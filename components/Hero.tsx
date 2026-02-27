@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://www.lectura-specs.com/models/renamed/orig/telescopic-work-platforms-on-wheels-1350sjp-jlg.jpg" 
+          src="/images/homebg.jpg" 
           alt="JLG Boom Lift in action" 
           className="w-full h-full object-cover"
         />

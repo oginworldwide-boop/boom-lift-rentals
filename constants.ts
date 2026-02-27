@@ -22,7 +22,7 @@ export const BOOM_LIFTS: BoomLift[] = [
       en: "The JLG 860SJ telescopic boom lift features a fuel-efficient Tier 4 engine and provides a large work envelope. Rented with a certified professional operator for maximum safety.",
       hi: "JLG 860SJ टेलीस्कोपिक बूम लिफ्ट में ईंधन-कुशल टियर 4 इंजन है। अधिकतम सुरक्षा के लिए प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
     },
-    imageUrl: "./images/860sj.webp",
+    imageUrl: "/images/860sj.webp",
     features: {
       en: ["Includes Professional Operator", "Oscillating Axle", "Hydraulic Platform Rotation", "Tilt Light and Alarm"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोलन धुरी (Oscillating Axle)", "हाइड्रोलिक प्लेटफॉर्म रोटेशन", "टिल्ट लाइट और अलार्म"]
@@ -40,7 +40,7 @@ export const BOOM_LIFTS: BoomLift[] = [
       en: "The 1200SJP offers the reach and capacity you need for demanding jobsites. All rentals include an experienced operator to ensure precision and safety.",
       hi: "1200SJP कठिन कार्यस्थलों के लिए आवश्यक पहुंच और क्षमता प्रदान करता है। सभी किराये में सटीकता और सुरक्षा सुनिश्चित करने के लिए एक अनुभवी ऑपरेटर शामिल है।"
     },
-    imageUrl: "./images/1200sjp.webp",
+    imageUrl: "/images/1200sjp.webp",
     features: {
       en: ["Includes Professional Operator", "Dual Capacity", "Extendable Axles", "360 Degree Continuous Rotation"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोहरी क्षमता", "विस्तार योग्य धुरी", "360 डिग्री निरंतर रोटेशन"]
@@ -58,7 +58,7 @@ export const BOOM_LIFTS: BoomLift[] = [
       en: "Go from the ground to 135 ft in under 95 seconds. The 1350SJP provides exceptional stability. Rented exclusively with our skilled operators.",
       hi: "95 सेकंड से भी कम समय में जमीन से 135 फीट ऊपर जाएं। 1350SJP असाधारण स्थिरता प्रदान करता है। विशेष रूप से हमारे कुशल ऑपरेटरों के साथ किराये पर उपलब्ध।"
     },
-    imageUrl: "./images/1350sjp.webp",
+    imageUrl: "/images/1350sjp.webp",
     features: {
       en: ["Includes Professional Operator", "Fastest Lift Speed", "JibPLUS® Boom", "Four-Wheel Hydrostatic Drive"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "सबसे तेज़ लिफ्ट गति", "JibPLUS® बूम", "फोर-व्हील हाइड्रोस्टेटिक ड्राइव"]
