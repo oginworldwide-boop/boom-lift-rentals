@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="images/homebg.jpg" 
+          src="https://www.lectura-specs.com/models/renamed/orig/telescopic-work-platforms-on-wheels-1350sjp-jlg.jpg" 
           alt="JLG Boom Lift in action" 
           className="w-full h-full object-cover"
         />
@@ -59,11 +59,11 @@ const Hero: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Fixed Centering */}
       <motion.div 
         animate={{ y: [0, 12, 0] }}
         transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/60 z-10"
+        className="absolute bottom-12 inset-x-0 flex justify-center text-white/60 z-10"
       >
         <ChevronDown size={40} strokeWidth={1.5} />
       </motion.div>

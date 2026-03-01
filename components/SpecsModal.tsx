@@ -40,24 +40,36 @@ const SpecsModal: React.FC<SpecsModalProps> = ({ lift, onClose }) => {
           </button>
           
           <div className="overflow-y-auto">
-            <div className="h-64 sm:h-80 relative bg-slate-50 flex items-center justify-center p-8">
+            {/* Image container */}
+            <div className="h-48 sm:h-80 relative bg-slate-50 flex items-center justify-center p-8">
               <img 
                 src={lift.imageUrl} 
                 alt={lift.model} 
                 className="max-w-full max-h-full object-contain" 
               />
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white/90 to-transparent">
+              {/* Desktop overlay - hidden on mobile */}
+              <div className="hidden sm:block absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white/20 to-transparent">
                 <h2 className="text-3xl font-bold text-slate-900">{lift.brand} {lift.model}</h2>
                 <div className="flex items-center justify-between w-full">
-                  <p className="text-slate-600 font-medium">
-                    Telescopic Boom Lift 
-                  </p>
+                  <p className="text-slate-600 font-medium">Telescopic Boom Lift</p>
                   <span className="inline-flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-xs font-bold">
                     <UserCheck size={12} />
                     {t.with_operator}
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Mobile title - hidden on desktop */}
+            <div className="sm:hidden px-6 pt-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">{lift.brand} {lift.model}</h2>
+                <p className="text-slate-600 font-medium">Telescopic Boom Lift</p>
+              </div>
+              <span className="inline-flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold whitespace-nowrap mt-1">
+                <UserCheck size={12} />
+                {t.with_operator}
+              </span>
             </div>
             
             <div className="p-6 sm:p-8">
