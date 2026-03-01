@@ -1,8 +1,8 @@
 import { BoomLift, ContactInfo } from './types';
 
 export const CONTACT_INFO: ContactInfo = {
-  phone: "+91 98765 43210",
-  email: "rentals@og-in.com",
+  phone: "+91 92210 28139",
+  email: "oginworldwide@gmail.com",
   address: {
     en: "Mumbai, Maharashtra, India",
     hi: "मुंबई, महाराष्ट्र, भारत"
