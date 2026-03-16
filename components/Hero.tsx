@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '../App';
 
@@ -12,28 +11,18 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://www.lectura-specs.com/models/renamed/orig/telescopic-work-platforms-on-wheels-1350sjp-jlg.jpg" 
+          src="images/homebg.webp" 
           alt="JLG Boom Lift in action" 
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
-        {/* Sophisticated Gradient Overlay for Readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80"></div>
       </div>
       
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center max-w-4xl z-10"
-      >
-        <motion.span 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="inline-block px-4 py-1.5 rounded-full bg-orange-600 text-white text-xs font-bold uppercase tracking-widest mb-8 shadow-lg shadow-orange-900/20"
-        >
+      <div className="text-center max-w-4xl z-10">
+        <span className="inline-block px-4 py-1.5 rounded-full bg-orange-600 text-white text-xs font-bold uppercase tracking-widest mb-8 shadow-lg shadow-orange-900/20">
           {t.hero_badge}
-        </motion.span>
+        </span>
         
         <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 leading-[1.1] tracking-tight">
           {t.hero_title_1} <span className="text-orange-500">{t.hero_title_2}</span> {t.hero_title_3}
@@ -57,16 +46,12 @@ const Hero: React.FC = () => {
             {t.hero_cta_2}
           </a>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Scroll Indicator - Fixed Centering */}
-      <motion.div 
-        animate={{ y: [0, 12, 0] }}
-        transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-        className="absolute bottom-12 inset-x-0 flex justify-center text-white/60 z-10"
-      >
+      {/* Scroll Indicator - Pure CSS, no Framer Motion */}
+      <div className="absolute bottom-12 inset-x-0 flex justify-center text-white/60 z-10 animate-bounce">
         <ChevronDown size={40} strokeWidth={1.5} />
-      </motion.div>
+      </div>
     </section>
   );
 };

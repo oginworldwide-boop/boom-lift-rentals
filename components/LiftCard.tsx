@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
 import { BoomLift } from '../types';
-import { motion } from 'framer-motion';
 import { useLanguage } from '../App';
 
 interface LiftCardProps {
@@ -14,10 +12,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
   const { t } = useLanguage();
 
   return (
-    <motion.div 
-      whileHover={{ y: -5 }}
-      className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col"
-    >
+    <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
       <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-6">
         <img 
           src={lift.imageUrl} 
@@ -64,7 +59,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
           {t.card_btn}
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
