@@ -17,10 +17,15 @@
     "tailwind-merge": "latest"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/node": "latest",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "latest",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
     "typescript": "latest",
     "vite": "latest"
   }
