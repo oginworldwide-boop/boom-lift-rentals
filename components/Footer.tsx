@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           </div>
           
           <div>
-            <h4 className="font-bold text-slate-900 mb-6">{t.footer_links}</h4>
+            <h3 className="font-bold text-slate-900 mb-6">{t.footer_links}</h3>
             <ul className="space-y-3 text-sm text-slate-500">
               <li><a href="#" className="hover:text-orange-600 transition-colors">Home</a></li>
               <li><a href="#fleet" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
           </div>
           
           <div>
-            <h4 className="font-bold text-slate-900 mb-6">{t.footer_contact}</h4>
+            <h3 className="font-bold text-slate-900 mb-6">{t.footer_contact}</h3>
             <ul className="space-y-4 text-sm text-slate-500">
               <li className="flex items-start gap-3">
                 <Phone size={18} className="text-orange-600 flex-shrink-0" />

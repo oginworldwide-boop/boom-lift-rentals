@@ -29,6 +29,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
           <h3 className="text-2xl font-bold text-slate-900">{lift.model}</h3>
           <button 
             onClick={() => onSelect(lift)}
+            aria-label={`View specs for ${lift.model}`}
             className="p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
           >
             <ArrowUpRight size={20} />

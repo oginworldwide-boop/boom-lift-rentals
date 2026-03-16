@@ -69,9 +69,10 @@ const App: React.FC = () => {
                 </p>
                 <a 
                   href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+                  aria-label={`Call us at ${CONTACT_INFO.phone}`}
                   className="inline-flex items-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl"
                 >
-                  <Phone size={24} />
+                  <Phone size={24} aria-hidden="true" />
                   {CONTACT_INFO.phone}
                 </a>
                 <p className="mt-6 text-orange-200 text-sm font-medium">
@@ -93,9 +94,10 @@ const App: React.FC = () => {
         <div className="fixed bottom-6 right-6 z-40 sm:hidden">
           <a 
             href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+            aria-label={`Call us at ${CONTACT_INFO.phone}`}
             className="flex items-center justify-center w-16 h-16 bg-orange-600 text-white rounded-full shadow-2xl animate-bounce"
           >
-            <Phone size={28} />
+            <Phone size={28} aria-hidden="true" />
           </a>
         </div>
       </div>

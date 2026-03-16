@@ -26,9 +26,10 @@ const Header: React.FC = () => {
 
           <a 
             href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+            aria-label={`Call us at ${CONTACT_INFO.phone}`}
             className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition-colors duration-300"
           >
-            <Phone size={16} />
+            <Phone size={16} aria-hidden="true" />
             <span className="hidden sm:inline">{t.nav_call}</span>
           </a>
         </div>
