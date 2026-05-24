@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
 import { BoomLift } from '../types';
-import { useLanguage } from '../App';
+import { useLanguage } from '../context/LanguageContext';
 
 interface LiftCardProps {
   lift: BoomLift;
