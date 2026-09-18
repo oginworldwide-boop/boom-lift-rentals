@@ -2,13 +2,14 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import HomeSections from './HomeSections';
+import FleetSections from './FleetSections';
 import LiftDetail from './LiftDetail';
 import { CONTACT_INFO } from '../../constants';
 import { Phone } from 'lucide-react';
 import { LanguageProvider } from '../i18n/language-context';
 
 interface SiteShellProps {
-  page: 'home' | 'lift';
+  page: 'home' | 'fleet' | 'lift';
   /** Required when page is 'lift'. */
   liftId?: string;
 }
@@ -38,6 +39,7 @@ const SiteShell: React.FC<SiteShellProps> = ({ page, liftId }) => (
 
       <main className="flex-grow">
         {page === 'home' && <HomeSections />}
+        {page === 'fleet' && <FleetSections />}
         {page === 'lift' && <LiftDetail liftId={liftId!} />}
       </main>
 

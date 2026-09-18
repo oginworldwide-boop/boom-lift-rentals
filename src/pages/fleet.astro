@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import { FLEET_TITLE, FLEET_DESCRIPTION } from '../seo';
+---
+<BaseLayout title={FLEET_TITLE} description={FLEET_DESCRIPTION}>
+  <SiteShell page="fleet" client:load />
+</BaseLayout>
