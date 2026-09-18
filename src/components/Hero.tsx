@@ -10,9 +10,11 @@ const Hero: React.FC = () => {
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <img
           src="/images/homebg.webp"
-          alt="JLG Boom Lift in action" 
+          alt="JLG Boom Lift in action"
+          width="1600"
+          height="1200"
           className="w-full h-full object-cover"
           fetchPriority="high"
         />

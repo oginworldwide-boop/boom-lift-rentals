@@ -37,11 +37,15 @@ const toggleLabel = (header.match(/'([\u0900-\u097F]+)'/) || [])[1];
 if (!toggleLabel) throw new Error('could not find the Devanagari toggle label in components/Header.tsx');
 
 const htmlFiles = [];
+const junkFiles = [];
 (function walk(dir) {
   for (const e of readdirSync(dir)) {
     const p = join(dir, e);
     if (statSync(p).isDirectory()) walk(p);
     else if (e.endsWith('.html')) htmlFiles.push(p);
+    // public/ is copied wholesale, and Finder recreates .DS_Store the moment anyone
+    // opens the folder, so this needs catching at build time, not once by hand.
+    else if (e === '.DS_Store') junkFiles.push(p);
   }
 })(DIST);
 
@@ -52,6 +56,11 @@ if (htmlFiles.length === 0) {
 
 let failures = 0;
 const fail = (file, msg) => { failures++; console.error(`  FAIL  ${relative(DIST, file)}  ${msg}`); };
+
+for (const junk of junkFiles) {
+  failures++;
+  console.error(`  FAIL  ${relative(DIST, junk)}  junk file copied into the build -- delete it from public/`);
+}
 
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');

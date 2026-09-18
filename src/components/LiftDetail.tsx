@@ -45,8 +45,8 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
           <img
             src={lift.imageUrl}
             alt={`${lift.brand} ${lift.model} telescopic boom lift`}
-            width="640"
-            height="640"
+            width={lift.imageWidth}
+            height={lift.imageHeight}
             className="max-w-full max-h-full object-contain"
           />
         </div>

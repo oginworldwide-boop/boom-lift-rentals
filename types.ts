@@ -29,6 +29,11 @@ export interface BoomLift {
     hi: string;
   };
   imageUrl: string;
+  /** Intrinsic pixel dimensions of imageUrl, measured from the file. Rendered as
+   *  width/height attributes so the browser reserves the right aspect ratio and the
+   *  image does not shift the layout as it loads. */
+  imageWidth: number;
+  imageHeight: number;
   features: {
     en: string[];
     hi: string[];

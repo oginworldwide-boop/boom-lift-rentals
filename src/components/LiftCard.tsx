@@ -16,9 +16,12 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
       <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-6">
-        <img 
-          src={lift.imageUrl} 
-          alt={lift.model} 
+        <img
+          src={lift.imageUrl}
+          alt={lift.model}
+          width={lift.imageWidth}
+          height={lift.imageHeight}
+          loading="lazy"
           className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-md text-xs font-bold text-slate-900 shadow-sm">

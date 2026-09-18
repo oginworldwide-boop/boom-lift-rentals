@@ -24,9 +24,9 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-bold text-slate-900 mb-6">{t.footer_links}</h3>
             <ul className="space-y-3 text-sm text-slate-500">
-              <li><a href="#" className="hover:text-orange-600 transition-colors">Home</a></li>
-              <li><a href="#fleet" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
-              <li><a href="#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
+              <li><a href="/" className="hover:text-orange-600 transition-colors">Home</a></li>
+              <li><a href="/fleet" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
+              <li><a href="/#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
               <li><a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-orange-600 transition-colors">Contact Support</a></li>
             </ul>
           </div>

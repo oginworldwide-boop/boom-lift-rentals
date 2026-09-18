@@ -30,6 +30,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "JLG 660SJ एक कॉम्पैक्ट फ्रेम में बड़ा कार्य क्षेत्र और उच्च क्षमता प्रदान करता है। प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/660sj.webp",
+    imageWidth: 1080,
+    imageHeight: 1080,
     features: {
       en: ["Includes Professional Operator", "Oscillating Axle", "Easy to Transport", "Durable Construction"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोलन धुरी", "परिवहन में आसान", "टिकाऊ निर्माण"]
@@ -54,6 +56,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "JLG 860SJ टेलीस्कोपिक बूम लिफ्ट में ईंधन-कुशल टियर 4 इंजन है। अधिकतम सुरक्षा के लिए प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/860sj.webp",
+    imageWidth: 1600,
+    imageHeight: 1200,
     features: {
       en: ["Includes Professional Operator", "Oscillating Axle", "Hydraulic Platform Rotation", "Tilt Light and Alarm"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोलन धुरी (Oscillating Axle)", "हाइड्रोलिक प्लेटफॉर्म रोटेशन", "टिल्ट लाइट और अलार्म"]
@@ -78,6 +82,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "1200SJP कठिन कार्यस्थलों के लिए आवश्यक पहुंच और क्षमता प्रदान करता है। सभी किराये में सटीकता और सुरक्षा सुनिश्चित करने के लिए एक अनुभवी ऑपरेटर शामिल है।"
     },
     imageUrl: "/images/1200sjp.webp",
+    imageWidth: 1600,
+    imageHeight: 1200,
     features: {
       en: ["Includes Professional Operator", "Dual Capacity", "Extendable Axles", "360 Degree Continuous Rotation"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोहरी क्षमता", "विस्तार योग्य धुरी", "360 डिग्री निरंतर रोटेशन"]
@@ -102,6 +108,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "95 सेकंड से भी कम समय में जमीन से 135 फीट ऊपर जाएं। 1350SJP असाधारण स्थिरता प्रदान करता है। विशेष रूप से हमारे कुशल ऑपरेटरों के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/1350sjp.webp",
+    imageWidth: 1600,
+    imageHeight: 1200,
     features: {
       en: ["Includes Professional Operator", "Fastest Lift Speed", "JibPLUS® Boom", "Four-Wheel Hydrostatic Drive"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "सबसे तेज़ लिफ्ट गति", "JibPLUS® बूम", "फोर-व्हील हाइड्रोस्टेटिक ड्राइव"]
@@ -126,6 +134,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "JLG 1500SJ उपलब्ध सबसे बड़े टेलीस्कोपिक बूम में से एक है, जो बड़े औद्योगिक प्रोजेक्ट्स के लिए उपयुक्त है। विशेषज्ञ ऑपरेटर के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/1500sj.webp",
+    imageWidth: 1600,
+    imageHeight: 1200,
     features: {
       en: ["Includes Professional Operator", "Telescoping Jib", "Dual Capacity", "Exceptional Stability"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "टेलीस्कोपिंग जिब", "दोहरी क्षमता", "असाधारण स्थिरता"]
@@ -150,6 +160,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "Genie S-60 J एक हल्का और उच्च प्रदर्शन वाला बूम लिफ्ट है जिसे आवश्यक कार्यों के लिए डिज़ाइन किया गया है। प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/s60j.webp",
+    imageWidth: 2000,
+    imageHeight: 2000,
     features: {
       en: ["Includes Professional Operator", "Lightweight Design", "Active Oscillation", "Low Maintenance"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "हल्का डिज़ाइन", "सक्रिय दोलन", "कम रखरखाव"]
@@ -174,6 +186,8 @@ export const BOOM_LIFTS: BoomLift[] = [
       hi: "Genie S-85 XC एक उच्च क्षमता वाली बूम लिफ्ट है जो दोहरी क्षमता और ईंधन दक्षता प्रदान करती है। विशेष रूप से हमारे कुशल ऑपरेटरों के साथ किराये पर उपलब्ध।"
     },
     imageUrl: "/images/s85xc.webp",
+    imageWidth: 750,
+    imageHeight: 1428,
     features: {
       en: ["Includes Professional Operator", "Dual Capacity (300/454 kg)", "Rough Terrain Capability", "Smooth Control"],
       hi: ["पेशेवर ऑपरेटर शामिल है", "दोहरी क्षमता (300/454 किग्रा)", "कठिन इलाके की क्षमता", "सुचारू नियंत्रण"]
