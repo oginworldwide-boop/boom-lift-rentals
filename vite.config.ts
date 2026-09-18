@@ -6,14 +6,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
     return {
-      define: {
-        'process.env.API_KEY' : JSON.stringify('api-key-this-is-not-used-can-be-ignored!'),
-      },
-      server: {
-        proxy: {
-          '/api-proxy': 'http://localhost:5000',
-        },
-      },
       plugins: [
         react(),
         tailwindcss(),
