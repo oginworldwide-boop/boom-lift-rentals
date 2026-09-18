@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteShell from '../../components/SiteShell';
 import { BOOM_LIFTS } from '../../../constants';
 import { liftTitle, liftDescription } from '../../seo';
+import { liftGraph } from '../../schema';
 
 export function getStaticPaths() {
   // Slugs are permanent URLs, so a collision would silently drop a machine page.
@@ -14,8 +15,10 @@ export function getStaticPaths() {
 }
 
 const { lift } = Astro.props;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <BaseLayout
+  schema={liftGraph(lift, Astro.site!, pageUrl)}
   title={liftTitle(lift)}
   description={liftDescription(lift)}
   ogImage={lift.imageUrl}

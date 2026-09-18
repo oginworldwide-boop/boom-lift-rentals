@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteShell from '../components/SiteShell';
+import { localBusiness } from '../schema';
 ---
 <BaseLayout
+  schema={[localBusiness(Astro.site!)]}
   title="Boom Lift Rental & Hiring Services Pan-India"
   description="Rent boom lifts Pan-India with certified operators. JLG 860SJ, 1200SJP, 1350SJP & more. Call OG-IN Worldwide for same-day quotes."
   preloadHero

@@ -13,12 +13,16 @@ export default defineConfig({
   // origins.
   site: 'https://www.og-inworldwide.in',
 
-  // One URL per page, no trailing slash. 'file' emits /fleet/jlg-1350sjp.html, which
-  // static hosts serve at /fleet/jlg-1350sjp. This has to agree with the canonical
-  // tags and the sitemap or the port manufactures the duplicate URLs it exists to
-  // prevent.
+  // One URL per page, no trailing slash: /fleet/jlg-1350sjp.
+  //
+  // 'directory' emits /fleet/jlg-1350sjp/index.html, which every static host serves
+  // at the extensionless path without extra configuration. 'file' was tried first
+  // and rejected: it puts .html into Astro.url.pathname, so canonical and og:url
+  // came out as /fleet/jlg-1350sjp.html while the page is served at
+  // /fleet/jlg-1350sjp -- manufacturing exactly the duplicate URLs this setting is
+  // supposed to prevent.
   trailingSlash: 'never',
-  build: { format: 'file' },
+  build: { format: 'directory' },
 
   integrations: [react()],
 

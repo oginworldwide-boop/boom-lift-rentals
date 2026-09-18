@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { graph } from '../schema';
 
 interface Props {
   title: string;
@@ -9,6 +10,8 @@ interface Props {
   ogType?: 'website' | 'product';
   /** Only the homepage shows the hero, so only it should pay for the preload. */
   preloadHero?: boolean;
+  /** JSON-LD nodes for this page, wrapped in an @graph below. */
+  schema?: object[];
 }
 
 const {
@@ -17,6 +20,7 @@ const {
   ogImage = '/images/homebg.webp',
   ogType = 'website',
   preloadHero = false,
+  schema = [],
 } = Astro.props;
 
 // Astro.site comes from astro.config.mjs. Building canonical and OG URLs from it
@@ -26,6 +30,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
 
 const SITE_NAME = 'OG-IN Worldwide LLP';
+
+const jsonLd = schema.length ? graph(schema) : null;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +76,9 @@ const SITE_NAME = 'OG-IN Worldwide LLP';
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       />
     </noscript>
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
   </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
     <slot />
