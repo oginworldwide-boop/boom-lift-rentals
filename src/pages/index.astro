@@ -11,5 +11,5 @@ import SiteShell from '../components/SiteShell';
        HTML at build time and then hydrates it. client:only would skip the server
        render and put the site back to an empty shell, which is the failure
        `npm run check` guards against. -->
-  <SiteShell client:load />
+  <SiteShell page="home" client:load />
 </BaseLayout>

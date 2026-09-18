@@ -23,8 +23,10 @@ const pick = (re, label) => {
   if (!m) throw new Error(`could not read ${label} from constants.ts`);
   return m[1];
 };
-// A model name, from the source of truth.
-const aModel = pick(/model: "([^"]+)"/, 'a model name');
+// Every model name, from the source of truth. A page must name at least one: the
+// homepage and /fleet list them all, a machine page names only its own.
+const models = [...constants.matchAll(/model: "([^"]+)"/g)].map((m) => m[1]);
+if (models.length === 0) throw new Error('no model names found in constants.ts');
 
 // The Devanagari label on the language toggle in Header. This is the correct probe
 // for "did the toggle render": strings from TRANSLATIONS.hi only appear once the page
@@ -61,8 +63,19 @@ for (const file of htmlFiles) {
   if (/<div id="root"><\/div>/.test(html)) {
     fail(file, 'contains an empty <div id="root"> -- content did not server-render');
   }
-  if (!html.includes(aModel)) {
-    fail(file, `does not contain "${aModel}" -- fleet data missing from served HTML`);
+  // Titles and descriptions are brand-visible in search results, so keep them
+  // inside the lengths Google will actually render rather than discovering the
+  // truncation live.
+  const title = (html.match(/<title>(.*?)<\/title>/) || [])[1] || '';
+  const desc = (html.match(/<meta name="description" content="(.*?)"/) || [])[1] || '';
+  const decode = (s) => s.replace(/&#\d+;|&amp;/g, 'x');
+  if (!title) fail(file, 'has no <title>');
+  else if (decode(title).length > 60) fail(file, `title is ${decode(title).length} chars, over 60`);
+  if (!desc) fail(file, 'has no meta description');
+  else if (decode(desc).length > 160) fail(file, `meta description is ${decode(desc).length} chars, over 160`);
+
+  if (!models.some((m) => html.includes(m))) {
+    fail(file, 'names none of the machines in constants.ts -- fleet data missing from served HTML');
   }
   if (!html.includes(toggleLabel)) {
     fail(file, `does not contain Hindi text "${toggleLabel}" -- the language toggle did not render`);

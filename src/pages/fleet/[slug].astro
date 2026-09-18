@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteShell from '../../components/SiteShell';
+import { BOOM_LIFTS } from '../../../constants';
+import { liftTitle, liftDescription } from '../../seo';
+
+export function getStaticPaths() {
+  // Slugs are permanent URLs, so a collision would silently drop a machine page.
+  const slugs = BOOM_LIFTS.map((l) => l.slug);
+  const dupes = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+  if (dupes.length) throw new Error(`Duplicate lift slugs in constants.ts: ${dupes.join(', ')}`);
+
+  return BOOM_LIFTS.map((lift) => ({ params: { slug: lift.slug }, props: { lift } }));
+}
+
+const { lift } = Astro.props;
+---
+<BaseLayout
+  title={liftTitle(lift)}
+  description={liftDescription(lift)}
+  ogImage={lift.imageUrl}
+  ogType="product"
+>
+  <SiteShell page="lift" liftId={lift.id} client:load />
+</BaseLayout>
