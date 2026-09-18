@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,7 +25,9 @@ export default defineConfig({
   trailingSlash: 'never',
   build: { format: 'directory' },
 
-  integrations: [react()],
+  // sitemap() derives every URL from `site` and the generated routes, so the
+  // sitemap cannot drift from the canonical tags.
+  integrations: [react(), sitemap()],
 
   vite: {
     // Tailwind v4 is CSS-first: config lives in src/styles/global.css via
