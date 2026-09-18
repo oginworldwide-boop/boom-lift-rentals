@@ -13,12 +13,18 @@ export const CONTACT_INFO: ContactInfo = {
 export const BOOM_LIFTS: BoomLift[] = [
   {
     id: "660sj",
+    slug: "jlg-660sj",
     model: "660SJ",
     brand: "JLG",
     platformHeight: "20.12 m (66 ft)",
     horizontalOutreach: "17.30 m (56 ft 9 in)",
     platformCapacity: "230 kg (500 lb)",
     weight: "11,476 kg",
+    heightM: 20.12,
+    outreachM: 17.30,
+    capacityKg: 230,
+    weightKg: 11476,
+    nominalHeightFt: 66,
     description: {
       en: "The JLG 660SJ offers a large work envelope and high capacity in a compact frame. Rented with a certified professional operator.",
       hi: "JLG 660SJ एक कॉम्पैक्ट फ्रेम में बड़ा कार्य क्षेत्र और उच्च क्षमता प्रदान करता है। प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
@@ -31,12 +37,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "860sj",
+    slug: "jlg-860sj",
     model: "860SJ",
     brand: "JLG",
     platformHeight: "26.21 m (86 ft)",
     horizontalOutreach: "22.86 m (75 ft)",
     platformCapacity: "230 kg (500 lb)",
     weight: "16,465 kg",
+    heightM: 26.21,
+    outreachM: 22.86,
+    capacityKg: 230,
+    weightKg: 16465,
+    nominalHeightFt: 86,
     description: {
       en: "The JLG 860SJ telescopic boom lift features a fuel-efficient Tier 4 engine and provides a large work envelope. Rented with a certified professional operator for maximum safety.",
       hi: "JLG 860SJ टेलीस्कोपिक बूम लिफ्ट में ईंधन-कुशल टियर 4 इंजन है। अधिकतम सुरक्षा के लिए प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
@@ -49,12 +61,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "1200sjp",
+    slug: "jlg-1200sjp",
     model: "1200SJP",
     brand: "JLG",
     platformHeight: "36.58 m (120 ft)",
     horizontalOutreach: "22.86 m (75 ft)",
     platformCapacity: "454 kg (1,000 lb)",
     weight: "18,552 kg",
+    heightM: 36.58,
+    outreachM: 22.86,
+    capacityKg: 454,
+    weightKg: 18552,
+    nominalHeightFt: 120,
     description: {
       en: "The 1200SJP offers the reach and capacity you need for demanding jobsites. All rentals include an experienced operator to ensure precision and safety.",
       hi: "1200SJP कठिन कार्यस्थलों के लिए आवश्यक पहुंच और क्षमता प्रदान करता है। सभी किराये में सटीकता और सुरक्षा सुनिश्चित करने के लिए एक अनुभवी ऑपरेटर शामिल है।"
@@ -67,12 +85,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "1350sjp",
+    slug: "jlg-1350sjp",
     model: "1350SJP",
     brand: "JLG",
     platformHeight: "41.15 m (135 ft)",
     horizontalOutreach: "24.38 m (80 ft)",
     platformCapacity: "454 kg (1,000 lb)",
     weight: "20,411 kg",
+    heightM: 41.15,
+    outreachM: 24.38,
+    capacityKg: 454,
+    weightKg: 20411,
+    nominalHeightFt: 135,
     description: {
       en: "Go from the ground to 135 ft in under 95 seconds. The 1350SJP provides exceptional stability. Rented exclusively with our skilled operators.",
       hi: "95 सेकंड से भी कम समय में जमीन से 135 फीट ऊपर जाएं। 1350SJP असाधारण स्थिरता प्रदान करता है। विशेष रूप से हमारे कुशल ऑपरेटरों के साथ किराये पर उपलब्ध।"
@@ -85,12 +109,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "1500sj",
+    slug: "jlg-1500sj",
     model: "1500SJ",
     brand: "JLG",
     platformHeight: "45.72 m (150 ft)",
     horizontalOutreach: "24.38 m (80 ft)",
     platformCapacity: "454 kg (1,000 lb)",
     weight: "22,000 kg",
+    heightM: 45.72,
+    outreachM: 24.38,
+    capacityKg: 454,
+    weightKg: 22000,
+    nominalHeightFt: 150,
     description: {
       en: "The JLG 1500SJ is one of the largest self-propelled telescopic booms available, perfect for massive industrial projects. Rented with an expert operator.",
       hi: "JLG 1500SJ उपलब्ध सबसे बड़े टेलीस्कोपिक बूम में से एक है, जो बड़े औद्योगिक प्रोजेक्ट्स के लिए उपयुक्त है। विशेषज्ञ ऑपरेटर के साथ किराये पर उपलब्ध।"
@@ -103,12 +133,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "s60j",
+    slug: "genie-s60j",
     model: "S-60 J",
     brand: "Genie",
     platformHeight: "18.50 m (60 ft 8 in)",
     horizontalOutreach: "12.30 m (40 ft 5 in)",
     platformCapacity: "300 kg (660 lb)",
     weight: "7,550 kg",
+    heightM: 18.50,
+    outreachM: 12.30,
+    capacityKg: 300,
+    weightKg: 7550,
+    nominalHeightFt: 60,
     description: {
       en: "The Genie S-60 J is a lightweight and high-performance boom lift designed for essential tasks. Rented with a certified professional operator.",
       hi: "Genie S-60 J एक हल्का और उच्च प्रदर्शन वाला बूम लिफ्ट है जिसे आवश्यक कार्यों के लिए डिज़ाइन किया गया है। प्रमाणित पेशेवर ऑपरेटर के साथ किराये पर उपलब्ध।"
@@ -121,12 +157,18 @@ export const BOOM_LIFTS: BoomLift[] = [
   },
   {
     id: "s85xc",
+    slug: "genie-s85xc",
     model: "S-85 XC",
     brand: "Genie",
     platformHeight: "25.91 m (85 ft)",
     horizontalOutreach: "22.71 m (74 ft 6 in)",
     platformCapacity: "454 kg (1,000 lb)",
     weight: "18,000 kg",
+    heightM: 25.91,
+    outreachM: 22.71,
+    capacityKg: 454,
+    weightKg: 18000,
+    nominalHeightFt: 85,
     description: {
       en: "The Genie S-85 XC is a high-capacity boom lift offering dual capacity and fuel efficiency. Rented exclusively with our skilled operators.",
       hi: "Genie S-85 XC एक उच्च क्षमता वाली बूम लिफ्ट है जो दोहरी क्षमता और ईंधन दक्षता प्रदान करती है। विशेष रूप से हमारे कुशल ऑपरेटरों के साथ किराये पर उपलब्ध।"
