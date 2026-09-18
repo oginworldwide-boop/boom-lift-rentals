@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+/* Site chrome that is not expressible as utility classes.
+ *
+ * These rules used to live in an inline <style> block in index.html. They are
+ * here so that the stylesheet is the single thing a build has to carry: porting
+ * index.css alone previously dropped the header's frosted background and fell
+ * the whole site back to system sans, with no build error to notice.
+ *
+ * Still owned by the HTML shell, and so still has to be carried over by hand:
+ *   - the Inter <link> preconnect/preload pair
+ *   - <link rel="preload" as="image" href="/images/homebg.webp">  (LCP hint)
+ *   - <body class="bg-slate-50 text-slate-900 antialiased">
+ */
+
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  /* prefixed first, standard last: the minifier keeps the last-declared of the
+   * two, and dropping the unprefixed property loses the frosted header on
+   * browsers that do not take the -webkit- alias. */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
