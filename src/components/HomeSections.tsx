@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Hero from './Hero';
 import LiftCard from './LiftCard';
-import SpecsModal from './SpecsModal';
 import TrustSection from './TrustSection';
 import { BOOM_LIFTS, CONTACT_INFO } from '../../constants';
-import type { BoomLift } from '../../types';
 import { Phone } from 'lucide-react';
 import { useLanguage } from '../i18n/language-context';
 
@@ -12,7 +10,6 @@ import { useLanguage } from '../i18n/language-context';
  *  shared chrome and each route supplies its own main content. */
 const HomeSections: React.FC = () => {
   const { t } = useLanguage();
-  const [selectedLift, setSelectedLift] = useState<BoomLift | null>(null);
 
   return (
     <>
@@ -28,11 +25,7 @@ const HomeSections: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {BOOM_LIFTS.map((lift) => (
-              <LiftCard
-                key={lift.id}
-                lift={lift}
-                onSelect={setSelectedLift}
-              />
+              <LiftCard key={lift.id} lift={lift} />
             ))}
           </div>
         </section>
@@ -61,8 +54,6 @@ const HomeSections: React.FC = () => {
             </div>
           </div>
         </section>
-
-      <SpecsModal lift={selectedLift} onClose={() => setSelectedLift(null)} />
     </>
   );
 };

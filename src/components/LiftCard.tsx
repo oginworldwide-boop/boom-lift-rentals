@@ -5,10 +5,12 @@ import { useLanguage } from '../i18n/language-context';
 
 interface LiftCardProps {
   lift: BoomLift;
-  onSelect: (lift: BoomLift) => void;
 }
 
-const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
+/** Both affordances link to the machine's own page. They used to open SpecsModal,
+ *  which no crawler can do, so the seven machine pages had nothing linking to them
+ *  and the specs were invisible to search. Styling is unchanged. */
+const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
   const { t } = useLanguage();
 
   return (
@@ -27,13 +29,13 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
       <div className="p-6 flex-grow flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl font-bold text-slate-900">{lift.model}</h3>
-          <button 
-            onClick={() => onSelect(lift)}
+          <a
+            href={`/fleet/${lift.slug}`}
             aria-label={`View specs for ${lift.model}`}
             className="p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
           >
-            <ArrowUpRight size={20} />
-          </button>
+            <ArrowUpRight size={20} aria-hidden="true" />
+          </a>
         </div>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -53,12 +55,12 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
           </div>
         </div>
         
-        <button 
-          onClick={() => onSelect(lift)}
-          className="mt-auto w-full py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all"
+        <a
+          href={`/fleet/${lift.slug}`}
+          className="mt-auto w-full py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all text-center"
         >
           {t.card_btn}
-        </button>
+        </a>
       </div>
     </div>
   );
