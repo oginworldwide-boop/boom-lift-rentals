@@ -4,11 +4,28 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  /** Path to the page's share image, e.g. "/images/1350sjp.webp". Made absolute below. */
+  ogImage?: string;
+  ogType?: 'website' | 'product';
   /** Only the homepage shows the hero, so only it should pay for the preload. */
   preloadHero?: boolean;
 }
 
-const { title, description, preloadHero = false } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = '/images/homebg.webp',
+  ogType = 'website',
+  preloadHero = false,
+} = Astro.props;
+
+// Astro.site comes from astro.config.mjs. Building canonical and OG URLs from it
+// keeps them consistent with the sitemap and with the trailingSlash policy, rather
+// than having three places that each guess at the origin.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
+
+const SITE_NAME = 'OG-IN Worldwide LLP';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +34,24 @@ const { title, description, preloadHero = false } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Enquiries travel over WhatsApp, which reads these tags for its link preview.
+         The images are WebP and none are 1200x630, so previews may still render
+         blank until purpose-made share images exist. Tracked as a follow-up. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
 
     {preloadHero && <link rel="preload" as="image" href="/images/homebg.webp" />}
 
