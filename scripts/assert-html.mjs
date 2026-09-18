@@ -30,7 +30,7 @@ const aModel = pick(/model: "([^"]+)"/, 'a model name');
 // for "did the toggle render": strings from TRANSLATIONS.hi only appear once the page
 // is already in Hindi, whereas the toggle's own label renders on the English page,
 // which is what the build emits.
-const header = readFileSync('components/Header.tsx', 'utf8');
+const header = readFileSync('src/components/Header.tsx', 'utf8');
 const toggleLabel = (header.match(/'([\u0900-\u097F]+)'/) || [])[1];
 if (!toggleLabel) throw new Error('could not find the Devanagari toggle label in components/Header.tsx');
 

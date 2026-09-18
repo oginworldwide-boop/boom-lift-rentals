@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+---
+<BaseLayout
+  title="Boom Lift Rental & Hiring Services Pan-India"
+  description="Rent boom lifts Pan-India with certified operators. JLG 860SJ, 1200SJP, 1350SJP & more. Call OG-IN Worldwide for same-day quotes."
+  preloadHero
+>
+  <!-- client:load, not client:only: client:load server-renders this tree to static
+       HTML at build time and then hydrates it. client:only would skip the server
+       render and put the site back to an empty shell, which is the failure
+       `npm run check` guards against. -->
+  <SiteShell client:load />
+</BaseLayout>

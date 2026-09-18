@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "astro dev",
+    "build": "astro build && npm run check",
+    "preview": "astro preview",
     "check": "node scripts/assert-html.mjs"
   },
   "dependencies": {
@@ -18,16 +18,14 @@
     "tailwind-merge": "3.5.0"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "4.2.1",
+    "@astrojs/react": "4.4.2",
     "@tailwindcss/vite": "4.2.1",
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "6.0.1",
-    "autoprefixer": "10.4.27",
-    "postcss": "8.5.8",
+    "astro": "5.18.2",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
-    "vite": "8.0.0"
+    "vite": "6.4.3"
   }
 }

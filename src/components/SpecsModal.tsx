@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { X, Phone, CheckCircle2, UserCheck } from 'lucide-react';
-import { BoomLift } from '../types';
-import { CONTACT_INFO } from '../constants';
+import type { BoomLift } from '../../types';
+import { CONTACT_INFO } from '../../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../i18n/language-context';
 

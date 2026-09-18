@@ -1,4 +1,4 @@
-import { BoomLift, ContactInfo } from './types';
+import type { BoomLift, ContactInfo } from './types';
 
 export const CONTACT_INFO: ContactInfo = {
   phone: "+91 92210 28139",

@@ -1,17 +1,17 @@
 
 import React, { useState } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import LiftCard from './components/LiftCard';
-import SpecsModal from './components/SpecsModal';
-import TrustSection from './components/TrustSection';
-import Footer from './components/Footer';
-import { BOOM_LIFTS, CONTACT_INFO } from './constants';
-import { BoomLift } from './types';
+import Header from './Header';
+import Hero from './Hero';
+import LiftCard from './LiftCard';
+import SpecsModal from './SpecsModal';
+import TrustSection from './TrustSection';
+import Footer from './Footer';
+import { BOOM_LIFTS, CONTACT_INFO } from '../../constants';
+import type { BoomLift } from '../../types';
 import { Phone } from 'lucide-react';
-import { LanguageProvider, useLanguage } from './i18n/language-context';
+import { LanguageProvider, useLanguage } from '../i18n/language-context';
 
-const AppContent: React.FC = () => {
+const SiteShellContent: React.FC = () => {
   const { t } = useLanguage();
   const [selectedLift, setSelectedLift] = useState<BoomLift | null>(null);
 
@@ -88,10 +88,28 @@ const AppContent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => (
+/**
+ * The single React island for a page.
+ *
+ * Astro islands each run in their own React root, so a context provider in one
+ * island is invisible to every other. Header owns setLanguage while Hero, Footer
+ * and the fleet grid consume it, so splitting them into separate islands would
+ * silently break the Hindi toggle. Keeping the whole page inside one island keeps
+ * the context intact, and Astro still server-renders it to full static HTML.
+ *
+ * This is scaffolding, not the destination. When /hi/ routes land, language
+ * becomes a route rather than client state, the toggle becomes a plain <a>, and
+ * these components can be converted to .astro for a zero-JS page. Until then the
+ * page hydrates, which is the same JS the site already ships today.
+ *
+ * Keep props minimal and scalar. Astro serializes island props into the HTML, so
+ * passing BOOM_LIFTS in would embed every machine description twice, in both
+ * languages, on top of the rendered markup.
+ */
+const SiteShell: React.FC = () => (
   <LanguageProvider>
-    <AppContent />
+    <SiteShellContent />
   </LanguageProvider>
 );
 
-export default App;
+export default SiteShell;

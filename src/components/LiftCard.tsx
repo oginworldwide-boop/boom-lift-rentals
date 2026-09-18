@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
-import { BoomLift } from '../types';
+import type { BoomLift } from '../../types';
 import { useLanguage } from '../i18n/language-context';
 
 interface LiftCardProps {
