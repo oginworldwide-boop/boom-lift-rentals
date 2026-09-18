@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="images/homebg.webp" 
+          src="/images/homebg.webp"
           alt="JLG Boom Lift in action" 
           className="w-full h-full object-cover"
           fetchPriority="high"
