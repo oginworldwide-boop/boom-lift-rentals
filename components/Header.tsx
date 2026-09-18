@@ -2,7 +2,7 @@
 import React from 'react';
 import { Phone, Languages } from 'lucide-react';
 import { CONTACT_INFO } from '../constants';
-import { useLanguage } from '../App';
+import { useLanguage } from '../i18n/language-context';
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();

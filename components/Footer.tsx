@@ -2,7 +2,7 @@
 import React from 'react';
 import { CONTACT_INFO } from '../constants';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { useLanguage } from '../App';
+import { useLanguage } from '../i18n/language-context';
 
 const Footer: React.FC = () => {
   const { language, t } = useLanguage();

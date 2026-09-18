@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useLanguage } from '../App';
+import { useLanguage } from '../i18n/language-context';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();

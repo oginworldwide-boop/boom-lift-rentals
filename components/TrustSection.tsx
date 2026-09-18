@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ShieldCheck, Clock, Truck, UserCheck } from 'lucide-react';
-import { useLanguage } from '../App';
+import { useLanguage } from '../i18n/language-context';
 
 const TrustSection: React.FC = () => {
   const { t } = useLanguage();
