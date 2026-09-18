@@ -85,9 +85,28 @@ The language context is defined inline in `App.tsx` and **works**:
 `useState<Language>('en')` with `t = TRANSLATIONS[language]`. It appears to lack
 only a switcher in the UI. Do not rewrite this; wire a switcher to it.
 
-**Target:** static generation (Astro preferred; Next.js static export
-acceptable) so every route ships real HTML. This is the root cause of the site's
-invisibility in search and must be fixed before content work is worth doing.
+**Done (roadmap item 2):** ported to **Astro 5.18.2** + `@astrojs/react` 4.4.2 +
+`@astrojs/sitemap` 3.7.4, all pinned exactly. Nine routes ship real HTML.
+
+- **Pinned to Astro 5, not 7, because 7 requires Node >= 22.12.0** and this
+  machine runs Node 20.20.2. Astro <= 7.2.7 carries unpatched advisories with no
+  5.x backport; accepted because the production artifact is static files with no
+  Astro runtime, nothing renders from user input, and server islands,
+  `astro:assets` and view transitions are all unused. Revisit with Node 22.
+- Canonical origin is `https://www.og-inworldwide.in`, set once as `site` in
+  `astro.config.mjs`. Canonicals, OG URLs and the sitemap all derive from it.
+- `trailingSlash: 'never'` with `build.format: 'directory'`. Do not switch to
+  `'file'`: it puts `.html` into `Astro.url.pathname`, which silently
+  corrupts every canonical and `og:url`.
+- Machine URLs are `/fleet/[brand]-[id]`, e.g. `/fleet/jlg-1350sjp`,
+  `/fleet/genie-s60j`. The `slug` is an explicit field in `constants.ts`, never
+  derived. **These are indexed; changing one costs a permanent redirect.**
+- One React island per page (`SiteShell`). Islands do not share context, so
+  splitting Header from Hero/Footer would break the Hindi toggle. Keep island
+  props scalar: Astro serializes them into the HTML.
+- `npm run build` runs `scripts/assert-html.mjs`, which fails the build if a page
+  stops server-rendering, loses its Hindi toggle, exceeds title/description
+  limits, or ships junk files.
 
 **Constraints:**
 - Pin all dependencies to exact versions. Several are currently `"latest"`,
@@ -120,6 +139,10 @@ vertex-ai-proxy-interceptor.js   # leftover scaffold, unused
 ```
 
 ## ⚠ Two diverging versions exist
+
+**Update 2026-09-18:** the diverged refactor is not only on the Desktop; it was
+pushed and lives on `origin/dev` (`d964a3d`), so roadmap item 0's "archive it on
+a branch" is effectively already done.
 
 There is a **local folder on the developer's Desktop that has diverged from
 `main` and was never pushed.** It refactors the site to react-router with
@@ -207,11 +230,14 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 6. No WhatsApp CTA and no quote form. Every CTA is a `tel:` link.
 
 **High**
-7. Hindi is wired but unreachable. On `main` the language state works, but no
-   switcher is exposed in the UI, and `SpecsModal` reads `description.en` /
-   `features.en` directly so it would not translate anyway. A complete Hindi
-   translation of every string already exists in `TRANSLATIONS` and currently
-   ships to the browser unused.
+7. ~~Hindi is wired but unreachable.~~ **Corrected 2026-09-18: this was already
+   wrong.** `Header.tsx` renders a working EN/हिंदी toggle, and the modal read
+   `description[language]`, so Hindi worked end to end. The real remaining gap is
+   about ten strings with no `TRANSLATIONS` key that never translate:
+   `"Capacity"`, `"Weight"` and `"Telescopic Boom Lift"` (now in
+   `LiftDetail.tsx`), and `"Home"`, `"Our Fleet"`, `"Why Choose Us"`,
+   `"Contact Support"`, `"Privacy Policy"`, `"Terms of Service"` in
+   `Footer.tsx`. That is the actual scope of roadmap item 3.
 8. All dependencies pinned to `"latest"`.
 9. `SpecsModal` lacks `role="dialog"`, `aria-modal`, Escape handling, a focus
    trap and body scroll lock. Its `AnimatePresence` never fires exit animations
