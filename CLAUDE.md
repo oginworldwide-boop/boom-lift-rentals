@@ -74,15 +74,12 @@ These override any instruction to be helpful, fast, or complete.
 
 ## Tech stack
 
-**Deployed (`main`, until PR #1 merges):** the old Vite + React client-rendered
-single page — crawlers get an empty `<div id="root">`, one indexable URL.
-
-**Branches (2026-10-03):** PR #1 `astro-static-port` → `main` = the static Astro
-site, copy-neutral. PR #2 `site-v2` → `main` (stacked on #1) = industrial
-redesign, WhatsApp + quote form, rewritten copy, high-reach page, working-height
-guide, contact, privacy, GA4 hook. Netlify is linked to GitHub and builds a
-deploy preview per PR (previews carry `noindex` and the Netlify drawer, so
-Lighthouse there needs `--blocked-url-patterns` for `*/.netlify/*` and `*/cdp/*`).
+**Deployed (`main`, live since 2026-10-03):** the static Astro site from PR #1
+(static build) and PR #2 (redesign, WhatsApp + quote form, copy, high-reach page,
+working-height guide, contact, privacy, GA4 hook). Netlify builds `main` and
+makes a deploy preview per PR (previews carry `noindex` and the Netlify drawer,
+so Lighthouse there needs `--blocked-url-patterns` for `*/.netlify/*` and
+`*/cdp/*`). Netlify form detection was still OFF at go-live.
 
 **English only (decided 2026-10-03).** The Hindi toggle, every Hindi string in
 `constants.ts` and the language context were removed on the user's instruction.
