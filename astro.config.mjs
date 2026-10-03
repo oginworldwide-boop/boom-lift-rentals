@@ -3,10 +3,6 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   // Used for canonical tags, absolute OG URLs and sitemap entries. Must match the
@@ -37,6 +33,5 @@ export default defineConfig({
     // @import "tailwindcss". This is the same plugin the Vite build used, so
     // nothing about the Tailwind setup changes in this port.
     plugins: [tailwindcss()],
-    resolve: { alias: { '@': path.resolve(__dirname, '.') } },
   },
 });

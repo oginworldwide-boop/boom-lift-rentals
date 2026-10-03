@@ -9,29 +9,41 @@ import { BOOM_LIFTS, CONTACT_INFO } from '../constants';
 /** Ascending by measured platform height (heightM), never by display string. */
 export const byHeight: BoomLift[] = [...BOOM_LIFTS].sort((a, b) => a.heightM - b.heightM);
 
-/** Machines above 100 ft, by the model-designation height. */
-export const highReach = byHeight.filter((l) => l.nominalHeightFt >= 100);
-const lowReach = byHeight.filter((l) => l.nominalHeightFt < 100);
+/**
+ * Platform height in whole feet, floored from heightM so a stated height never
+ * exceeds the measured one. Use this wherever copy says "platform height";
+ * nominalHeightFt is a model-naming term (660SJ -> 66), not a spec.
+ * Today this gives 60, 66, 85, 85, 120, 135, 150: the JLG 860SJ (26.21 m =
+ * 85.99 ft) floors to 85 while its datasheet rounds to 86, so per-machine chips
+ * that sit under the model name keep nominalHeightFt and are not labelled
+ * "platform height".
+ */
+export const platformFt = (l: BoomLift) => Math.floor(l.heightM / 0.3048);
+
+/** Machines above 100 ft platform height. */
+export const highReach = byHeight.filter((l) => platformFt(l) >= 100);
+const lowReach = byHeight.filter((l) => platformFt(l) < 100);
 
 /** ["120", "135", "150"] -> "120, 135 and 150" */
 const joinAnd = (xs: (string | number)[]) =>
   xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`;
 
-const nominal = BOOM_LIFTS.map((l) => l.nominalHeightFt);
+const heightsFt = BOOM_LIFTS.map(platformFt);
 const kg = (n: number) => n.toLocaleString('en-IN');
 const weights = (ls: BoomLift[]) => ls.map((l) => l.weightKg);
 
 export const FLEET_VARS: Record<string, string | number> = {
   fleetCount: BOOM_LIFTS.length,
-  minHeightFt: Math.min(...nominal),
-  maxHeightFt: Math.max(...nominal),
-  maxCapacityKg: Math.max(...BOOM_LIFTS.map((l) => l.capacityKg)),
+  // No fleet-wide capacity figure: the highest capacityKg is a restricted-envelope
+  // rating on dual-rated machines, so it is stated only per machine, with a note.
+  minHeightFt: Math.min(...heightsFt),
+  maxHeightFt: Math.max(...heightsFt),
   highReachCount: highReach.length,
-  highReachHeightsFt: joinAnd(highReach.map((l) => l.nominalHeightFt)),
-  highReachMinFt: Math.min(...highReach.map((l) => l.nominalHeightFt)),
-  highReachMaxCapacityKg: Math.max(...highReach.map((l) => l.capacityKg)),
+  highReachHeightsFt: joinAnd(highReach.map(platformFt)),
+  highReachMinFt: Math.min(...highReach.map(platformFt)),
   highReachWeightRange: `${kg(Math.min(...weights(highReach)))}–${kg(Math.max(...weights(highReach)))} kg`,
   lowCount: lowReach.length,
+  // Model-designation heights (60, 66, 85 and 86): the copy using this does not call them platform height.
   lowHeightsFt: joinAnd(lowReach.map((l) => l.nominalHeightFt)),
   minWeightKg: kg(Math.min(...weights(BOOM_LIFTS))),
   maxWeightKg: kg(Math.max(...weights(BOOM_LIFTS))),

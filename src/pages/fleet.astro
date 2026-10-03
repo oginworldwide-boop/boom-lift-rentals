@@ -4,6 +4,7 @@ import SiteShell from '../components/SiteShell';
 import FleetSections from '../components/FleetSections';
 import { breadcrumbs, localBusiness } from '../schema';
 import { FLEET_TITLE, FLEET_DESCRIPTION } from '../seo';
+import { TRANSLATIONS as t } from '../../constants';
 
 const site = Astro.site!;
 ---
@@ -11,8 +12,8 @@ const site = Astro.site!;
   schema={[
     localBusiness(site),
     breadcrumbs([
-      { name: 'Home', url: site.href },
-      { name: 'Fleet', url: new URL('/fleet/', site).href },
+      { name: t.crumb_home, url: site.href },
+      { name: t.fleet_title, url: new URL('/fleet/', site).href },
     ]),
   ]}
   title={FLEET_TITLE}

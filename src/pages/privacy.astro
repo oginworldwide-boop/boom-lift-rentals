@@ -21,7 +21,7 @@ const ga4 = Boolean(import.meta.env.PUBLIC_GA4_ID);
   schema={[
     localBusiness(site),
     breadcrumbs([
-      { name: 'Home', url: site.href },
+      { name: t.crumb_home, url: site.href },
       { name: t.footer_privacy, url: new URL(path, site).href },
     ]),
   ]}

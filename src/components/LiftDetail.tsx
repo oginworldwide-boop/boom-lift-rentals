@@ -5,7 +5,7 @@ import type { BoomLift } from '../../types';
 import { TRANSLATIONS as t } from '../../constants';
 import { fill, liftSrcSet, liftVars, neighbours, splitSpec } from '../fleet';
 import { liftImageAlt, liftPath } from '../seo';
-import { BrandFlag, CONTAINER, CtaRow, Label } from './ui';
+import { BrandFlag, Bullets, CONTAINER, CtaRow, Label } from './ui';
 
 const LiftDetail: React.FC<{ lift: BoomLift }> = ({ lift }) => {
   // Specs are in the served HTML, exactly as written in constants.ts: the table
@@ -13,7 +13,7 @@ const LiftDetail: React.FC<{ lift: BoomLift }> = ({ lift }) => {
   const specs = [
     { label: t.card_height, value: lift.platformHeight },
     { label: t.card_outreach, value: lift.horizontalOutreach },
-    { label: t.spec_capacity, value: lift.platformCapacity },
+    { label: t.spec_capacity, value: lift.platformCapacity, note: t.spec_capacity_note },
     { label: t.spec_weight, value: lift.weight },
   ];
   const { down, up } = neighbours(lift);
@@ -27,7 +27,7 @@ const LiftDetail: React.FC<{ lift: BoomLift }> = ({ lift }) => {
       <div className={`${CONTAINER} pt-4 pb-14 sm:pb-20`}>
         <nav aria-label="Breadcrumb">
           <ol className="micro-label flex flex-wrap items-center gap-x-2 text-steel-500">
-            <li><a href="/" className="inline-flex min-h-12 items-center hover:text-ink">Home</a></li>
+            <li><a href="/" className="inline-flex min-h-12 items-center hover:text-ink">{t.crumb_home}</a></li>
             <li aria-hidden="true">/</li>
             <li><a href="/fleet/" className="inline-flex min-h-12 items-center hover:text-ink">{t.fleet_title}</a></li>
             <li aria-hidden="true">/</li>
@@ -67,6 +67,7 @@ const LiftDetail: React.FC<{ lift: BoomLift }> = ({ lift }) => {
                     <dt className="micro-label text-steel-500">{s.label}</dt>
                     <dd className={`mt-1 font-display text-[2rem] leading-none ${i === 0 ? 'text-safety-ink' : ''}`}>{metric}</dd>
                     {imperial && <dd className="mt-1 text-sm text-steel-500">{imperial}</dd>}
+                    {s.note && <dd className="mt-2 text-xs leading-snug text-steel-500">{s.note}</dd>}
                   </div>
                 );
               })}
@@ -88,21 +89,17 @@ const LiftDetail: React.FC<{ lift: BoomLift }> = ({ lift }) => {
                 {specs.map((s) => (
                   <tr key={s.label} className="border-b border-steel-100">
                     <th scope="row" className="py-3 pr-4 text-left font-normal text-steel-500">{s.label}</th>
-                    <td className="py-3 text-right font-semibold">{s.value}</td>
+                    <td className="py-3 text-right font-semibold">
+                      {s.value}
+                      {s.note && <span className="mt-1 block text-xs font-normal text-steel-500">{s.note}</span>}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
             <h2 className="mt-10 micro-label text-steel-500">{t.features_heading}</h2>
-            <ul className="mt-3 space-y-2">
-              {lift.features.map((feature) => (
-                <li key={feature} className="flex gap-3">
-                  <span aria-hidden="true" className="mt-2 size-2 shrink-0 bg-safety" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <Bullets items={lift.features} className="mt-3" />
             <p className="mt-6 max-w-[60ch] leading-relaxed text-steel-500">{lift.description}</p>
           </div>
         </div>

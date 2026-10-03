@@ -11,6 +11,14 @@ import { CONTAINER, CtaRow, LINK, Label, cx } from './ui';
 // The hero photo shows a JLG 1350SJP; the alt reads its name from the data.
 const pictured = BOOM_LIFTS.find((l) => l.id === '1350sjp')!;
 
+/** One source for the hero <img> and BaseLayout's head preload: if srcset/sizes
+ *  differ, the browser fetches the image twice instead of deduping. */
+export const HERO_IMG = {
+  src: '/images/homebg.webp',
+  srcSet: '/images/homebg-800.webp 800w, /images/homebg-1200.webp 1200w, /images/homebg.webp 1600w',
+  sizes: '(min-width: 1024px) 58vw, 100vw',
+};
+
 const Hero: React.FC = () => (
   <section className="relative overflow-hidden bg-ink text-white lg:min-h-[36rem]">
     <div className={`${CONTAINER} relative z-10 pt-8 pb-8 lg:py-20`}>
@@ -25,9 +33,9 @@ const Hero: React.FC = () => (
       </div>
     </div>
     <img
-      src="/images/homebg.webp"
-      srcSet="/images/homebg-800.webp 800w, /images/homebg-1200.webp 1200w, /images/homebg.webp 1600w"
-      sizes="(min-width: 1024px) 58vw, 100vw"
+      src={HERO_IMG.src}
+      srcSet={HERO_IMG.srcSet}
+      sizes={HERO_IMG.sizes}
       alt={`${pictured.brand} ${pictured.model} telescopic boom lift on a steel-structure site`}
       width="1600"
       height="1200"

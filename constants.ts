@@ -173,6 +173,8 @@ export const BOOM_LIFTS: BoomLift[] = [
 // fill fails the build. No figure or phone number is typed into these strings.
 export const TRANSLATIONS = {
   nav_call: "Call",
+  // Breadcrumb root: the visible crumb and the BreadcrumbList JSON-LD both use it.
+  crumb_home: "Home",
   // Short labels so three links fit beside the wordmark at 390px.
   nav_fleet: "Fleet",
   nav_highreach: "High reach",
@@ -181,14 +183,12 @@ export const TRANSLATIONS = {
   // Hero
   hero_eyebrow: "JLG and Genie telescopic boom lifts · operator included",
   hero_h1: "Boom lift rental in Mumbai and pan-India, operator included",
-  hero_subhead: "{fleetCount} telescopic boom lifts (manlifts) from {minHeightFt} ft to {maxHeightFt} ft platform height, up to {maxCapacityKg} kg on the platform. A certified operator comes with every machine. Pricing is by quote.",
+  hero_subhead: "{fleetCount} telescopic boom lifts (manlifts) from {minHeightFt} ft to {maxHeightFt} ft platform height. A certified operator comes with every machine. Pricing is by quote.",
   hero_cta_1: "See the fleet",
 
   // Spec strip under the hero
   strip_height_label: "Platform height",
   strip_height_value: "{minHeightFt}–{maxHeightFt} ft",
-  strip_capacity_label: "Platform capacity",
-  strip_capacity_value: "Up to {maxCapacityKg} kg",
   strip_fleet_label: "Fleet",
   strip_fleet_value: "{fleetCount} machines · JLG, Genie",
   strip_operator_label: "Operator",
@@ -207,6 +207,9 @@ export const TRANSLATIONS = {
   card_outreach: "Horizontal outreach",
   spec_capacity: "Platform capacity",
   spec_weight: "Machine weight",
+  // Shown under platform capacity on machine pages: several machines carry a dual
+  // rating, and the figure in constants.ts is the higher (restricted-envelope) one.
+  spec_capacity_note: "Maximum rated capacity. The rating can be lower at full outreach — ask us.",
   lift_type: "Telescopic boom lift",
   card_btn: "Specs and quote",
 
@@ -218,22 +221,23 @@ export const TRANSLATIONS = {
   trust_2_desc: "{highReachCount} machines work above 100 ft: {highReachHeightsFt} ft platform height.",
   trust_3_title: "Pan-India from Mumbai",
   trust_3_desc: "Based in Mumbai. Machines and operators are hired to sites across India. Tell us the site location when you enquire.",
-  trust_4_title: "Up to {maxCapacityKg} kg on the platform",
-  trust_4_desc: "Room for people, tools and materials. Each machine's rated capacity is on its spec page.",
+  trust_4_title: "Specs on every machine page",
+  trust_4_desc: "Platform height, outreach, capacity and weight are listed for each machine. Capacity ratings can change with height and outreach, so tell us the load and we will check which rating applies.",
 
   steps_title: "How hiring works",
-  step_1_title: "1. Send the job details",
+  step_1_title: "Send the job details",
   step_1_desc: "Call, WhatsApp or use the quote form. Tell us the working height, site location and dates.",
-  step_2_title: "2. Get a quote",
+  step_2_title: "Get a quote",
   step_2_desc: "We confirm which machine fits the job and send a quote for your dates.",
-  step_3_title: "3. Machine arrives with its operator",
+  step_3_title: "Machine arrives with its operator",
   step_3_desc: "The boom lift comes to your site with a certified operator who runs it for the hire.",
 
   clients_label: "Clients include",
 
   highreach_title: "Work above 100 ft",
-  highreach_desc: "{highReachCount} JLG telescopic booms at {highReachHeightsFt} ft platform height, up to {highReachMaxCapacityKg} kg on the platform, each hired with a certified operator.",
+  highreach_desc: "{highReachCount} JLG telescopic booms at {highReachHeightsFt} ft platform height, each hired with a certified operator.",
   highreach_link: "High-reach boom lifts",
+  highreach_crumb: "High-reach boom lift rental",
   // /guides/boom-lift-working-height/: fleet-table link and footer link.
   guide_link: "How to choose working height",
   footer_guide: "Working height guide",
@@ -263,7 +267,7 @@ export const TRANSLATIONS = {
   // [text](/path/) is a link. No FAQPage schema.
   faq: [
     { q: "Is an operator included?", a: ["Yes. Every machine is hired with a certified operator who runs it on your site. We do not hire machines without an operator."] },
-    { q: "Which machines do you have, and how high do they reach?", a: ["{fleetCount} JLG and Genie telescopic boom lifts, from {minHeightFt} ft to {maxHeightFt} ft platform height, with up to {maxCapacityKg} kg platform capacity. The [fleet page](/fleet/) lists platform height, horizontal outreach, capacity and weight for each machine."] },
+    { q: "Which machines do you have, and how high do they reach?", a: ["{fleetCount} JLG and Genie telescopic boom lifts, from {minHeightFt} ft to {maxHeightFt} ft platform height. The [fleet page](/fleet/) lists platform height, horizontal outreach, capacity and weight for each machine."] },
     { q: "How much does it cost?", a: ["Pricing is by quote. We do not publish a rate card. Send the machine (or the height you need), the site location, the start date and the duration, and we will send a quote for that job."] },
     { q: "Which areas do you cover?", a: ["We are based in Mumbai and hire pan-India. Tell us the site city when you enquire."] },
     {

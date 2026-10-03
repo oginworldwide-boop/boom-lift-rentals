@@ -5,13 +5,12 @@ import { FleetGrid } from './LiftCard';
 import TrustSection from './TrustSection';
 import QuoteForm from './QuoteForm';
 import { CLIENTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
-import { byHeight, fill, highReach } from '../fleet';
+import { byHeight, fill, highReach, platformFt } from '../fleet';
 import { liftPath, telHref, waPrefill, whatsappHref } from '../seo';
-import { CONTAINER, H2, LINK, Label, cx } from './ui';
+import { Bullets, CONTAINER, H2, LINK, Label, cx } from './ui';
 
 const STRIP = [
   [t.strip_height_label, t.strip_height_value],
-  [t.strip_capacity_label, t.strip_capacity_value],
   [t.strip_fleet_label, t.strip_fleet_value],
   [t.strip_operator_label, t.strip_operator_value],
   [t.strip_area_label, t.strip_area_value],
@@ -33,9 +32,9 @@ const HomeSections: React.FC = () => (
     {/* Spec strip: the IndiaMART-row facts, then one chip per machine by height. */}
     <div className="border-b border-steel-100 bg-white">
       <div className={CONTAINER}>
-        <dl className="grid grid-cols-2 gap-px border-x border-steel-100 bg-steel-100 md:grid-cols-3 xl:grid-cols-6">
+        <dl className="grid grid-cols-2 gap-px border-x border-steel-100 bg-steel-100 md:grid-cols-3 xl:grid-cols-5">
           {STRIP.map(([label, value], i) => (
-            <div key={label} className="bg-white px-4 py-4">
+            <div key={label} className="bg-white px-4 py-4 last:col-span-2 xl:last:col-span-1">
               <dt className="micro-label text-steel-500">{label}</dt>
               <dd className={`mt-1 font-display text-xl leading-tight tabular-nums sm:text-2xl ${i === 0 ? 'text-safety-ink' : ''}`}>{fill(value)}</dd>
             </div>
@@ -44,7 +43,8 @@ const HomeSections: React.FC = () => (
       </div>
     </div>
 
-    <nav aria-label={t.card_height} className="border-b border-steel-100 bg-paper">
+    {/* Model-designation heights (types.ts nominalHeightFt), so not labelled platform height. */}
+    <nav aria-label={t.fleet_title} className="border-b border-steel-100 bg-paper">
       <div className={`${CONTAINER} py-5`}>
         <ul className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0 lg:grid lg:grid-cols-7 lg:pb-0">
           {byHeight.map((l) => (
@@ -82,7 +82,7 @@ const HomeSections: React.FC = () => (
             <li key={l.id} className={i ? 'border-l border-steel-700' : ''}>
               <a href={liftPath(l)} className="block px-3 pt-4 pb-2 transition-colors duration-150 hover:bg-steel-900 sm:px-5">
                 <span className="block font-display text-[3rem] leading-none text-safety tabular-nums sm:text-[4.5rem]">
-                  {l.nominalHeightFt}<span className="ml-1 text-xl text-steel-300 sm:text-2xl">ft</span>
+                  {platformFt(l)}<span className="ml-1 text-xl text-steel-300 sm:text-2xl">ft</span>
                 </span>
                 <span className="mt-2 block text-sm font-semibold text-steel-100">{l.brand} {l.model}</span>
               </a>
@@ -117,15 +117,7 @@ const HomeSections: React.FC = () => (
               <dt className="text-lg font-semibold">{q}</dt>
               <dd className="space-y-3 text-steel-500">
                 {a.map((block, i) =>
-                  typeof block === 'string'
-                    ? <p key={i}>{withLinks(block)}</p>
-                    : (
-                      <ul key={i} className="space-y-1">
-                        {block.map((li) => (
-                          <li key={li} className="flex gap-3"><span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-safety" />{li}</li>
-                        ))}
-                      </ul>
-                    ),
+                  typeof block === 'string' ? <p key={i}>{withLinks(block)}</p> : <Bullets key={i} items={block} />,
                 )}
               </dd>
             </div>

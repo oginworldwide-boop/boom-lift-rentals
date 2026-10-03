@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteShell from '../components/SiteShell';
 import QuoteForm from '../components/QuoteForm';
 import { Clock } from 'lucide-react';
-import { CONTAINER, LINK, BTN_CALL, BTN_WA } from '../components/ui';
+import { CONTAINER, LINK, BTN_CALL, BTN_WA, PageHero } from '../components/ui';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { fill } from '../fleet';
 import { CONTACT_TITLE, CONTACT_DESCRIPTION, formatAddress, telHref, waPrefill, whatsappHref } from '../seo';
@@ -19,7 +19,7 @@ const DT = 'micro-label text-steel-500';
   schema={[
     localBusiness(site),
     breadcrumbs([
-      { name: 'Home', url: site.href },
+      { name: t.crumb_home, url: site.href },
       { name: t.nav_contact, url: new URL('/contact/', site).href },
     ]),
   ]}
@@ -27,18 +27,14 @@ const DT = 'micro-label text-steel-500';
   description={CONTACT_DESCRIPTION}
 >
   <SiteShell path={Astro.url.pathname} quoteHref="#quote">
-    <div class="bg-ink py-10 text-white sm:py-14">
-      <div class={CONTAINER}>
-        <h1 class="font-display text-[2.5rem] leading-[1.02] sm:text-[3.5rem]">{t.contact_title.replace('OG-IN', 'OG\u2011IN')}</h1>
-        <p class="mt-3 max-w-[60ch] text-[1.0625rem] leading-relaxed text-steel-100">{t.contact_intro}</p>
-        <div class="mt-7 grid gap-3 sm:flex sm:flex-wrap">
-          <a href={whatsappHref(waPrefill())} class={BTN_WA}>{t.cta_whatsapp_long}</a>
-          {phones.map((p) => (
-            <a href={telHref(p)} class={BTN_CALL}>{fill(t.cta_call_long, { phone: p })}</a>
-          ))}
-        </div>
+    <PageHero crumb={t.nav_contact} title={t.contact_title.replace('OG-IN', 'OG\u2011IN')} intro={t.contact_intro}>
+      <div class="mt-7 grid gap-3 sm:flex sm:flex-wrap">
+        <a href={whatsappHref(waPrefill())} class={BTN_WA}>{t.cta_whatsapp_long}</a>
+        {phones.map((p) => (
+          <a href={telHref(p)} class={BTN_CALL}>{fill(t.cta_call_long, { phone: p })}</a>
+        ))}
       </div>
-    </div>
+    </PageHero>
 
     <section class={`${CONTAINER} grid items-start gap-10 py-12 sm:py-16 lg:grid-cols-[2fr_3fr] lg:gap-16`}>
       <div>

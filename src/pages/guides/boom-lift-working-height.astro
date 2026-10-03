@@ -25,8 +25,8 @@ const STEPS = [
   schema={[
     localBusiness(site),
     breadcrumbs([
-      { name: 'Home', url: site.href },
-      { name: title, url: new URL(path, site).href },
+      { name: t.crumb_home, url: site.href },
+      { name: t.footer_guide, url: new URL(path, site).href },
     ]),
   ]}
   title={GUIDE_TITLE}
@@ -67,7 +67,7 @@ const STEPS = [
             'materials lifted in one go',
           ]}
         />
-        <p>{fill('Some machines have a dual capacity rating: a higher load within a restricted part of the work envelope and a lower load across the full envelope. If your load is near the higher figure, check with us which rating applies at the height and outreach you need. Platform capacity in the OG‑IN fleet goes up to {maxCapacityKg} kg. Each machine\'s rating is on its spec page.')}</p>
+        <p>Some machines have a dual capacity rating: a higher load within a restricted part of the work envelope and a lower load across the full envelope. If your load is near the higher figure, check with us which rating applies at the height and outreach you need. Each machine's capacity is on its spec page; ask us which rating applies at your height and outreach.</p>
 
         <h2>Ground conditions and machine weight</h2>
         <p>{fill('Large telescopic booms are heavy. Across the OG‑IN fleet, machine weight runs from {minWeightKg} kg to {maxWeightKg} kg. Each machine page lists its weight.')}</p>

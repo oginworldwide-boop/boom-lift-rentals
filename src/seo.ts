@@ -50,12 +50,12 @@ export const liftTitle = (lift: BoomLift) =>
 
 export const liftDescription = (lift: BoomLift) =>
   `${lift.brand} ${lift.model} boom lift on rent, pan-India from Mumbai. ` +
-  `${lift.platformHeight} platform height, ${lift.platformCapacity} capacity. Certified operator included.`;
+  `${lift.platformHeight} platform height, ${lift.platformCapacity} max. capacity. Certified operator included.`;
 
 export const FLEET_TITLE = fill(`Boom Lift Fleet: JLG & Genie, {minHeightFt}–{maxHeightFt} ft | ${BRAND_SUFFIX}`);
 export const FLEET_DESCRIPTION = fill(
-  '{fleetCount} JLG and Genie telescopic boom lifts for hire pan-India, {minHeightFt}–{maxHeightFt} ft platform height, ' +
-  'up to {maxCapacityKg} kg. Compare specs. Certified operator included.',
+  '{fleetCount} JLG and Genie telescopic boom lifts for hire pan-India, {minHeightFt}–{maxHeightFt} ft platform height. ' +
+  'Compare specs. Certified operator included.',
 );
 
 export const CONTACT_TITLE = `Contact: Boom Lift Rental Quotes | ${BRAND_SUFFIX}`;
@@ -65,7 +65,7 @@ export const CONTACT_DESCRIPTION =
 
 export const HIGHREACH_TITLE = fill(`High Reach Boom Lift Rental, {highReachMinFt}–{maxHeightFt} ft | ${BRAND_SUFFIX}`);
 export const HIGHREACH_DESCRIPTION = fill(
-  'Hire JLG telescopic boom lifts at {highReachHeightsFt} ft platform height, up to {highReachMaxCapacityKg} kg, ' +
+  'Hire JLG telescopic boom lifts at {highReachHeightsFt} ft platform height ' +
   'with a certified operator. Mumbai-based, pan-India. Get a quote.',
 );
 
@@ -87,5 +87,5 @@ export const THANKS_DESCRIPTION =
 export const HOME_TITLE = `Boom Lift Rental Mumbai & Pan-India | ${BRAND_SUFFIX}`;
 export const HOME_DESCRIPTION = fill(
   'Boom lift and manlift rental from Mumbai, pan-India. JLG and Genie telescopic booms, ' +
-  '{minHeightFt}–{maxHeightFt} ft, up to {maxCapacityKg} kg, certified operator on every hire.',
+  '{minHeightFt}–{maxHeightFt} ft platform height, certified operator on every hire.',
 );

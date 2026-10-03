@@ -9,16 +9,12 @@ const facts = [
   [t.trust_4_title, t.trust_4_desc],
 ];
 
-// "1. Send the job details" -> ["01", "Send the job details"]: the number is drawn
-// as a numeral, and the <ol> carries the order for screen readers.
+// The numeral is drawn from the position; the <ol> carries the order for screen readers.
 const steps = [
   [t.step_1_title, t.step_1_desc],
   [t.step_2_title, t.step_2_desc],
   [t.step_3_title, t.step_3_desc],
-].map(([title, desc]) => {
-  const m = title.match(/^(\d+)\.\s*(.*)$/);
-  return { n: (m ? m[1] : '').padStart(2, '0'), title: m ? m[2] : title, desc };
-});
+].map(([title, desc], i) => ({ n: String(i + 1).padStart(2, '0'), title, desc }));
 
 /** What you get (the operator first, as the core offer) beside how hiring works. */
 const TrustSection: React.FC = () => (

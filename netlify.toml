@@ -12,6 +12,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Self-hosted fonts, cached for good: give a changed font file a new name.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Unhashed images: cache for 30 days, not forever, so a replaced file shows up.
 [[headers]]
   for = "/images/*"

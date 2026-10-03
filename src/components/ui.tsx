@@ -75,7 +75,7 @@ export const PageHero: React.FC<{ title: string; crumb: string; intro?: string; 
     <div className={CONTAINER}>
       <nav aria-label="Breadcrumb">
         <ol className="micro-label flex flex-wrap items-center gap-x-2 text-steel-300">
-          <li><a href="/" className="inline-flex min-h-12 items-center hover:text-white">Home</a></li>
+          <li><a href="/" className="inline-flex min-h-12 items-center hover:text-white">{t.crumb_home}</a></li>
           <li aria-hidden="true">/</li>
           <li aria-current="page" className="text-white">{crumb}</li>
         </ol>
