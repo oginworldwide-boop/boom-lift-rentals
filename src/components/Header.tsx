@@ -25,7 +25,8 @@ const Header: React.FC = () => {
 
           <button 
             onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-            className="flex items-center gap-2 text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider"
+            aria-label="Switch language"
+            className="flex items-center gap-2 min-h-11 min-w-11 justify-center text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider"
           >
             <Languages size={18} />
             <span>{language === 'en' ? 'हिंदी' : 'EN'}</span>
@@ -34,7 +35,7 @@ const Header: React.FC = () => {
           <a 
             href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
             aria-label={`Call us at ${CONTACT_INFO.phone}`}
-            className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition-colors duration-300"
+            className="flex items-center justify-center gap-2 min-h-11 min-w-11 bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition-colors duration-300"
           >
             <Phone size={16} aria-hidden="true" />
             <span className="hidden sm:inline">{t.nav_call}</span>

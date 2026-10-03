@@ -27,7 +27,7 @@ export default defineConfig({
 
   // sitemap() derives every URL from `site` and the generated routes, so the
   // sitemap cannot drift from the canonical tags.
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap({ filter: (page) => !page.endsWith('/404') })],
 
   vite: {
     // Tailwind v4 is CSS-first: config lives in src/styles/global.css via

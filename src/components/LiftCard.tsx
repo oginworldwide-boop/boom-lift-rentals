@@ -18,7 +18,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
       <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-6">
         <img
           src={lift.imageUrl}
-          alt={lift.model}
+          alt={`${lift.brand} ${lift.model} telescopic boom lift`}
           width={lift.imageWidth}
           height={lift.imageHeight}
           loading="lazy"
@@ -35,7 +35,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
           <a
             href={`/fleet/${lift.slug}`}
             aria-label={`View specs for ${lift.model}`}
-            className="p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
+            className="flex items-center justify-center min-h-11 min-w-11 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
           >
             <ArrowUpRight size={20} aria-hidden="true" />
           </a>
