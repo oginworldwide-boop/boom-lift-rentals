@@ -27,7 +27,7 @@ if (!SITE) throw new Error('could not read `site` from astro.config.mjs');
 
 // Every model name, from the source of truth. A page must name at least one: the
 // homepage and /fleet list them all, a machine page names only its own.
-const models = [...constants.matchAll(/model: "([^"]+)"/g)].map((m) => m[1]);
+const models = [...constants.matchAll(/\bmodel: "([^"]+)"/g)].map((m) => m[1]);
 if (models.length === 0) throw new Error('no model names found in constants.ts');
 
 // Per-machine display specs. Each chunk runs from one `slug:` to the next, so a

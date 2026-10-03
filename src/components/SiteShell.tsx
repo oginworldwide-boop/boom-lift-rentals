@@ -1,23 +1,30 @@
 import React from 'react';
+import { FileText, MessageCircle, Phone } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
-import { CONTACT_INFO } from '../../constants';
-import { telHref } from '../seo';
-import { Phone } from 'lucide-react';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { fill } from '../fleet';
+import { telHref, waPrefill, whatsappHref } from '../seo';
+
+const CELL = 'flex h-14 items-center justify-center gap-2 text-[0.9375rem] font-semibold active:translate-y-px';
 
 /**
  * Shared chrome for every page. Each .astro page passes its body as children.
  * Rendered to static HTML at build time with no client directive: zero JS ships.
+ * Props stay scalar: `path` marks the active nav link, `quoteHref` points the
+ * mobile "Get a quote" cell at this page's form or, without one, the contact page's.
  */
-const SiteShell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="min-h-dvh flex flex-col">
+const SiteShell: React.FC<{ children: React.ReactNode; path: string; quoteHref?: string }> = ({
+  children, path, quoteHref = '/contact/#quote',
+}) => (
+  <div className="flex min-h-dvh flex-col pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
     <a
       href="#main-content"
-      className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:text-slate-900 focus:px-4 focus:py-3 focus:rounded-lg focus:font-semibold"
+      className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:px-4 focus:py-3 focus:font-semibold focus:text-ink"
     >
       Skip to content
     </a>
-    <Header />
+    <Header path={path} />
 
     <main id="main-content" className="flex-grow">
       {children}
@@ -25,16 +32,24 @@ const SiteShell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
     <Footer />
 
-    {/* Mobile Sticky Call Button */}
-    <div className="fixed bottom-6 right-6 z-40 sm:hidden">
-      <a
-        href={telHref(CONTACT_INFO.phone)}
-        aria-label={`Call us at ${CONTACT_INFO.phone}`}
-        className="flex items-center justify-center w-16 h-16 bg-orange-600 text-white rounded-full shadow-2xl motion-safe:animate-bounce"
-      >
-        <Phone size={28} aria-hidden="true" />
+    {/* Mobile action bar: the three ways to enquire, always one tap away. */}
+    <nav
+      aria-label="Contact options"
+      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-steel-700 bg-ink pb-[env(safe-area-inset-bottom)] md:hidden"
+    >
+      <a href={telHref(CONTACT_INFO.phone)} aria-label={fill(t.cta_call_aria)} className={`${CELL} text-white`}>
+        <Phone size={20} aria-hidden="true" />
+        {t.cta_call}
       </a>
-    </div>
+      <a href={whatsappHref(waPrefill())} className={`${CELL} bg-wa text-ink`}>
+        <MessageCircle size={20} aria-hidden="true" />
+        {t.cta_whatsapp}
+      </a>
+      <a href={quoteHref} className={`${CELL} bg-safety-ink text-white`}>
+        <FileText size={20} aria-hidden="true" />
+        {t.cta_quote}
+      </a>
+    </nav>
   </div>
 );
 

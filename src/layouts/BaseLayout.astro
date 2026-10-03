@@ -74,26 +74,13 @@ const jsonLd = schema.length ? graph(schema) : null;
         for the fetchPriority="high" hero <img> (and for each machine page's image),
         so a second one would only duplicate it. */}
 
-    <!-- Google Fonts - non-blocking -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      />
-    </noscript>
+    <!-- Display font only (headings, numerals). Self-hosted, swap; body text is system UI. -->
+    <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin />
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
+  <body class="bg-paper font-sans text-ink antialiased">
     <slot />
   </body>
 </html>

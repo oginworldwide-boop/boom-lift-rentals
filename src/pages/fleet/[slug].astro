@@ -35,5 +35,5 @@ const pageUrl = new URL(liftPath(lift), site).href;
   ogImageAlt={liftImageAlt(lift)}
   ogType="product"
 >
-  <SiteShell><LiftDetail lift={lift} /></SiteShell>
+  <SiteShell path={Astro.url.pathname} quoteHref="#quote"><LiftDetail lift={lift} /></SiteShell>
 </BaseLayout>

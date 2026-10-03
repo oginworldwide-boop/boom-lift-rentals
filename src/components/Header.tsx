@@ -1,45 +1,65 @@
-
 import React from 'react';
-import { Phone } from 'lucide-react';
+import { MessageCircle, Phone } from 'lucide-react';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
-import { telHref } from '../seo';
+import { fill } from '../fleet';
+import { telHref, waPrefill, whatsappHref } from '../seo';
+import { BTN_PRIMARY, BTN_WA, CONTAINER, cx } from './ui';
 
-const Header: React.FC = () => {
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2" aria-label="OG-IN Worldwide, home">
-          <div className="w-8 h-8 bg-orange-600 rounded flex items-center justify-center text-white font-bold text-xl">O</div>
-          <span className="font-bold text-lg tracking-tight text-slate-900">OG-IN <span className="text-slate-500 font-medium hidden sm:inline">WORLDWIDE</span></span>
+export const Wordmark: React.FC<{ full?: boolean }> = ({ full }) => (
+  <span className="flex items-center gap-2">
+    <span aria-hidden="true" className="grid size-8 place-items-center bg-safety font-display text-xl text-white">O</span>
+    <span className="font-display text-2xl leading-none tracking-wide text-white">OG-IN</span>
+    <span className={`micro-label text-steel-300 ${full ? '' : 'hidden sm:inline'}`}>Worldwide</span>
+  </span>
+);
+
+const NAV = [
+  { href: '/fleet/', label: t.fleet_title },
+  { href: '/contact/', label: t.nav_contact },
+];
+
+const Header: React.FC<{ path: string }> = ({ path }) => (
+  <header className="sticky top-0 z-50 border-b border-steel-800 bg-ink text-white">
+    <div className={`${CONTAINER} flex h-14 items-center justify-between gap-2 sm:h-16`}>
+      <a href="/" aria-label="OG-IN Worldwide, home" className="inline-flex min-h-12 items-center">
+        <Wordmark />
+      </a>
+
+      <nav aria-label="Main" className="flex items-center gap-1 sm:gap-2">
+        {NAV.map(({ href, label }) => {
+          const active = path.startsWith(href);
+          return (
+            <a
+              key={href}
+              href={href}
+              aria-current={path === href ? 'page' : undefined}
+              className={`relative inline-flex min-h-12 items-center whitespace-nowrap px-2 text-sm font-semibold transition-colors duration-150 hover:text-white ${
+                active ? 'text-white after:absolute after:inset-x-2 after:bottom-2 after:h-0.5 after:bg-safety' : 'text-steel-300'
+              }`}
+            >
+              {label}
+            </a>
+          );
+        })}
+        <a
+          href={telHref(CONTACT_INFO.phone)}
+          aria-label={fill(t.cta_call_aria)}
+          className={cx(BTN_PRIMARY, 'ml-2 px-4 text-sm tabular-nums max-sm:hidden')}
+        >
+          <Phone size={18} aria-hidden="true" />
+          {t.nav_call}
+          <span className="hidden lg:inline">{CONTACT_INFO.phone}</span>
         </a>
-        
-        <div className="flex items-center gap-3 sm:gap-6">
-          <a
-            href="/fleet/"
-            className="text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider hidden sm:inline"
-          >
-            {t.fleet_title}
-          </a>
-          <a
-            href="/contact/"
-            className="text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider min-h-12 inline-flex items-center"
-          >
-            {t.nav_contact}
-          </a>
-
-
-          <a 
-            href={telHref(CONTACT_INFO.phone)}
-            aria-label={`Call us at ${CONTACT_INFO.phone}`}
-            className="flex items-center justify-center gap-2 min-h-11 min-w-11 bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition-colors duration-300"
-          >
-            <Phone size={16} aria-hidden="true" />
-            <span className="hidden sm:inline">{t.nav_call}</span>
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-};
+        <a
+          href={whatsappHref(waPrefill())}
+          aria-label={t.cta_whatsapp_aria}
+          className={cx(BTN_WA, 'w-12 px-0 max-sm:hidden')}
+        >
+          <MessageCircle size={20} aria-hidden="true" />
+        </a>
+      </nav>
+    </div>
+  </header>
+);
 
 export default Header;

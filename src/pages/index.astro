@@ -10,5 +10,5 @@ import { HOME_TITLE, HOME_DESCRIPTION } from '../seo';
   title={HOME_TITLE}
   description={HOME_DESCRIPTION}
 >
-  <SiteShell><HomeSections /></SiteShell>
+  <SiteShell path={Astro.url.pathname} quoteHref="#quote"><HomeSections /></SiteShell>
 </BaseLayout>

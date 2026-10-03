@@ -23,7 +23,9 @@ export default defineConfig({
   // Do not switch build.format to 'file': it puts .html into Astro.url.pathname,
   // which corrupts every canonical and og:url.
   trailingSlash: 'always',
-  build: { format: 'directory' },
+  // inlineStylesheets: the whole CSS is a few KB; inlining it removes the one
+  // render-blocking request that delayed LCP on slow 4G.
+  build: { format: 'directory', inlineStylesheets: 'always' },
 
   // sitemap() derives every URL from `site` and the generated routes, so the
   // sitemap cannot drift from the canonical tags. 404 is excluded automatically;

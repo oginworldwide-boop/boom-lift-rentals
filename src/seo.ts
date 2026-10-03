@@ -1,5 +1,6 @@
 import type { BoomLift, PostalAddress } from '../types';
 import { CONTACT_INFO, TRANSLATIONS } from '../constants';
+import { fill, liftVars } from './fleet';
 
 /**
  * Page titles and meta descriptions, assembled from constants.ts.
@@ -29,9 +30,7 @@ export const whatsappHref = (text?: string) =>
 
 /** WhatsApp opening message: names the machine when there is one. */
 export const waPrefill = (lift?: BoomLift) =>
-  lift
-    ? TRANSLATIONS.wa_prefill_lift.replace('{lift.brand}', lift.brand).replace('{lift.model}', lift.model)
-    : TRANSLATIONS.wa_prefill_generic;
+  lift ? fill(TRANSLATIONS.wa_prefill_lift, liftVars(lift)) : TRANSLATIONS.wa_prefill_generic;
 
 /** Display lines for an address. JSON-LD addressLocality uses the same "locality, city" pairing. */
 export const addressLocality = (a: PostalAddress) => `${a.locality}, ${a.city}`;
@@ -50,20 +49,18 @@ export const liftTitle = (lift: BoomLift) =>
   `${lift.brand} ${lift.model} Boom Lift Rental — ${lift.nominalHeightFt} ft | ${BRAND_SUFFIX}`;
 
 export const liftDescription = (lift: BoomLift) =>
-  `${lift.brand} ${lift.model} boom lift on hire pan-India. ` +
-  `${lift.platformHeight} height, ${lift.platformCapacity} capacity, ` +
-  `certified operator included. Call ${CONTACT_INFO.phone}.`;
+  `${lift.brand} ${lift.model} boom lift on rent, pan-India from Mumbai. ` +
+  `${lift.platformHeight} platform height, ${lift.platformCapacity} capacity. Certified operator included.`;
 
-export const FLEET_TITLE = `Boom Lift Fleet — JLG & Genie, 60–150 ft | ${BRAND_SUFFIX}`;
-
-export const FLEET_DESCRIPTION =
-  `Telescopic boom lifts for hire pan-India, 60 ft to 150 ft platform height, ` +
-  `every machine with a certified operator. JLG and Genie. ` +
-  `Call ${CONTACT_INFO.phone}.`;
+export const FLEET_TITLE = fill(`Boom Lift Fleet: JLG & Genie, {minHeightFt}–{maxHeightFt} ft | ${BRAND_SUFFIX}`);
+export const FLEET_DESCRIPTION = fill(
+  '{fleetCount} JLG and Genie telescopic boom lifts for hire pan-India, {minHeightFt}–{maxHeightFt} ft platform height, ' +
+  'up to {maxCapacityKg} kg. Compare specs. Certified operator included.',
+);
 
 export const CONTACT_TITLE = `Contact: Boom Lift Rental Quotes | ${BRAND_SUFFIX}`;
 export const CONTACT_DESCRIPTION =
-  'Call, WhatsApp or send the quote form for boom lift rental. Mumbai office, pan-India hire, ' +
+  'Call, WhatsApp or send the quote form for boom lift rental. Mumbai-based, pan-India hire, ' +
   'certified operator included. Mon–Sat, 9:00 AM–7:00 PM.';
 
 export const THANKS_TITLE = `Enquiry Received | ${BRAND_SUFFIX}`;
@@ -71,8 +68,8 @@ export const THANKS_DESCRIPTION =
   'Your boom lift rental enquiry has reached OG-IN Worldwide. ' +
   'We will contact you by phone or WhatsApp during working hours, Mon–Sat.';
 
-export const HOME_TITLE = 'Boom Lift Rental & Hiring Services Pan-India';
-
-export const HOME_DESCRIPTION =
-  'Rent boom lifts Pan-India with certified operators. JLG 860SJ, 1200SJP, 1350SJP & more. ' +
-  'Call OG-IN Worldwide for same-day quotes.';
+export const HOME_TITLE = `Boom Lift Rental Mumbai & Pan-India | ${BRAND_SUFFIX}`;
+export const HOME_DESCRIPTION = fill(
+  'Boom lift and manlift rental from Mumbai, pan-India. JLG and Genie telescopic booms, ' +
+  '{minHeightFt}–{maxHeightFt} ft, up to {maxCapacityKg} kg, certified operator on every hire.',
+);

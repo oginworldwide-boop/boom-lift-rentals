@@ -1,28 +1,56 @@
 @import "tailwindcss";
 
-/* Site chrome that is not expressible as utility classes.
- *
- * These rules used to live in an inline <style> block in index.html. They are
- * here so that the stylesheet is the single thing a build has to carry: porting
- * index.css alone previously dropped the header's frosted background and fell
- * the whole site back to system sans, with no build error to notice.
- *
- * Still owned by the HTML shell, and so still has to be carried over by hand:
- *   - the Inter <link> preconnect/preload pair
- *   - <link rel="preload" as="image" href="/images/homebg.webp">  (LCP hint)
- *   - <body class="bg-slate-50 text-slate-900 antialiased">
- */
-
-body {
-  font-family: 'Inter', sans-serif;
-  scroll-behavior: smooth;
+/* Barlow Condensed 700, latin subset, self-hosted (public/fonts/OFL.txt:
+ * SIL Open Font License 1.1). Headings and big numerals only; body text is the
+ * system stack so the LCP paragraph never waits on a font. Preloaded in BaseLayout. */
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/barlow-condensed-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-.glass-effect {
-  background: rgba(255, 255, 255, 0.8);
-  /* prefixed first, standard last: the minifier keeps the last-declared of the
-   * two, and dropping the unprefixed property loses the frosted header on
-   * browsers that do not take the -webkit- alias. */
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+@theme {
+  --color-ink: #0d1117;
+  --color-steel-900: #151b23;
+  --color-steel-800: #1f2731;
+  --color-steel-700: #2d3742;
+  --color-steel-500: #5b6672;
+  --color-steel-300: #a6afb9;
+  --color-steel-100: #e6e9ec;
+  --color-paper: #f4f5f6;
+  /* Accent for rules, markers, icons and large numerals. */
+  --color-safety: #e8590c;
+  /* Background for any button carrying white text (5.2:1). */
+  --color-safety-ink: #c2410c;
+  --color-safety-ink-dark: #9a3412;
+  /* WhatsApp button only, with ink text. */
+  --color-wa: #25d366;
+  --color-wa-dark: #1fb457;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li, dd { text-wrap: pretty; }
+  /* Anchored sections clear the sticky header. */
+  [id] { scroll-margin-top: 4.5rem; }
+  :focus-visible { outline: 2px solid var(--color-safety); outline-offset: 2px; }
+}
+
+@utility micro-label {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
