@@ -1,5 +1,5 @@
 import type { BoomLift, PostalAddress } from '../types';
-import { CONTACT_INFO } from '../constants';
+import { CONTACT_INFO, TRANSLATIONS } from '../constants';
 
 /**
  * Page titles and meta descriptions, assembled from constants.ts.
@@ -21,6 +21,17 @@ export const liftImageAlt = (lift: BoomLift) => `${lift.brand} ${lift.model} tel
 /** "+91 98765 43210" -> "+919876543210" (E.164, for tel: links and JSON-LD). */
 export const e164 = (phone: string) => `+${phone.replace(/\D/g, '')}`;
 export const telHref = (phone: string) => `tel:${e164(phone)}`;
+
+/** wa.me wants the number as bare digits with country code, no "+". */
+export const whatsappHref = (text?: string) =>
+  `https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, '')}` +
+  (text ? `?text=${encodeURIComponent(text)}` : '');
+
+/** WhatsApp opening message: names the machine when there is one. */
+export const waPrefill = (lift?: BoomLift) =>
+  lift
+    ? TRANSLATIONS.wa_prefill_lift.replace('{lift.brand}', lift.brand).replace('{lift.model}', lift.model)
+    : TRANSLATIONS.wa_prefill_generic;
 
 /** Display lines for an address. JSON-LD addressLocality uses the same "locality, city" pairing. */
 export const addressLocality = (a: PostalAddress) => `${a.locality}, ${a.city}`;
@@ -49,6 +60,16 @@ export const FLEET_DESCRIPTION =
   `Telescopic boom lifts for hire pan-India, 60 ft to 150 ft platform height, ` +
   `every machine with a certified operator. JLG and Genie. ` +
   `Call ${CONTACT_INFO.phone}.`;
+
+export const CONTACT_TITLE = `Contact: Boom Lift Rental Quotes | ${BRAND_SUFFIX}`;
+export const CONTACT_DESCRIPTION =
+  'Call, WhatsApp or send the quote form for boom lift rental. Mumbai office, pan-India hire, ' +
+  'certified operator included. Mon–Sat, 9:00 AM–7:00 PM.';
+
+export const THANKS_TITLE = `Enquiry Received | ${BRAND_SUFFIX}`;
+export const THANKS_DESCRIPTION =
+  'Your boom lift rental enquiry has reached OG-IN Worldwide. ' +
+  'We will contact you by phone or WhatsApp during working hours, Mon–Sat.';
 
 export const HOME_TITLE = 'Boom Lift Rental & Hiring Services Pan-India';
 

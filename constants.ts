@@ -3,6 +3,8 @@ import type { BoomLift, ContactInfo } from './types';
 export const CONTACT_INFO: ContactInfo = {
   phone: "+91 92210 28139",
   phone2: "+91 93245 25581",
+  // Confirmed by the client on 2026-10-03.
+  whatsapp: "+91 93245 25581",
   email: "oginworldwide@gmail.com",
   // Registered office, supplied by the client on 2026-10-03.
   address: {
@@ -12,8 +14,16 @@ export const CONTACT_INFO: ContactInfo = {
     region: "Maharashtra",
     postalCode: "401107",
     country: "India"
-  }
+  },
+  // Placeholders until the client supplies them. The footer company-details line
+  // renders only when a value is set.
+  gstin: "",
+  llpin: ""
 };
+
+// Names only, with the client's permission (2026-10-03). No logos, quotes or
+// project details: those need separate permission.
+export const CLIENTS = ["Godrej", "Reliance", "Vedanta Power", "Bokaro Steel"];
 
 export const BOOM_LIFTS: BoomLift[] = [
   {
@@ -193,5 +203,49 @@ export const TRANSLATIONS = {
   footer_links: "Quick Links",
   footer_contact: "Contact Us",
   footer_rights: "All rights reserved.",
-  with_operator: "With Professional Operator"
+  with_operator: "With Professional Operator",
+
+  nav_contact: "Contact",
+
+  // CTA labels. {phone} and {lift.*} are filled in code from constants.
+  cta_whatsapp_long: "WhatsApp us",
+  cta_call_long: "Call {phone}",
+  wa_prefill_generic: "Hello OG-IN, I need a boom lift. Working height: ___ Site location: ___ Start date: ___ Duration: ___",
+  wa_prefill_lift: "Hello OG-IN, I'd like a quote for the {lift.brand} {lift.model} with operator. Site location: ___ Start date: ___ Duration: ___",
+
+  // Quote form (Netlify Forms)
+  form_title: "Get a quote",
+  form_intro: "Send the job details. We reply by phone or WhatsApp during working hours, Mon–Sat, 9:00 AM–7:00 PM.",
+  form_name: "Your name",
+  form_phone: "Phone (WhatsApp if possible)",
+  form_phone_help: "We use this number to send the quote.",
+  form_company: "Company (optional)",
+  form_machine: "Machine",
+  form_machine_unsure: "Not sure, help me choose",
+  form_machine_help: "Not sure? Tell us the working height you need under Site conditions.",
+  form_city: "Site city",
+  form_city_help: "City or town, and the area if you know it.",
+  form_start: "Start date",
+  form_duration: "Duration",
+  form_duration_opts: ["1–3 days", "Up to 1 week", "Up to 1 month", "Longer than 1 month", "Not sure yet"],
+  form_conditions: "Site conditions (optional)",
+  form_conditions_help: "Working height needed, what you are reaching (facade, roof, steelwork), ground (concrete, soil, slab), gate width, anything overhead.",
+  form_required: "Required",
+  form_submit: "Send enquiry",
+  // Draft continues "See the privacy policy." -- appended, linked, once /privacy/ exists.
+  form_privacy_note: "We use these details only to reply to this enquiry.",
+
+  // /quote/thanks/
+  thanks_title: "Enquiry received",
+  thanks_body: "We have your details. We will contact you by phone or WhatsApp during working hours, Mon–Sat, 9:00 AM–7:00 PM.",
+  thanks_urgent: "If the job can't wait, call {phone} or message us on WhatsApp.",
+  thanks_back: "Back to the fleet",
+
+  // /contact/
+  contact_title: "Contact OG-IN Worldwide",
+  contact_intro: "Boom lift rental enquiries by phone, WhatsApp or the quote form. Mon–Sat, 9:00 AM–7:00 PM.",
+  contact_office_label: "Registered office",
+  contact_email_label: "Email",
+  contact_map_link: "Open in Google Maps",
+  footer_hours: "Mon–Sat, 9:00 AM–7:00 PM"
 };

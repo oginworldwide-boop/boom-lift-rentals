@@ -3,8 +3,9 @@ import Hero from './Hero';
 import LiftCard from './LiftCard';
 import TrustSection from './TrustSection';
 import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
-import { Phone } from 'lucide-react';
-import { telHref } from '../seo';
+import QuoteForm from './QuoteForm';
+import { MessageCircle, Phone } from 'lucide-react';
+import { telHref, waPrefill, whatsappHref } from '../seo';
 
 /** The homepage body, lifted out of SiteShell unchanged so that SiteShell can be
  *  shared chrome and each route supplies its own main content. */
@@ -38,18 +39,30 @@ const HomeSections: React.FC = () => {
               <p className="text-orange-100 text-lg mb-10 max-w-xl mx-auto">
                 {t.cta_desc}
               </p>
-              <a
-                href={telHref(CONTACT_INFO.phone)}
-                aria-label={`Call us at ${CONTACT_INFO.phone}`}
-                className="inline-flex items-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl"
-              >
-                <Phone size={24} aria-hidden="true" />
-                {CONTACT_INFO.phone}
-              </a>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a
+                  href={telHref(CONTACT_INFO.phone)}
+                  aria-label={`Call us at ${CONTACT_INFO.phone}`}
+                  className="inline-flex items-center justify-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl"
+                >
+                  <Phone size={24} aria-hidden="true" />
+                  {CONTACT_INFO.phone}
+                </a>
+                <a
+                  href={whatsappHref(waPrefill())}
+                  className="inline-flex items-center justify-center gap-3 bg-green-700 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-green-800 transition-colors shadow-xl"
+                >
+                  <MessageCircle size={24} aria-hidden="true" />
+                  {t.cta_whatsapp_long}
+                </a>
+              </div>
               <p className="mt-6 text-orange-200 text-sm font-medium">
                 {t.cta_hours}
               </p>
             </div>
+          </div>
+          <div className="max-w-2xl mx-auto mt-12">
+            <QuoteForm page="/" />
           </div>
         </section>
     </>

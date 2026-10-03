@@ -48,7 +48,7 @@ if (lifts.length !== models.length) {
 
 // Phone numbers, as their last ten digits, so a hardcoded copy is caught whatever
 // its spacing or country-code prefix.
-const phoneDigits = [...constants.matchAll(/\bphone2?: "([^"]+)"/g)]
+const phoneDigits = [...constants.matchAll(/\b(?:phone2?|whatsapp): "([^"]+)"/g)]
   .map((m) => m[1].replace(/\D/g, '').slice(-10));
 if (phoneDigits.length === 0) throw new Error('no phone numbers found in constants.ts');
 
@@ -74,6 +74,11 @@ if (htmlFiles.length === 0) {
 
 let failures = 0;
 const fail = (file, msg) => { failures++; console.error(`  FAIL  ${file}  ${msg}`); };
+
+// Netlify Forms registers a form from the deployed HTML and merges every form with
+// the same name, keeping only the fields it saw. So each quote form must carry the
+// Netlify markers, and all of them must have the identical field set.
+let quoteFields = null; // { names, file } from the first quote form seen
 
 for (const junk of junkFiles) {
   fail(relative(DIST, junk), 'junk file copied into the build -- delete it from public/');
@@ -153,6 +158,18 @@ for (const file of htmlFiles) {
     if (!url.startsWith(SITE + '/')) fail(rel, `share image ${url} is not on ${SITE}`);
     else if (!existsSync(join(DIST, decodeURIComponent(url.slice(SITE.length))))) {
       fail(rel, `share image ${url} does not exist in ${DIST}/`);
+    }
+  }
+
+  for (const [, open, body] of html.matchAll(/(<form\b[^>]*\bname="quote"[^>]*>)([\s\S]*?)<\/form>/g)) {
+    if (!open.includes('data-netlify="true"')) fail(rel, 'quote form lacks data-netlify="true"');
+    if (!/<input[^>]*name="form-name"[^>]*value="quote"/.test(body)) fail(rel, 'quote form lacks hidden form-name=quote');
+    const action = (open.match(/\baction="([^"]*)"/) || [])[1];
+    if (!action || !existsSync(join(DIST, action, 'index.html'))) fail(rel, `quote form action ${action} is not a built page`);
+    const names = [...new Set([...body.matchAll(/\bname="([^"]+)"/g)].map((m) => m[1]))].sort().join(',');
+    if (!quoteFields) quoteFields = { names, file: rel };
+    else if (names !== quoteFields.names) {
+      fail(rel, `quote form fields [${names}] differ from ${quoteFields.file} [${quoteFields.names}]`);
     }
   }
 

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteShell from '../../components/SiteShell';
+import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../../constants';
+import { THANKS_TITLE, THANKS_DESCRIPTION, liftPath, telHref, waPrefill, whatsappHref } from '../../seo';
+
+// Netlify Forms redirects here after a successful POST. noindex, and filtered out
+// of the sitemap in astro.config.mjs.
+const [beforePhone, afterPhone] = t.thanks_urgent.split('{phone}');
+const btn = 'min-h-12 inline-flex items-center justify-center rounded-xl px-6 py-3 font-bold text-white';
+---
+<BaseLayout noindex title={THANKS_TITLE} description={THANKS_DESCRIPTION}>
+  <SiteShell>
+    <section class="max-w-3xl mx-auto px-4 pt-28 pb-24">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t.thanks_title}</h1>
+      <p class="text-slate-600 mb-4">{t.thanks_body}</p>
+      <p class="text-slate-600 mb-8">
+        {beforePhone}<a href={telHref(CONTACT_INFO.phone)} class="underline">{CONTACT_INFO.phone}</a>{afterPhone}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mb-10">
+        <a href={telHref(CONTACT_INFO.phone)} class={`${btn} bg-orange-600 hover:bg-orange-700`}>{t.cta_call_long.replace('{phone}', CONTACT_INFO.phone)}</a>
+        <a href={whatsappHref(waPrefill())} class={`${btn} bg-green-700 hover:bg-green-800`}>{t.cta_whatsapp_long}</a>
+      </div>
+      <p class="mb-4"><a href="/fleet/" class="underline inline-flex items-center min-h-12 font-semibold">{t.thanks_back}</a></p>
+      <ul class="space-y-1">
+        {BOOM_LIFTS.map((l) => (
+          <li><a href={liftPath(l)} class="underline inline-flex items-center min-h-12">{l.brand} {l.model}</a></li>
+        ))}
+      </ul>
+    </section>
+  </SiteShell>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import QuoteForm from '../components/QuoteForm';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { CONTACT_TITLE, CONTACT_DESCRIPTION, formatAddress, telHref, waPrefill, whatsappHref } from '../seo';
+import { breadcrumbs, localBusiness } from '../schema';
+
+const site = Astro.site!;
+const addressLines = formatAddress(CONTACT_INFO.address);
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLines.join(', '))}`;
+const phones = [CONTACT_INFO.phone, CONTACT_INFO.phone2];
+const btn = 'min-h-12 inline-flex items-center justify-center rounded-xl px-6 py-3 font-bold text-white';
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: t.nav_contact, url: new URL('/contact/', site).href },
+    ]),
+  ]}
+  title={CONTACT_TITLE}
+  description={CONTACT_DESCRIPTION}
+>
+  <SiteShell>
+    <section class="max-w-3xl mx-auto px-4 pt-28 pb-24">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{t.contact_title}</h1>
+      <p class="text-slate-600 mb-8">{t.contact_intro}</p>
+
+      <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-10">
+        {phones.map((p) => (
+          <a href={telHref(p)} class={`${btn} bg-orange-600 hover:bg-orange-700`}>{t.cta_call_long.replace('{phone}', p)}</a>
+        ))}
+        <a href={whatsappHref(waPrefill())} class={`${btn} bg-green-700 hover:bg-green-800`}>{t.cta_whatsapp_long}</a>
+      </div>
+
+      <dl class="space-y-6 mb-6">
+        <div>
+          <dt class="font-semibold text-slate-900">{t.contact_email_label}</dt>
+          <dd><a href={`mailto:${CONTACT_INFO.email}`} class="underline inline-flex items-center min-h-12">{CONTACT_INFO.email}</a></dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-slate-900">{t.contact_office_label}</dt>
+          <dd>
+            <address class="not-italic">{addressLines.map((line) => <span class="block">{line}</span>)}</address>
+            <a href={mapsHref} target="_blank" rel="noopener" class="underline inline-flex items-center min-h-12">{t.contact_map_link}</a>
+          </dd>
+        </div>
+      </dl>
+      <p class="text-slate-600 mb-12">{t.footer_hours}</p>
+
+      <QuoteForm page="/contact/" />
+    </section>
+  </SiteShell>
+</BaseLayout>

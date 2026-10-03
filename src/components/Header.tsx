@@ -20,6 +20,12 @@ const Header: React.FC = () => {
           >
             {t.fleet_title}
           </a>
+          <a
+            href="/contact/"
+            className="text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider min-h-12 inline-flex items-center"
+          >
+            {t.nav_contact}
+          </a>
 
 
           <a 

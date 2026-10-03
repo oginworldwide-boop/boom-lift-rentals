@@ -1,8 +1,9 @@
 import React from 'react';
-import { CheckCircle2, Phone, UserCheck } from 'lucide-react';
+import { CheckCircle2, MessageCircle, Phone, UserCheck } from 'lucide-react';
+import QuoteForm from './QuoteForm';
 import type { BoomLift } from '../../types';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
-import { telHref } from '../seo';
+import { liftPath, telHref, waPrefill, whatsappHref } from '../seo';
 
 interface LiftDetailProps {
   lift: BoomLift;
@@ -82,21 +83,34 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ lift }) => {
             ))}
           </ul>
 
-          <div className="bg-slate-50 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="bg-slate-50 rounded-2xl p-6 flex flex-col gap-4">
             <div>
               <p className="text-sm text-slate-500 font-medium">{t.modal_rent_prompt}</p>
               <p className="text-lg font-bold text-slate-900">{t.modal_contact_desk}</p>
             </div>
-            <a
-              href={telHref(CONTACT_INFO.phone)}
-              aria-label={`Call us at ${CONTACT_INFO.phone}`}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-200"
-            >
-              <Phone size={18} aria-hidden="true" />
-              {CONTACT_INFO.phone}
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={telHref(CONTACT_INFO.phone)}
+                aria-label={`Call us at ${CONTACT_INFO.phone}`}
+                className="w-full sm:w-auto min-h-12 flex items-center justify-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-200"
+              >
+                <Phone size={18} aria-hidden="true" />
+                {CONTACT_INFO.phone}
+              </a>
+              <a
+                href={whatsappHref(waPrefill(lift))}
+                className="w-full sm:w-auto min-h-12 flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-800 transition-colors"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                {t.cta_whatsapp_long}
+              </a>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-12 max-w-2xl">
+        <QuoteForm page={liftPath(lift)} selectedLiftId={lift.id} />
       </div>
     </article>
   );

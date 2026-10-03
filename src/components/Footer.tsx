@@ -2,7 +2,13 @@
 import React from 'react';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { formatAddress, telHref } from '../seo';
+import { formatAddress } from '../seo';
+
+// Rendered only once the client supplies the numbers (empty in constants.ts until then).
+const companyIds = [
+  CONTACT_INFO.gstin && `GSTIN ${CONTACT_INFO.gstin}`,
+  CONTACT_INFO.llpin && `LLPIN ${CONTACT_INFO.llpin}`,
+].filter(Boolean).join(' · ');
 
 const Footer: React.FC = () => {
   return (
@@ -25,7 +31,7 @@ const Footer: React.FC = () => {
               <li><a href="/" className="hover:text-orange-600 transition-colors">Home</a></li>
               <li><a href="/fleet/" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
               <li><a href="/#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
-              <li><a href={telHref(CONTACT_INFO.phone)} className="hover:text-orange-600 transition-colors">Contact Support</a></li>
+              <li><a href="/contact/" className="hover:text-orange-600 transition-colors">{t.nav_contact}</a></li>
             </ul>
           </div>
           
@@ -55,10 +61,7 @@ const Footer: React.FC = () => {
         
         <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} OG-IN Worldwide LLP. {t.footer_rights}</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-slate-600">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-600">Terms of Service</a>
-          </div>
+          {companyIds && <p>{companyIds}</p>}
         </div>
       </div>
     </footer>
