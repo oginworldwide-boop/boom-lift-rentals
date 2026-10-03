@@ -1,11 +1,9 @@
 
 import React from 'react';
 import { ShieldCheck, Clock, Truck, UserCheck } from 'lucide-react';
-import { useLanguage } from '../App';
+import { TRANSLATIONS as t } from '../../constants';
 
 const TrustSection: React.FC = () => {
-  const { t } = useLanguage();
-
   const benefits = [
     {
       icon: <UserCheck className="text-orange-600" size={32} />,

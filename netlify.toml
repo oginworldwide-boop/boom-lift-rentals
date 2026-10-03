@@ -1,0 +1,33 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Matches local Node; Astro 7 would need >= 22.12, which is why we are on Astro 5.
+  NODE_VERSION = "20.20.2"
+
+# Hashed build assets: the filename changes when the content does.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Unhashed images: cache for 30 days, not forever, so a replaced file shows up.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Baseline security headers on every response.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import HomeSections from '../components/HomeSections';
+import { localBusiness, webSite } from '../schema';
+import { HOME_TITLE, HOME_DESCRIPTION } from '../seo';
+---
+<BaseLayout
+  schema={[localBusiness(Astro.site!), webSite(Astro.site!)]}
+  title={HOME_TITLE}
+  description={HOME_DESCRIPTION}
+>
+  <SiteShell><HomeSections /></SiteShell>
+</BaseLayout>

@@ -25,7 +25,6 @@ or sends a WhatsApp message?
 - They are comparison-shopping against IndiaMART listings that show working
   height, capacity, price and a WhatsApp button in a single row. The site has to
   match that density of decision-relevant information.
-- Many are more comfortable in Hindi than English.
 
 ## Competitive context
 
@@ -81,13 +80,37 @@ router.** `App.tsx` renders Hero → fleet grid → TrustSection → CTA → Foo
 on `/`. Client-side rendered — crawlers get an empty `<div id="root">`. The
 entire site is **one indexable URL**.
 
-The language context is defined inline in `App.tsx` and **works**:
-`useState<Language>('en')` with `t = TRANSLATIONS[language]`. It appears to lack
-only a switcher in the UI. Do not rewrite this; wire a switcher to it.
+**English only (decided 2026-10-03).** The Hindi toggle, every Hindi string in
+`constants.ts` and the language context were removed on the user's instruction.
+`TRANSLATIONS` is now a flat English object. Do not reintroduce Hindi, a
+switcher or `/hi/` routes without the user asking.
 
-**Target:** static generation (Astro preferred; Next.js static export
-acceptable) so every route ships real HTML. This is the root cause of the site's
-invisibility in search and must be fixed before content work is worth doing.
+**Done (roadmap item 2):** ported to **Astro 5.18.2** + `@astrojs/react` 4.4.2 +
+`@astrojs/sitemap` 3.7.4, all pinned exactly. Nine routes ship real HTML.
+
+- **Pinned to Astro 5, not 7, because 7 requires Node >= 22.12.0** and this
+  machine runs Node 20.20.2. Astro <= 7.2.7 carries unpatched advisories with no
+  5.x backport; accepted because the production artifact is static files with no
+  Astro runtime, nothing renders from user input, and server islands,
+  `astro:assets` and view transitions are all unused. Revisit with Node 22.
+- Canonical origin is `https://www.og-inworldwide.in`, set once as `site` in
+  `astro.config.mjs`. Canonicals, OG URLs and the sitemap all derive from it.
+- **`trailingSlash: 'always'` with `build.format: 'directory'`** (changed
+  2026-10-03, before any `/fleet/*` URL went live). Netlify Pretty URLs 301s
+  `/fleet/x` to `/fleet/x/` when only `fleet/x/index.html` exists, so the old
+  `'never'` setting made every canonical point at a redirecting URL. Every
+  internal link must end in `/`. Do not switch to `'file'`: it puts `.html`
+  into `Astro.url.pathname`.
+- Machine URLs are `/fleet/[brand]-[id]/`, e.g. `/fleet/jlg-1350sjp/`,
+  `/fleet/genie-s60j/`. Build them with `liftPath()` from `src/seo.ts`. The
+  `slug` is an explicit field in `constants.ts`, never derived. **Once live
+  they are indexed; changing one costs a permanent redirect.**
+- **Zero client JS.** React components are rendered to static HTML at build time
+  with no `client:*` directive. Do not add one: nothing on the site needs
+  hydration, and it costs ~66 KB gzipped on patchy 4G.
+- `npm run build` runs `scripts/assert-html.mjs`, which fails the build if a page
+  stops server-rendering, exceeds title/description
+  limits, or ships junk files.
 
 **Constraints:**
 - Pin all dependencies to exact versions. Several are currently `"latest"`,
@@ -97,7 +120,7 @@ invisibility in search and must be fixed before content work is worth doing.
 - No backend. Forms go through Netlify Forms or an equivalent static-host
   service.
 - Use absolute asset paths (`/images/...`), never relative. Relative paths break
-  on nested routes like `/fleet/jlg-1350sjp`.
+  on nested routes like `/fleet/jlg-1350sjp/`.
 
 ## Commands
 
@@ -107,11 +130,28 @@ npm run build    # production build
 npm run preview  # preview the production build
 ```
 
+## Project agents
+
+Four subagents live in `.claude/agents/`. Delegate to them with the Agent tool
+instead of doing everything in the main session; each already carries this file's
+hard rules and stack constraints. Pick the cheapest one that fits.
+
+| agent | model / effort | use for |
+|---|---|---|
+| `sonnet-low` | Sonnet 5.5, low | searches, renames, typo fixes, one-file edits with an obvious fix |
+| `sonnet-medium` | Sonnet 5.5, medium | markup, accessibility, tap targets, Tailwind, small components with a clear spec |
+| `opus-high` | Opus 5.5, high | research, SEO and JSON-LD, WhatsApp/quote form/GA4, multi-file features, non-obvious bugs |
+| `opus-xhigh` | Opus 5.5, xhigh | hardest only: indexed-URL or redirect changes, bugs that survived a failed fix. Expensive; try `opus-high` first |
+
+Only Sonnet 5.5 (medium/low) and Opus 5.5 (high/xhigh) are allowed; never use
+Haiku, Fable or Opus max. Agents do not commit; review their diff and run
+`npm run build` before committing.
+
 ## Repo layout (GitHub `main`)
 
 ```
 constants.ts              # SOURCE OF TRUTH: BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS
-types.ts                  # BoomLift, ContactInfo, Language
+types.ts                  # BoomLift, ContactInfo
 App.tsx                   # entire page + inline LanguageContext + sticky call button
 components/               # Header, Hero, LiftCard, SpecsModal, TrustSection, Footer
 public/images/            # WebP, already well optimised (~644 KB total)
@@ -121,6 +161,10 @@ vertex-ai-proxy-interceptor.js   # leftover scaffold, unused
 
 ## ⚠ Two diverging versions exist
 
+**Update 2026-09-18:** the diverged refactor is not only on the Desktop; it was
+pushed and lives on `origin/dev` (`d964a3d`), so roadmap item 0's "archive it on
+a branch" is effectively already done.
+
 There is a **local folder on the developer's Desktop that has diverged from
 `main` and was never pushed.** It refactors the site to react-router with
 `pages/` and `context/` directories, and carries an older `index.html` title.
@@ -128,8 +172,7 @@ There is a **local folder on the developer's Desktop that has diverged from
 **`main` is the source of truth.** Work from it. The local refactor:
 
 - is not deployed and does not match the live site,
-- **regressed the language feature** — its `context/LanguageContext.tsx`
-  hardcodes `TRANSLATIONS.en` and drops `setLanguage` entirely,
+- drops the language switcher (now moot: the site is English-only),
 - adds routing that the planned Astro port will replace anyway.
 
 Do not merge it without the user explicitly deciding to. If asked to reconcile,
@@ -150,8 +193,8 @@ Seven machines, all telescopic, all rented with an operator. Full specs live in
 | `s60j` | Genie | S-60 J | 18.50 m / 60 ft 8 in |
 | `s85xc` | Genie | S-85 XC | 25.91 m / 85 ft |
 
-Each entry already carries outreach, capacity, weight, a bilingual description,
-a bilingual feature list and an image path. **Do not duplicate this data.**
+Each entry already carries outreach, capacity, weight, an English description,
+an English feature list and an image path. **Do not duplicate this data.**
 
 ## Contact
 
@@ -165,8 +208,7 @@ capacity, lead time — not adjectives. Avoid "premium", "world-class",
 "cutting-edge", "state-of-the-art". Prefer "150 ft working height, 454 kg
 capacity, operator included" over "unmatched reach and reliability".
 
-Bilingual: English and Hindi. Hindi strings already exist in `TRANSLATIONS` in
-`constants.ts` but are not currently reachable — see roadmap.
+English only.
 
 ---
 
@@ -207,11 +249,7 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 6. No WhatsApp CTA and no quote form. Every CTA is a `tel:` link.
 
 **High**
-7. Hindi is wired but unreachable. On `main` the language state works, but no
-   switcher is exposed in the UI, and `SpecsModal` reads `description.en` /
-   `features.en` directly so it would not translate anyway. A complete Hindi
-   translation of every string already exists in `TRANSLATIONS` and currently
-   ships to the browser unused.
+7. ~~Hindi gaps.~~ Moot: Hindi was removed on 2026-10-03.
 8. All dependencies pinned to `"latest"`.
 9. `SpecsModal` lacks `role="dialog"`, `aria-modal`, Escape handling, a focus
    trap and body scroll lock. Its `AnimatePresence` never fires exit animations
@@ -238,8 +276,7 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 2. **Static generation + fleet pages** — port to Astro, generate one page per
    `BOOM_LIFTS` entry with full specs in HTML, per-page meta, OG tags and
    Product/Service JSON-LD. Add sitemap and robots.
-3. **Enable Hindi** — real switcher, `/hi/` routes, `hreflang`, fix `SpecsModal`
-   to use the active locale.
+3. ~~Enable Hindi~~ — dropped; the site is English-only.
 4. **Conversion** — WhatsApp deep links with the model prefilled, a quote form
    capturing working height / location / duration / site conditions, GA4 with
    events on call, WhatsApp and form submit.

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import FleetSections from '../components/FleetSections';
+import { breadcrumbs, localBusiness } from '../schema';
+import { FLEET_TITLE, FLEET_DESCRIPTION } from '../seo';
+
+const site = Astro.site!;
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: 'Fleet', url: new URL('/fleet/', site).href },
+    ]),
+  ]}
+  title={FLEET_TITLE}
+  description={FLEET_DESCRIPTION}
+  ogImage="/og/fleet.jpg"
+  ogImageAlt="OG-IN Worldwide boom lift fleet: JLG and Genie telescopic boom lifts"
+>
+  <SiteShell><FleetSections /></SiteShell>
+</BaseLayout>

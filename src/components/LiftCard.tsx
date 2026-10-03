@@ -1,22 +1,26 @@
 import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
-import { BoomLift } from '../types';
-import { useLanguage } from '../App';
+import type { BoomLift } from '../../types';
+import { TRANSLATIONS as t } from '../../constants';
+import { liftPath } from '../seo';
 
 interface LiftCardProps {
   lift: BoomLift;
-  onSelect: (lift: BoomLift) => void;
 }
 
-const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
-  const { t } = useLanguage();
-
+/** Both affordances link to the machine's own page. They used to open SpecsModal,
+ *  which no crawler can do, so the seven machine pages had nothing linking to them
+ *  and the specs were invisible to search. Styling is unchanged. */
+const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
       <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-6">
-        <img 
-          src={lift.imageUrl} 
-          alt={lift.model} 
+        <img
+          src={lift.imageUrl}
+          alt={`${lift.brand} ${lift.model} telescopic boom lift`}
+          width={lift.imageWidth}
+          height={lift.imageHeight}
+          loading="lazy"
           className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-md text-xs font-bold text-slate-900 shadow-sm">
@@ -27,13 +31,13 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
       <div className="p-6 flex-grow flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl font-bold text-slate-900">{lift.model}</h3>
-          <button 
-            onClick={() => onSelect(lift)}
+          <a
+            href={liftPath(lift)}
             aria-label={`View specs for ${lift.model}`}
-            className="p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
+            className="flex items-center justify-center min-h-11 min-w-11 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
           >
-            <ArrowUpRight size={20} />
-          </button>
+            <ArrowUpRight size={20} aria-hidden="true" />
+          </a>
         </div>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -53,12 +57,12 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift, onSelect }) => {
           </div>
         </div>
         
-        <button 
-          onClick={() => onSelect(lift)}
-          className="mt-auto w-full py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all"
+        <a
+          href={liftPath(lift)}
+          className="mt-auto w-full py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all text-center"
         >
           {t.card_btn}
-        </button>
+        </a>
       </div>
     </div>
   );

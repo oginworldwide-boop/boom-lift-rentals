@@ -1,12 +1,10 @@
 
 import React from 'react';
-import { CONTACT_INFO } from '../constants';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { useLanguage } from '../App';
+import { formatAddress, telHref } from '../seo';
 
 const Footer: React.FC = () => {
-  const { language, t } = useLanguage();
-
   return (
     <footer className="bg-white border-t border-slate-100 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4">
@@ -24,10 +22,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-bold text-slate-900 mb-6">{t.footer_links}</h3>
             <ul className="space-y-3 text-sm text-slate-500">
-              <li><a href="#" className="hover:text-orange-600 transition-colors">Home</a></li>
-              <li><a href="#fleet" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
-              <li><a href="#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
-              <li><a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-orange-600 transition-colors">Contact Support</a></li>
+              <li><a href="/" className="hover:text-orange-600 transition-colors">Home</a></li>
+              <li><a href="/fleet/" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
+              <li><a href="/#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
+              <li><a href={telHref(CONTACT_INFO.phone)} className="hover:text-orange-600 transition-colors">Contact Support</a></li>
             </ul>
           </div>
           
@@ -47,7 +45,9 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-orange-600 flex-shrink-0" />
-                <span>{CONTACT_INFO.address[language]}</span>
+                <address className="not-italic flex flex-col">
+                  {formatAddress(CONTACT_INFO.address).map((line) => <span key={line}>{line}</span>)}
+                </address>
               </li>
             </ul>
           </div>

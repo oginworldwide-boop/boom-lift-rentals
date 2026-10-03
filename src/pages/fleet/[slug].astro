@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteShell from '../../components/SiteShell';
+import LiftDetail from '../../components/LiftDetail';
+import { BOOM_LIFTS } from '../../../constants';
+import { liftPath, liftTitle, liftDescription, ogImagePath, liftImageAlt } from '../../seo';
+import { breadcrumbs, liftService, localBusiness } from '../../schema';
+
+export function getStaticPaths() {
+  // Slugs are permanent URLs, so a collision would silently drop a machine page.
+  const slugs = BOOM_LIFTS.map((l) => l.slug);
+  const dupes = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+  if (dupes.length) throw new Error(`Duplicate lift slugs in constants.ts: ${dupes.join(', ')}`);
+
+  return BOOM_LIFTS.map((lift) => ({ params: { slug: lift.slug }, props: { lift } }));
+}
+
+const { lift } = Astro.props;
+const site = Astro.site!;
+const pageUrl = new URL(liftPath(lift), site).href;
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    liftService(lift, site, pageUrl),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: 'Fleet', url: new URL('/fleet/', site).href },
+      { name: `${lift.brand} ${lift.model}`, url: pageUrl },
+    ]),
+  ]}
+  title={liftTitle(lift)}
+  description={liftDescription(lift)}
+  ogImage={ogImagePath(lift)}
+  ogImageAlt={liftImageAlt(lift)}
+  ogType="product"
+>
+  <SiteShell><LiftDetail lift={lift} /></SiteShell>
+</BaseLayout>
