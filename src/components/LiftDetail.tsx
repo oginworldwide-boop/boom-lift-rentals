@@ -1,7 +1,6 @@
 import React from 'react';
 import { CheckCircle2, Phone, UserCheck } from 'lucide-react';
-import { BOOM_LIFTS, CONTACT_INFO } from '../../constants';
-import { useLanguage } from '../i18n/language-context';
+import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 
 interface LiftDetailProps {
   /** Only the id is passed in. Astro serializes island props into the HTML, so the
@@ -11,7 +10,6 @@ interface LiftDetailProps {
 }
 
 const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
-  const { language, t } = useLanguage();
   const lift = BOOM_LIFTS.find((l) => l.id === liftId);
   if (!lift) throw new Error(`Unknown lift id: ${liftId}`);
 
@@ -21,9 +19,6 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
   const specs = [
     { label: t.card_height, value: lift.platformHeight },
     { label: t.card_outreach, value: lift.horizontalOutreach },
-    // "Capacity" and "Weight" have no TRANSLATIONS keys and were hardcoded English
-    // in SpecsModal too. Carried over as-is; adding Hindi for them is new copy and
-    // belongs with the /hi/ routes.
     { label: 'Capacity', value: lift.platformCapacity },
     { label: 'Weight', value: lift.weight },
   ];
@@ -60,10 +55,9 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
           <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mt-4 mb-2">
             {lift.brand} {lift.model}
           </h1>
-          {/* Hardcoded English in SpecsModal as well; see the note on `specs` above. */}
           <p className="text-slate-600 font-medium mb-6">Telescopic Boom Lift</p>
 
-          <p className="text-slate-600 leading-relaxed mb-8">{lift.description[language]}</p>
+          <p className="text-slate-600 leading-relaxed mb-8">{lift.description}</p>
 
           <h2 className="font-bold text-slate-900 uppercase text-xs tracking-widest border-b border-slate-100 pb-2 mb-4">
             {t.modal_tech_specs}
@@ -83,7 +77,7 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
             {t.modal_features}
           </h2>
           <ul className="space-y-2 mb-8">
-            {lift.features[language].map((feature) => (
+            {lift.features.map((feature) => (
               <li key={feature} className="flex items-center gap-2 text-sm text-slate-600">
                 <CheckCircle2 size={16} className="text-orange-500 flex-shrink-0" aria-hidden="true" />
                 {feature}

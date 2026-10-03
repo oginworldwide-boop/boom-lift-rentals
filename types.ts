@@ -1,6 +1,4 @@
 
-export type Language = 'en' | 'hi';
-
 export interface BoomLift {
   id: string;
   /** URL segment for /fleet/[slug]. Stored explicitly, never derived: these URLs are
@@ -24,28 +22,19 @@ export interface BoomLift {
    *  (660SJ -> 66, S-60 J -> 60). This is a naming/search term, NOT a measured spec:
    *  use `platformHeight` or `heightM` whenever an actual figure is being stated. */
   nominalHeightFt: number;
-  description: {
-    en: string;
-    hi: string;
-  };
+  description: string;
   imageUrl: string;
   /** Intrinsic pixel dimensions of imageUrl, measured from the file. Rendered as
    *  width/height attributes so the browser reserves the right aspect ratio and the
    *  image does not shift the layout as it loads. */
   imageWidth: number;
   imageHeight: number;
-  features: {
-    en: string[];
-    hi: string[];
-  };
+  features: string[];
 }
 
 export interface ContactInfo {
   phone: string;
   phone2: string;
   email: string;
-  address: {
-    en: string;
-    hi: string;
-  };
+  address: string;
 }

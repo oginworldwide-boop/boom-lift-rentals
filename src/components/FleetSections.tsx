@@ -1,7 +1,6 @@
 import React from 'react';
 import LiftCard from './LiftCard';
-import { BOOM_LIFTS } from '../../constants';
-import { useLanguage } from '../i18n/language-context';
+import { BOOM_LIFTS, TRANSLATIONS as t } from '../../constants';
 
 /**
  * The /fleet catalogue.
@@ -12,8 +11,6 @@ import { useLanguage } from '../i18n/language-context';
  * it is built entirely from constants.ts -- no new copy, no new figures.
  */
 const FleetSections: React.FC = () => {
-  const { t } = useLanguage();
-
   // Ascending by platform height, so the table reads as a range rather than an
   // arbitrary order. Sorted on the numeric field, not by parsing display strings.
   const byHeight = [...BOOM_LIFTS].sort((a, b) => a.heightM - b.heightM);

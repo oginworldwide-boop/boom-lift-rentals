@@ -41,7 +41,7 @@ export const localBusiness = (site: URL) => ({
     addressCountry: 'IN',
   },
   areaServed: { '@type': 'Country', name: 'India' },
-  // Taken from the hours the site already publishes (TRANSLATIONS.en.cta_hours,
+  // Taken from the hours the site already publishes (TRANSLATIONS.cta_hours,
   // "Available Monday - Saturday, 9:00 AM - 7:00 PM"), not from an assumption.
   openingHours: 'Mo-Sa 09:00-19:00',
 });
@@ -69,7 +69,7 @@ export const liftGraph = (lift: BoomLift, site: URL, pageUrl: string) => {
       brand: { '@type': 'Brand', name: lift.brand },
       category: 'Telescopic boom lift',
       image,
-      description: lift.description.en,
+      description: lift.description,
       additionalProperty: [
         quantity('Platform height', lift.heightM, 'MTR', lift.platformHeight),
         quantity('Horizontal outreach', lift.outreachM, 'MTR', lift.horizontalOutreach),

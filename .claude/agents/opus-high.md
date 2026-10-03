@@ -1,6 +1,6 @@
 ---
 name: opus-high
-description: Use for RESEARCH and HARD tasks on the boom-lift site - SEO and structured data (JSON-LD, hreflang, sitemap, canonicals, OG), /hi/ routing, quote form and WhatsApp/GA4 conversion work, competitor comparison, multi-file features with coupled logic, bugs with a non-obvious root cause. Runs Opus 5.5 at high effort.
+description: Use for RESEARCH and HARD tasks on the boom-lift site - SEO and structured data (JSON-LD, hreflang, sitemap, canonicals, OG), quote form and WhatsApp/GA4 conversion work, competitor comparison, multi-file features with coupled logic, bugs with a non-obvious root cause. Runs Opus 5.5 at high effort.
 model: claude-opus-5-5
 effort: high
 ---

@@ -28,14 +28,6 @@ const pick = (re, label) => {
 const models = [...constants.matchAll(/model: "([^"]+)"/g)].map((m) => m[1]);
 if (models.length === 0) throw new Error('no model names found in constants.ts');
 
-// The Devanagari label on the language toggle in Header. This is the correct probe
-// for "did the toggle render": strings from TRANSLATIONS.hi only appear once the page
-// is already in Hindi, whereas the toggle's own label renders on the English page,
-// which is what the build emits.
-const header = readFileSync('src/components/Header.tsx', 'utf8');
-const toggleLabel = (header.match(/'([\u0900-\u097F]+)'/) || [])[1];
-if (!toggleLabel) throw new Error('could not find the Devanagari toggle label in components/Header.tsx');
-
 const htmlFiles = [];
 const junkFiles = [];
 (function walk(dir) {
@@ -86,9 +78,6 @@ for (const file of htmlFiles) {
   if (!models.some((m) => html.includes(m))) {
     fail(file, 'names none of the machines in constants.ts -- fleet data missing from served HTML');
   }
-  if (!html.includes(toggleLabel)) {
-    fail(file, `does not contain Hindi text "${toggleLabel}" -- the language toggle did not render`);
-  }
 }
 
 const checked = `${htmlFiles.length} HTML file${htmlFiles.length === 1 ? '' : 's'}`;
@@ -96,4 +85,4 @@ if (failures) {
   console.error(`\n  ${failures} assertion(s) failed across ${checked}.`);
   process.exit(1);
 }
-console.log(`  PASS  ${checked} ${htmlFiles.length === 1 ? 'contains' : 'contain'} server-rendered content, fleet data and Hindi text.`);
+console.log(`  PASS  ${checked} ${htmlFiles.length === 1 ? 'contains' : 'contain'} server-rendered content and fleet data.`);

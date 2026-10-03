@@ -1,12 +1,9 @@
 
 import React from 'react';
-import { CONTACT_INFO } from '../../constants';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { Mail, MapPin, Phone } from 'lucide-react';
-import { useLanguage } from '../i18n/language-context';
 
 const Footer: React.FC = () => {
-  const { language, t } = useLanguage();
-
   return (
     <footer className="bg-white border-t border-slate-100 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4">
@@ -47,7 +44,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-orange-600 flex-shrink-0" />
-                <span>{CONTACT_INFO.address[language]}</span>
+                <span>{CONTACT_INFO.address}</span>
               </li>
             </ul>
           </div>

@@ -25,7 +25,6 @@ or sends a WhatsApp message?
 - They are comparison-shopping against IndiaMART listings that show working
   height, capacity, price and a WhatsApp button in a single row. The site has to
   match that density of decision-relevant information.
-- Many are more comfortable in Hindi than English.
 
 ## Competitive context
 
@@ -81,9 +80,10 @@ router.** `App.tsx` renders Hero → fleet grid → TrustSection → CTA → Foo
 on `/`. Client-side rendered — crawlers get an empty `<div id="root">`. The
 entire site is **one indexable URL**.
 
-The language context is defined inline in `App.tsx` and **works**:
-`useState<Language>('en')` with `t = TRANSLATIONS[language]`. It appears to lack
-only a switcher in the UI. Do not rewrite this; wire a switcher to it.
+**English only (decided 2026-10-03).** The Hindi toggle, every Hindi string in
+`constants.ts` and the language context were removed on the user's instruction.
+`TRANSLATIONS` is now a flat English object. Do not reintroduce Hindi, a
+switcher or `/hi/` routes without the user asking.
 
 **Done (roadmap item 2):** ported to **Astro 5.18.2** + `@astrojs/react` 4.4.2 +
 `@astrojs/sitemap` 3.7.4, all pinned exactly. Nine routes ship real HTML.
@@ -101,11 +101,9 @@ only a switcher in the UI. Do not rewrite this; wire a switcher to it.
 - Machine URLs are `/fleet/[brand]-[id]`, e.g. `/fleet/jlg-1350sjp`,
   `/fleet/genie-s60j`. The `slug` is an explicit field in `constants.ts`, never
   derived. **These are indexed; changing one costs a permanent redirect.**
-- One React island per page (`SiteShell`). Islands do not share context, so
-  splitting Header from Hero/Footer would break the Hindi toggle. Keep island
-  props scalar: Astro serializes them into the HTML.
+- One React island per page (`SiteShell`). Keep island props scalar: Astro serializes them into the HTML.
 - `npm run build` runs `scripts/assert-html.mjs`, which fails the build if a page
-  stops server-rendering, loses its Hindi toggle, exceeds title/description
+  stops server-rendering, exceeds title/description
   limits, or ships junk files.
 
 **Constraints:**
@@ -130,7 +128,7 @@ npm run preview  # preview the production build
 
 ```
 constants.ts              # SOURCE OF TRUTH: BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS
-types.ts                  # BoomLift, ContactInfo, Language
+types.ts                  # BoomLift, ContactInfo
 App.tsx                   # entire page + inline LanguageContext + sticky call button
 components/               # Header, Hero, LiftCard, SpecsModal, TrustSection, Footer
 public/images/            # WebP, already well optimised (~644 KB total)
@@ -151,8 +149,7 @@ There is a **local folder on the developer's Desktop that has diverged from
 **`main` is the source of truth.** Work from it. The local refactor:
 
 - is not deployed and does not match the live site,
-- **regressed the language feature** — its `context/LanguageContext.tsx`
-  hardcodes `TRANSLATIONS.en` and drops `setLanguage` entirely,
+- drops the language switcher (now moot: the site is English-only),
 - adds routing that the planned Astro port will replace anyway.
 
 Do not merge it without the user explicitly deciding to. If asked to reconcile,
@@ -173,8 +170,8 @@ Seven machines, all telescopic, all rented with an operator. Full specs live in
 | `s60j` | Genie | S-60 J | 18.50 m / 60 ft 8 in |
 | `s85xc` | Genie | S-85 XC | 25.91 m / 85 ft |
 
-Each entry already carries outreach, capacity, weight, a bilingual description,
-a bilingual feature list and an image path. **Do not duplicate this data.**
+Each entry already carries outreach, capacity, weight, an English description,
+an English feature list and an image path. **Do not duplicate this data.**
 
 ## Contact
 
@@ -188,8 +185,7 @@ capacity, lead time — not adjectives. Avoid "premium", "world-class",
 "cutting-edge", "state-of-the-art". Prefer "150 ft working height, 454 kg
 capacity, operator included" over "unmatched reach and reliability".
 
-Bilingual: English and Hindi. Hindi strings already exist in `TRANSLATIONS` in
-`constants.ts` but are not currently reachable — see roadmap.
+English only.
 
 ---
 
@@ -230,14 +226,7 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 6. No WhatsApp CTA and no quote form. Every CTA is a `tel:` link.
 
 **High**
-7. ~~Hindi is wired but unreachable.~~ **Corrected 2026-09-18: this was already
-   wrong.** `Header.tsx` renders a working EN/हिंदी toggle, and the modal read
-   `description[language]`, so Hindi worked end to end. The real remaining gap is
-   about ten strings with no `TRANSLATIONS` key that never translate:
-   `"Capacity"`, `"Weight"` and `"Telescopic Boom Lift"` (now in
-   `LiftDetail.tsx`), and `"Home"`, `"Our Fleet"`, `"Why Choose Us"`,
-   `"Contact Support"`, `"Privacy Policy"`, `"Terms of Service"` in
-   `Footer.tsx`. That is the actual scope of roadmap item 3.
+7. ~~Hindi gaps.~~ Moot: Hindi was removed on 2026-10-03.
 8. All dependencies pinned to `"latest"`.
 9. `SpecsModal` lacks `role="dialog"`, `aria-modal`, Escape handling, a focus
    trap and body scroll lock. Its `AnimatePresence` never fires exit animations
@@ -264,8 +253,7 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 2. **Static generation + fleet pages** — port to Astro, generate one page per
    `BOOM_LIFTS` entry with full specs in HTML, per-page meta, OG tags and
    Product/Service JSON-LD. Add sitemap and robots.
-3. **Enable Hindi** — real switcher, `/hi/` routes, `hreflang`, fix `SpecsModal`
-   to use the active locale.
+3. ~~Enable Hindi~~ — dropped; the site is English-only.
 4. **Conversion** — WhatsApp deep links with the model prefilled, a quote form
    capturing working height / location / duration / site conditions, GA4 with
    events on call, WhatsApp and form submit.

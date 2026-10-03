@@ -2,15 +2,12 @@ import React from 'react';
 import Hero from './Hero';
 import LiftCard from './LiftCard';
 import TrustSection from './TrustSection';
-import { BOOM_LIFTS, CONTACT_INFO } from '../../constants';
+import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { Phone } from 'lucide-react';
-import { useLanguage } from '../i18n/language-context';
 
 /** The homepage body, lifted out of SiteShell unchanged so that SiteShell can be
  *  shared chrome and each route supplies its own main content. */
 const HomeSections: React.FC = () => {
-  const { t } = useLanguage();
-
   return (
     <>
         <Hero />

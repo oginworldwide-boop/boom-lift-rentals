@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
 import type { BoomLift } from '../../types';
-import { useLanguage } from '../i18n/language-context';
+import { TRANSLATIONS as t } from '../../constants';
 
 interface LiftCardProps {
   lift: BoomLift;
@@ -11,8 +11,6 @@ interface LiftCardProps {
  *  which no crawler can do, so the seven machine pages had nothing linking to them
  *  and the specs were invisible to search. Styling is unchanged. */
 const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
-  const { t } = useLanguage();
-
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col">
       <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-6">

@@ -1,11 +1,9 @@
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useLanguage } from '../i18n/language-context';
+import { TRANSLATIONS as t } from '../../constants';
 
 const Hero: React.FC = () => {
-  const { t } = useLanguage();
-
   return (
     <section className="relative min-h-dvh flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
       {/* Background Image with Overlay */}
