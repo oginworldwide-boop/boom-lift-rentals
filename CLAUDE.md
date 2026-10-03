@@ -60,8 +60,8 @@ These override any instruction to be helpful, fast, or complete.
    obvious placeholders and flag that real content is required.
 4. **Never invent prices, rates or rate cards.** Pricing is quote-based. Do not
    add a number unless the user gives one.
-5. **Never invent the GST number, LLP registration number, office address or
-   years in business.** These are marked TO CONFIRM below; leave them as
+5. **Never invent the GST number, LLP registration number or years in
+   business.** (The office address is now confirmed.) These are marked TO CONFIRM below; leave them as
    placeholders until filled.
 6. **`constants.ts` is the single source of truth for fleet data and contact
    details.** Do not hardcode a phone number, model name or spec anywhere else.
@@ -74,11 +74,15 @@ These override any instruction to be helpful, fast, or complete.
 
 ## Tech stack
 
-**Current (GitHub `main` — this is what is deployed):** Vite + React 19 +
-Tailwind v4 + framer-motion + lucide-react. **Single-page scroll site, no
-router.** `App.tsx` renders Hero → fleet grid → TrustSection → CTA → Footer all
-on `/`. Client-side rendered — crawlers get an empty `<div id="root">`. The
-entire site is **one indexable URL**.
+**Deployed (`main`, until PR #1 merges):** the old Vite + React client-rendered
+single page — crawlers get an empty `<div id="root">`, one indexable URL.
+
+**Branches (2026-10-03):** PR #1 `astro-static-port` → `main` = the static Astro
+site, copy-neutral. PR #2 `site-v2` → `main` (stacked on #1) = industrial
+redesign, WhatsApp + quote form, rewritten copy, high-reach page, working-height
+guide, contact, privacy, GA4 hook. Netlify is linked to GitHub and builds a
+deploy preview per PR (previews carry `noindex` and the Netlify drawer, so
+Lighthouse there needs `--blocked-url-patterns` for `*/.netlify/*` and `*/cdp/*`).
 
 **English only (decided 2026-10-03).** The Hindi toggle, every Hindi string in
 `constants.ts` and the language context were removed on the user's instruction.
@@ -109,8 +113,19 @@ switcher or `/hi/` routes without the user asking.
   with no `client:*` directive. Do not add one: nothing on the site needs
   hydration, and it costs ~66 KB gzipped on patchy 4G.
 - `npm run build` runs `scripts/assert-html.mjs`, which fails the build if a page
-  stops server-rendering, exceeds title/description
-  limits, or ships junk files.
+  stops server-rendering, ships JS, has a wrong canonical or slashless internal
+  link, a missing/non-JPEG share image, broken JSON-LD, a machine page missing
+  its own specs, a phone number typed outside `constants.ts`, mismatched quote
+  form fields, or exceeds title/description limits. Never weaken it to pass.
+- Share images: `npm run og` regenerates `public/og/*.jpg` (1200×630);
+  `npm run images` regenerates the 640w/800w/1200w WebP variants. Run both after
+  changing a machine or photo, and commit the output (not part of the build).
+- Quote form: one `QuoteForm` component, Netlify Forms (`name="quote"`), same
+  field set on every page. Netlify form detection must be enabled in the UI.
+- GA4: set `PUBLIC_GA4_ID` in the Netlify environment (not `.env`). Unset = no
+  scripts at all.
+- Copy lives in `TRANSLATIONS`; figures in copy are `{placeholders}` filled by
+  `fill()` in `src/fleet.ts` from `BOOM_LIFTS`/`CONTACT_INFO`.
 
 **Constraints:**
 - Pin all dependencies to exact versions. Several are currently `"latest"`,
@@ -150,13 +165,17 @@ Haiku, Fable or Opus max. Agents do not commit; review their diff and run
 ## Repo layout (GitHub `main`)
 
 ```
-constants.ts              # SOURCE OF TRUTH: BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS
-types.ts                  # BoomLift, ContactInfo
-App.tsx                   # entire page + inline LanguageContext + sticky call button
-components/               # Header, Hero, LiftCard, SpecsModal, TrustSection, Footer
-public/images/            # WebP, already well optimised (~644 KB total)
-metadata.json             # leftover Google AI Studio scaffold
-vertex-ai-proxy-interceptor.js   # leftover scaffold, unused
+constants.ts        # SOURCE OF TRUTH: BOOM_LIFTS, CONTACT_INFO, CLIENTS, TRANSLATIONS
+types.ts            # BoomLift, ContactInfo, PostalAddress
+src/pages/          # index, fleet, fleet/[slug], high-reach-boom-lift-rental,
+                    # guides/boom-lift-working-height, contact, privacy, quote/thanks, 404
+src/components/     # SiteShell, Header, Footer, Hero, HomeSections, LiftCard, LiftDetail,
+                    # FleetSections, TrustSection, QuoteForm, ui (buttons, plates, CtaRow)
+src/fleet.ts        # derived figures (ranges, highReach, neighbours) + fill()
+src/seo.ts          # titles/descriptions, liftPath, telHref, whatsappHref, ogImagePath
+src/schema.ts       # JSON-LD: LocalBusiness, Service, BreadcrumbList, WebSite
+scripts/            # assert-html (build guard), og-images, responsive-images
+public/og/          # generated share images; public/fonts/ Barlow Condensed (OFL)
 ```
 
 ## ⚠ Two diverging versions exist
@@ -237,34 +256,19 @@ disproportionately here because enquiries travel over WhatsApp.
 
 Ordered by impact. Full reasoning is in the audit; this is the working list.
 
-**Critical**
-1. Client-side rendering only — no SSR or prerender.
-2. **The entire site is one URL.** Seven machines, zero machine pages. Specs are
-   trapped in `SpecsModal`; there is no `/fleet/jlg-1350sjp` to rank or link to,
-   and no separate page for the fleet or the trust content either.
-3. A single title and description for the whole site, so there is nothing to
-   rank against model-specific or city-specific queries.
-4. No Open Graph or Twitter tags at all → blank WhatsApp link previews.
-5. No `robots.txt`, `sitemap.xml`, canonical tags or JSON-LD.
-6. No WhatsApp CTA and no quote form. Every CTA is a `tel:` link.
+Items 1–15 of the original audit are fixed on PR #1/#2 (static HTML, machine
+pages, per-page meta/OG, sitemap/robots/JSON-LD, WhatsApp + quote form, pinned
+deps, SpecsModal deleted, no bouncing button, scaffold removed, absolute paths,
+hero dimensions, no `href="#"`, GA4 hook). Open:
 
-**High**
-7. ~~Hindi gaps.~~ Moot: Hindi was removed on 2026-10-03.
-8. All dependencies pinned to `"latest"`.
-9. `SpecsModal` lacks `role="dialog"`, `aria-modal`, Escape handling, a focus
-   trap and body scroll lock. Its `AnimatePresence` never fires exit animations
-   because `if (!lift) return null` returns first.
-10. `animate-bounce` runs permanently on the fixed mobile call button with no
-    `prefers-reduced-motion` guard.
-
-**Medium**
-11. Leftover AI Studio scaffold: `vertex-ai-proxy-interceptor.js`, a fake
-    `process.env.API_KEY` define, and a `localhost:5000` proxy in
-    `vite.config.ts`.
-12. Relative image paths (`images/...`) will break on nested routes.
-13. Hero `<img>` has no width/height → CLS on the LCP element.
-14. Footer Privacy Policy and Terms link to `href="#"`.
-15. No analytics or conversion tracking of any kind.
+1. **Spec audit (2026-10-03, vs JLG/Genie datasheets):** capacity shows only the
+   restricted maximum for 1200SJP/1350SJP/1500SJ/S-85 XC (unrestricted 227 kg /
+   300 kg); all four 660SJ figures and the 1200SJP/1350SJP heights match older
+   datasheet revisions; weights mix ANSI/CE variants. Do not change without the
+   client's per-unit build spec.
+2. Hero photo shows a machine in "Universal" livery, not OG-IN's.
+3. Node 20 is EOL; upgrade to Node 22 + Astro 7.
+4. `@astrojs/react` still emits an unreferenced `dist/_astro/client.*.js`.
 
 ## Roadmap
 
@@ -292,18 +296,18 @@ Ordered by impact. Full reasoning is in the audit; this is the working list.
 
 Do not fill these in by guessing. Ask, then update this file.
 
-- [ ] GST number and LLP registration number
-- [ ] Full registered office address (currently only "Mumbai, Maharashtra")
+- [ ] GST number and LLP registration number (empty `gstin`/`llpin` placeholders in `CONTACT_INFO`; footer shows them once set)
+- [x] Registered office: Green Avenue, Bungalow No. 2, Mira Road East, Thane 401107 (client, 2026-10-03)
 - [ ] Years in business (an IndiaMART listing suggests ~9, unverified)
 - [ ] Which safety certifications and inspection regimes genuinely apply
 - [ ] Whether third-party inspection (TPI) certificates are provided per hire
 - [ ] Insurance coverage and whether it can be stated publicly
 - [ ] Whether operator training credentials can be named specifically
 - [ ] Which cities can actually be served with what lead time
-- [ ] Permission to name any existing clients or publish testimonials
+- [x] Clients may be named: Godrej, Reliance, Vedanta Power, Bokaro Steel (names only; no testimonials or logos supplied)
 - [ ] Whether any indicative pricing can be published
-- [ ] Preferred WhatsApp number (may differ from the two in `CONTACT_INFO`)
+- [x] WhatsApp number: +91 93245 25581 (client, 2026-10-03)
 - [ ] Google Analytics / Search Console / Google Business Profile access
-- [ ] Confirm Netlify builds from GitHub `main` (not manual drag-and-drop)
-- [ ] Who owns the `og-inworldwide.in` domain and DNS
+- [x] Netlify is linked to the GitHub repo with deploy previews (seen on PR #1)
+- [x] Domain `og-inworldwide.in` rented for 3 years from Hostinger (DNS there)
 - [ ] Whether anything in the local Desktop refactor is worth keeping
