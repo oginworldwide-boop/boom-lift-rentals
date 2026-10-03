@@ -1,59 +1,49 @@
-
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
-import { TRANSLATIONS as t } from '../../constants';
+import { BOOM_LIFTS, TRANSLATIONS as t } from '../../constants';
+import { fill } from '../fleet';
+import { CONTAINER, CtaRow, LINK, Label, cx } from './ui';
 
-const Hero: React.FC = () => {
-  return (
-    <section className="relative min-h-dvh flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/homebg.webp"
-          alt="JLG Boom Lift in action"
-          width="1600"
-          height="1200"
-          className="w-full h-full object-cover"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80"></div>
-      </div>
-      
-      <div className="text-center max-w-4xl z-10">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-orange-600 text-white text-xs font-bold uppercase tracking-widest mb-8 shadow-lg shadow-orange-900/20">
-          {t.hero_badge}
-        </span>
-        
-        <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 leading-[1.1] tracking-tight">
-          {t.hero_title_1} <span className="text-orange-500">{t.hero_title_2}</span> {t.hero_title_3}
-        </h1>
-        
-        <p className="text-lg md:text-xl text-slate-200 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
-          {t.hero_desc}
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-          <a 
-            href="#fleet" 
-            className="w-full sm:w-auto bg-orange-600 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-orange-500 transition-all shadow-xl shadow-orange-900/40 hover:-translate-y-1 active:translate-y-0"
-          >
-            {t.hero_cta_1}
-          </a>
-          <a 
-            href="#why-us" 
-            className="w-full sm:w-auto bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all hover:-translate-y-1 active:translate-y-0"
-          >
-            {t.hero_cta_2}
-          </a>
-        </div>
-      </div>
+/**
+ * Dark hero. Phones: copy and the three CTAs fit the first screen, the photo is a
+ * 16:9 strip below them. lg+: the photo fills the right ~58% under an ink gradient.
+ * One <img>, so React emits exactly one preload, carrying the same srcset/sizes.
+ */
+// The hero photo shows a JLG 1350SJP; the alt reads its name from the data.
+const pictured = BOOM_LIFTS.find((l) => l.id === '1350sjp')!;
 
-      {/* Scroll Indicator - Pure CSS, no Framer Motion */}
-      <div className="absolute bottom-12 inset-x-0 flex justify-center text-white/60 z-10 motion-safe:animate-bounce">
-        <ChevronDown size={40} strokeWidth={1.5} />
-      </div>
-    </section>
-  );
+/** One source for the hero <img> and BaseLayout's head preload: if srcset/sizes
+ *  differ, the browser fetches the image twice instead of deduping. */
+export const HERO_IMG = {
+  src: '/images/homebg.webp',
+  srcSet: '/images/homebg-800.webp 800w, /images/homebg-1200.webp 1200w, /images/homebg.webp 1600w',
+  sizes: '(min-width: 1024px) 58vw, 100vw',
 };
+
+const Hero: React.FC = () => (
+  <section className="relative overflow-hidden bg-ink text-white lg:min-h-[36rem]">
+    <div className={`${CONTAINER} relative z-10 pt-8 pb-8 lg:py-20`}>
+      <div className="lg:max-w-[40rem]">
+        <Label dark>{t.hero_eyebrow}</Label>
+        <h1 className="mt-4 font-display text-[2.5rem] leading-[1.02] lg:text-[4rem]">{t.hero_h1}</h1>
+        <p className="mt-5 max-w-[60ch] text-[1.0625rem] leading-relaxed text-steel-100">{fill(t.hero_subhead)}</p>
+        <CtaRow dark className="mt-7" />
+        <a href="#fleet" className={cx(LINK, 'mt-2 inline-flex min-h-12 items-center font-semibold text-steel-100 decoration-steel-500')}>
+          {t.hero_cta_1}
+        </a>
+      </div>
+    </div>
+    <img
+      src={HERO_IMG.src}
+      srcSet={HERO_IMG.srcSet}
+      sizes={HERO_IMG.sizes}
+      alt={`${pictured.brand} ${pictured.model} telescopic boom lift on a steel-structure site`}
+      width="1600"
+      height="1200"
+      fetchPriority="high"
+      className="block aspect-video w-full object-cover lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:h-full lg:w-[58%]"
+    />
+    <div aria-hidden="true" className="absolute inset-y-0 right-0 hidden w-[58%] bg-linear-to-r from-ink via-ink/50 to-transparent lg:block" />
+  </section>
+);
 
 export default Hero;

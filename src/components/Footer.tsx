@@ -1,68 +1,69 @@
-
 import React from 'react';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
-import { Mail, MapPin, Phone } from 'lucide-react';
-import { formatAddress, telHref } from '../seo';
+import { byHeight, fill } from '../fleet';
+import { formatAddress, liftPath, telHref, waPrefill, whatsappHref } from '../seo';
+import { CONTAINER } from './ui';
+import { Wordmark } from './Header';
 
-const Footer: React.FC = () => {
-  return (
-    <footer className="bg-white border-t border-slate-100 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-orange-600 rounded flex items-center justify-center text-white font-bold text-xl">O</div>
-              <span className="font-bold text-lg tracking-tight text-slate-900">OG-IN <span className="text-slate-500 font-medium">WORLDWIDE</span></span>
-            </div>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              {t.footer_desc}
-            </p>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-slate-900 mb-6">{t.footer_links}</h3>
-            <ul className="space-y-3 text-sm text-slate-500">
-              <li><a href="/" className="hover:text-orange-600 transition-colors">Home</a></li>
-              <li><a href="/fleet/" className="hover:text-orange-600 transition-colors">Our Fleet</a></li>
-              <li><a href="/#why-us" className="hover:text-orange-600 transition-colors">Why Choose Us</a></li>
-              <li><a href={telHref(CONTACT_INFO.phone)} className="hover:text-orange-600 transition-colors">Contact Support</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-slate-900 mb-6">{t.footer_contact}</h3>
-            <ul className="space-y-4 text-sm text-slate-500">
-              <li className="flex items-start gap-3">
-                <Phone size={18} className="text-orange-600 flex-shrink-0" />
-                <div className="flex flex-col">
-                  <span>{CONTACT_INFO.phone}</span>
-                  <span>{CONTACT_INFO.phone2}</span>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="text-orange-600 flex-shrink-0" />
-                <span>{CONTACT_INFO.email}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-orange-600 flex-shrink-0" />
-                <address className="not-italic flex flex-col">
-                  {formatAddress(CONTACT_INFO.address).map((line) => <span key={line}>{line}</span>)}
-                </address>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} OG-IN Worldwide LLP. {t.footer_rights}</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-slate-600">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-600">Terms of Service</a>
-          </div>
+// Rendered only once the client supplies the numbers (empty in constants.ts until then).
+const companyIds = [
+  CONTACT_INFO.gstin && `GSTIN ${CONTACT_INFO.gstin}`,
+  CONTACT_INFO.llpin && `LLPIN ${CONTACT_INFO.llpin}`,
+].filter(Boolean).join(' · ');
+
+const HEAD = 'micro-label mb-3 text-white';
+const A = 'inline-flex min-h-12 lg:min-h-9 items-center text-steel-300 transition-colors duration-150 hover:text-white';
+
+const Footer: React.FC = () => (
+  <footer className="border-t-4 border-safety bg-ink text-sm text-steel-300">
+    <div className={`${CONTAINER} grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_1fr]`}>
+      <div className="space-y-5">
+        <Wordmark full />
+        <p className="max-w-[48ch] leading-relaxed">{fill(t.footer_desc)}</p>
+        <div>
+          <p className={HEAD}>{t.footer_address_label}</p>
+          <address className="not-italic leading-relaxed">
+            {formatAddress(CONTACT_INFO.address).map((line) => <span key={line} className="block">{line}</span>)}
+          </address>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      <div>
+        <h2 className={HEAD}>{t.footer_links}</h2>
+        <ul className="grid grid-cols-2 gap-x-4 md:grid-cols-1">
+          <li className="col-span-2 md:col-span-1"><a href="/fleet/" className={`${A} font-semibold text-white`}>{t.fleet_title}</a></li>
+          {byHeight.map((l) => (
+            <li key={l.id}><a href={liftPath(l)} className={A}>{l.brand} {l.model}</a></li>
+          ))}
+          <li><a href="/high-reach-boom-lift-rental/" className={A}>{t.highreach_link}</a></li>
+          <li><a href="/guides/boom-lift-working-height/" className={A}>{t.footer_guide}</a></li>
+          <li><a href="/contact/" className={A}>{t.nav_contact}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 className={HEAD}>{t.footer_contact}</h2>
+        <ul className="tabular-nums">
+          {[CONTACT_INFO.phone, CONTACT_INFO.phone2].map((p) => (
+            <li key={p}><a href={telHref(p)} className={A}>{p}</a></li>
+          ))}
+          <li><a href={whatsappHref(waPrefill())} className={A}>{t.cta_whatsapp}</a></li>
+          <li><a href={`mailto:${CONTACT_INFO.email}`} className={`${A} break-all`}>{CONTACT_INFO.email}</a></li>
+          <li className="pt-2">{t.footer_hours}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div className="border-t border-steel-800">
+      <div className={`${CONTAINER} flex flex-col gap-2 py-6 text-xs md:flex-row md:justify-between`}>
+        <p>
+          © {new Date().getFullYear()} OG-IN Worldwide LLP. {t.footer_rights}{' '}
+          <a href="/privacy/" className="inline-flex min-h-12 items-center underline underline-offset-4 hover:text-white md:min-h-0">{t.footer_privacy}</a>
+        </p>
+        {companyIds && <p>{companyIds}</p>}
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

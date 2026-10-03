@@ -3,10 +3,6 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   // Used for canonical tags, absolute OG URLs and sitemap entries. Must match the
@@ -23,7 +19,9 @@ export default defineConfig({
   // Do not switch build.format to 'file': it puts .html into Astro.url.pathname,
   // which corrupts every canonical and og:url.
   trailingSlash: 'always',
-  build: { format: 'directory' },
+  // inlineStylesheets: the whole CSS is a few KB; inlining it removes the one
+  // render-blocking request that delayed LCP on slow 4G.
+  build: { format: 'directory', inlineStylesheets: 'always' },
 
   // sitemap() derives every URL from `site` and the generated routes, so the
   // sitemap cannot drift from the canonical tags. 404 is excluded automatically;
@@ -35,6 +33,5 @@ export default defineConfig({
     // @import "tailwindcss". This is the same plugin the Vite build used, so
     // nothing about the Tailwind setup changes in this port.
     plugins: [tailwindcss()],
-    resolve: { alias: { '@': path.resolve(__dirname, '.') } },
   },
 });

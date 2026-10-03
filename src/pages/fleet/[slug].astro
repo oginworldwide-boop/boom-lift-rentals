@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteShell from '../../components/SiteShell';
 import LiftDetail from '../../components/LiftDetail';
-import { BOOM_LIFTS } from '../../../constants';
+import { BOOM_LIFTS, TRANSLATIONS as t } from '../../../constants';
 import { liftPath, liftTitle, liftDescription, ogImagePath, liftImageAlt } from '../../seo';
 import { breadcrumbs, liftService, localBusiness } from '../../schema';
 
@@ -24,8 +24,8 @@ const pageUrl = new URL(liftPath(lift), site).href;
     localBusiness(site),
     liftService(lift, site, pageUrl),
     breadcrumbs([
-      { name: 'Home', url: site.href },
-      { name: 'Fleet', url: new URL('/fleet/', site).href },
+      { name: t.crumb_home, url: site.href },
+      { name: t.fleet_title, url: new URL('/fleet/', site).href },
       { name: `${lift.brand} ${lift.model}`, url: pageUrl },
     ]),
   ]}
@@ -33,7 +33,6 @@ const pageUrl = new URL(liftPath(lift), site).href;
   description={liftDescription(lift)}
   ogImage={ogImagePath(lift)}
   ogImageAlt={liftImageAlt(lift)}
-  ogType="product"
 >
-  <SiteShell><LiftDetail lift={lift} /></SiteShell>
+  <SiteShell path={Astro.url.pathname} quoteHref="#quote"><LiftDetail lift={lift} /></SiteShell>
 </BaseLayout>

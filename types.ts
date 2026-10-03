@@ -35,8 +35,12 @@ export interface BoomLift {
 export interface ContactInfo {
   phone: string;
   phone2: string;
+  whatsapp: string;
   email: string;
   address: PostalAddress;
+  /** Empty until the client supplies them; UI renders them only when set. */
+  gstin: string;
+  llpin: string;
 }
 
 export interface PostalAddress {

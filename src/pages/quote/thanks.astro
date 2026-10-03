@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteShell from '../../components/SiteShell';
+import { BTN_CALL, BTN_WA, CONTAINER, LINK } from '../../components/ui';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../../constants';
+import { byHeight, fill } from '../../fleet';
+import { THANKS_TITLE, THANKS_DESCRIPTION, liftPath, telHref, waPrefill, whatsappHref } from '../../seo';
+
+// Netlify Forms redirects here after a successful POST. noindex, and filtered out
+// of the sitemap in astro.config.mjs.
+const [beforePhone, afterPhone] = t.thanks_urgent.split('{phone}');
+---
+<BaseLayout noindex title={THANKS_TITLE} description={THANKS_DESCRIPTION}>
+  <SiteShell path={Astro.url.pathname}>
+    <div class="bg-ink py-12 text-white sm:py-16">
+      <div class={CONTAINER}>
+        <h1 class="font-display text-[2.5rem] leading-[1.02] sm:text-[3.5rem]">{t.thanks_title}</h1>
+        <p class="mt-3 max-w-[60ch] text-[1.0625rem] leading-relaxed text-steel-100">{t.thanks_body}</p>
+        <p class="mt-3 max-w-[60ch] text-steel-100">
+          {beforePhone}<a href={telHref(CONTACT_INFO.phone)} class="underline underline-offset-4 tabular-nums">{CONTACT_INFO.phone}</a>{afterPhone}
+        </p>
+        <div class="mt-7 grid gap-3 sm:flex sm:flex-wrap">
+          <a href={whatsappHref(waPrefill())} class={BTN_WA}>{t.cta_whatsapp_long}</a>
+          <a href={telHref(CONTACT_INFO.phone)} class={BTN_CALL}>{fill(t.cta_call_long)}</a>
+        </div>
+      </div>
+    </div>
+    <section class={`${CONTAINER} py-12`}>
+      <a href="/fleet/" class={`${LINK} inline-flex min-h-12 items-center font-semibold`}>{t.thanks_back}</a>
+      <ul class="mt-2 grid gap-x-6 sm:grid-cols-2 lg:grid-cols-4">
+        {byHeight.map((l) => (
+          <li><a href={liftPath(l)} class={`${LINK} inline-flex min-h-12 items-center`}>{l.brand} {l.model}</a></li>
+        ))}
+      </ul>
+    </section>
+  </SiteShell>
+</BaseLayout>

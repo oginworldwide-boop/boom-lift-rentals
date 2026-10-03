@@ -1,22 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteShell from '../components/SiteShell';
-import { BOOM_LIFTS } from '../../constants';
-import { liftPath } from '../seo';
+import { FleetGrid } from '../components/LiftCard';
+import { BTN_LINE_DARK, BTN_PRIMARY, CONTAINER } from '../components/ui';
 ---
 <BaseLayout noindex title="Page not found | OG-IN Worldwide" description="This page does not exist. Go to the home page or the boom lift fleet.">
-  <SiteShell>
-    <section class="max-w-3xl mx-auto px-4 pt-28 pb-24">
-      <h1 class="text-3xl font-bold text-slate-900 mb-4">Page not found</h1>
-      <p class="mb-6">
-        <a href="/" class="underline mr-6">Home</a>
-        <a href="/fleet/" class="underline">Fleet</a>
-      </p>
-      <ul class="space-y-1">
-        {BOOM_LIFTS.map((l) => (
-          <li><a href={liftPath(l)} class="underline">{l.brand} {l.model}</a></li>
-        ))}
-      </ul>
+  <SiteShell path={Astro.url.pathname}>
+    <div class="bg-ink py-12 text-white sm:py-16">
+      <div class={CONTAINER}>
+        <h1 class="font-display text-[2.5rem] leading-[1.02] sm:text-[3.5rem]">Page not found</h1>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/" class={BTN_LINE_DARK}>Home</a>
+          <a href="/fleet/" class={BTN_PRIMARY}>Fleet</a>
+        </div>
+      </div>
+    </div>
+    <section class={`${CONTAINER} py-12`}>
+      <FleetGrid />
     </section>
   </SiteShell>
 </BaseLayout>

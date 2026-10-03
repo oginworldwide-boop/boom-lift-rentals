@@ -9,7 +9,9 @@ interface Props {
    *  Made absolute below. Not WebP: WhatsApp previews are unreliable with it. */
   ogImage?: string;
   ogImageAlt?: string;
-  ogType?: 'website' | 'product';
+  /** The page's LCP image (home: HERO_IMG from Hero.tsx). Preloaded from <head> with the
+   *  img's exact srcset/sizes, so the browser dedupes it with React's in-body preload. */
+  preloadImage?: { src: string; srcSet: string; sizes: string };
   /** JSON-LD nodes for this page, wrapped in an @graph below. */
   schema?: object[];
   /** For pages that must not be indexed (404, thank-you). Emits robots noindex and
@@ -22,7 +24,7 @@ const {
   description,
   ogImage = '/og/home.jpg',
   ogImageAlt = 'OG-IN Worldwide boom lift rental',
-  ogType = 'website',
+  preloadImage,
   schema = [],
   noindex = false,
 } = Astro.props;
@@ -36,6 +38,26 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 const SITE_NAME = 'OG-IN Worldwide LLP';
 
 const jsonLd = schema.length ? graph(schema) : null;
+
+// GA4. Set PUBLIC_GA4_ID (e.g. G-XXXXXXXXXX) in the build environment (Netlify UI)
+// to load gtag.js and send click_call, click_whatsapp and, on /quote/thanks/,
+// generate_lead. Unset, the site ships no JavaScript at all. scripts/assert-html.mjs
+// reads the same variable and allows these two scripts and nothing else.
+const ga4Id: string | undefined = import.meta.env.PUBLIC_GA4_ID;
+if (ga4Id && !/^G-[A-Z0-9]+$/.test(ga4Id)) throw new Error(`PUBLIC_GA4_ID "${ga4Id}" is not a GA4 measurement ID`);
+const ga4Script = ga4Id && [
+  'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}',
+  `gtag('js',new Date());gtag('config','${ga4Id}');`,
+  // One delegated listener: every tel: and wa.me link on the page, including ones added later.
+  `document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"],a[href^="https://wa.me/"]');if(a)gtag('event',a.protocol==='tel:'?'click_call':'click_whatsapp',{link_url:a.href})});`,
+  // Only a real submission counts: the form POST arrives from a page on this origin
+  // (a bookmark, share or direct visit has no same-origin referrer), and a reload
+  // keeps that referrer, so a sessionStorage flag stops a second count. Storage
+  // blocked: the lead still fires (ponytail: reloads can then double-count).
+  Astro.url.pathname === '/quote/thanks/'
+    ? `if(document.referrer.indexOf(location.origin+'/')===0){var s;try{s=sessionStorage.getItem('og_lead');sessionStorage.setItem('og_lead','1')}catch(e){}if(!s)gtag('event','generate_lead')}`
+    : '',
+].join('');
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +71,7 @@ const jsonLd = schema.length ? graph(schema) : null;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <meta property="og:type" content={ogType} />
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -70,30 +92,22 @@ const jsonLd = schema.length ? graph(schema) : null;
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
 
-    {/* No hero preload here: React 19 already emits <link rel="preload" as="image">
-        for the fetchPriority="high" hero <img> (and for each machine page's image),
-        so a second one would only duplicate it. */}
+    {/* React 19 also emits a preload for a fetchPriority="high" <img>, but in <body>,
+        after this head has been parsed. This one starts the LCP fetch earlier; identical
+        imagesrcset/imagesizes let the browser treat both as the same request. */}
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage.src} imagesrcset={preloadImage.srcSet} imagesizes={preloadImage.sizes} fetchpriority="high" />
+    )}
 
-    <!-- Google Fonts - non-blocking -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      />
-    </noscript>
+    <!-- Display font only (headings, numerals). Self-hosted, swap; body text is system UI. -->
+    <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    {ga4Id && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>}
+    {ga4Script && <script is:inline set:html={ga4Script} />}
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
+  <body class="bg-paper font-sans text-ink antialiased">
     <slot />
   </body>
 </html>

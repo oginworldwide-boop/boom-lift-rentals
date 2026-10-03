@@ -1,0 +1,4 @@
+Barlow Condensed © The Barlow Project Authors, SIL Open Font License 1.1
+https://openfontlicense.org
+
+barlow-condensed-700-latin.woff2: weight 700, latin subset, downloaded from Google Fonts (v13).

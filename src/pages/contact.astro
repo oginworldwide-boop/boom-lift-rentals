@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import QuoteForm from '../components/QuoteForm';
+import { Clock } from 'lucide-react';
+import { CONTAINER, LINK, BTN_CALL, BTN_WA, PageHero } from '../components/ui';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { fill } from '../fleet';
+import { CONTACT_TITLE, CONTACT_DESCRIPTION, formatAddress, telHref, waPrefill, whatsappHref } from '../seo';
+import { breadcrumbs, localBusiness } from '../schema';
+
+const site = Astro.site!;
+const addressLines = formatAddress(CONTACT_INFO.address);
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLines.join(', '))}`;
+const phones = [CONTACT_INFO.phone, CONTACT_INFO.phone2];
+const DT = 'micro-label text-steel-500';
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: t.crumb_home, url: site.href },
+      { name: t.nav_contact, url: new URL('/contact/', site).href },
+    ]),
+  ]}
+  title={CONTACT_TITLE}
+  description={CONTACT_DESCRIPTION}
+>
+  <SiteShell path={Astro.url.pathname} quoteHref="#quote">
+    <PageHero crumb={t.nav_contact} title={t.contact_title.replace('OG-IN', 'OG\u2011IN')} intro={t.contact_intro}>
+      <div class="mt-7 grid gap-3 sm:flex sm:flex-wrap">
+        <a href={whatsappHref(waPrefill())} class={BTN_WA}>{t.cta_whatsapp_long}</a>
+        {phones.map((p) => (
+          <a href={telHref(p)} class={BTN_CALL}>{fill(t.cta_call_long, { phone: p })}</a>
+        ))}
+      </div>
+    </PageHero>
+
+    <section class={`${CONTAINER} grid items-start gap-10 py-12 sm:py-16 lg:grid-cols-[2fr_3fr] lg:gap-16`}>
+      <div>
+      <dl class="divide-y divide-steel-100 border-t border-steel-100">
+        <div class="py-5">
+          <dt class={DT}>{t.contact_email_label}</dt>
+          <dd><a href={`mailto:${CONTACT_INFO.email}`} class={`${LINK} inline-flex min-h-12 items-center font-semibold break-all`}>{CONTACT_INFO.email}</a></dd>
+        </div>
+        <div class="py-5">
+          <dt class={DT}>{t.contact_office_label}</dt>
+          <dd class="mt-2">
+            <address class="not-italic leading-relaxed">{addressLines.map((line) => <span class="block">{line}</span>)}</address>
+            <a href={mapsHref} target="_blank" rel="noopener" class={`${LINK} inline-flex min-h-12 items-center font-semibold`}>{t.contact_map_link}</a>
+          </dd>
+        </div>
+      </dl>
+      <p class="flex items-center gap-3 border-y border-steel-100 py-5"><Clock size={20} aria-hidden="true" className="text-safety" />{t.footer_hours}</p>
+      </div>
+
+      <QuoteForm page="/contact/" />
+    </section>
+  </SiteShell>
+</BaseLayout>
