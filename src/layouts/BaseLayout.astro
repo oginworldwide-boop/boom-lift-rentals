@@ -5,8 +5,10 @@ import { graph } from '../schema';
 interface Props {
   title: string;
   description: string;
-  /** Path to the page's share image, e.g. "/images/1350sjp.webp". Made absolute below. */
+  /** Path to the page's 1200x630 JPEG share image from `npm run og`, e.g. "/og/jlg-1350sjp.jpg".
+   *  Made absolute below. Not WebP: WhatsApp previews are unreliable with it. */
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: 'website' | 'product';
   /** JSON-LD nodes for this page, wrapped in an @graph below. */
   schema?: object[];
@@ -18,7 +20,8 @@ interface Props {
 const {
   title,
   description,
-  ogImage = '/images/homebg.webp',
+  ogImage = '/og/home.jpg',
+  ogImageAlt = 'OG-IN Worldwide boom lift rental',
   ogType = 'website',
   schema = [],
   noindex = false,
@@ -38,11 +41,13 @@ const jsonLd = schema.length ? graph(schema) : null;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1117" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE_NAME} />
@@ -50,15 +55,20 @@ const jsonLd = schema.length ? graph(schema) : null;
     <meta property="og:description" content={description} />
     {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content="en_IN" />
 
     <!-- Enquiries travel over WhatsApp, which reads these tags for its link preview.
-         The images are WebP and none are 1200x630, so previews may still render
-         blank until purpose-made share images exist. Tracked as a follow-up. -->
+         Images are 1200x630 JPEGs under 150 KB with the subject in the centre square,
+         since WhatsApp often crops to a square. Regenerate with `npm run og`. -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {/* No hero preload here: React 19 already emits <link rel="preload" as="image">
         for the fetchPriority="high" hero <img> (and for each machine page's image),

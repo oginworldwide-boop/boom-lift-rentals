@@ -149,6 +149,7 @@ for (const file of htmlFiles) {
 
   // Share images: a 404 here is a blank WhatsApp preview.
   for (const [, url] of html.matchAll(/<meta (?:property="og:image"|name="twitter:image") content="([^"]*)"/g)) {
+    if (!/\.(jpe?g|png)$/i.test(url)) fail(rel, `share image ${url} is not JPEG/PNG -- WhatsApp previews are unreliable with WebP`);
     if (!url.startsWith(SITE + '/')) fail(rel, `share image ${url} is not on ${SITE}`);
     else if (!existsSync(join(DIST, decodeURIComponent(url.slice(SITE.length))))) {
       fail(rel, `share image ${url} does not exist in ${DIST}/`);
