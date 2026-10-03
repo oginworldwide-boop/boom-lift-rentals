@@ -1,5 +1,5 @@
 import React from 'react';
-import { TRANSLATIONS as t } from '../../constants';
+import { BOOM_LIFTS, TRANSLATIONS as t } from '../../constants';
 import { fill } from '../fleet';
 import { CONTAINER, CtaRow, LINK, Label, cx } from './ui';
 
@@ -8,6 +8,9 @@ import { CONTAINER, CtaRow, LINK, Label, cx } from './ui';
  * 16:9 strip below them. lg+: the photo fills the right ~58% under an ink gradient.
  * One <img>, so React emits exactly one preload, carrying the same srcset/sizes.
  */
+// The hero photo shows a JLG 1350SJP; the alt reads its name from the data.
+const pictured = BOOM_LIFTS.find((l) => l.id === '1350sjp')!;
+
 const Hero: React.FC = () => (
   <section className="relative overflow-hidden bg-ink text-white lg:min-h-[36rem]">
     <div className={`${CONTAINER} relative z-10 pt-8 pb-8 lg:py-20`}>
@@ -25,7 +28,7 @@ const Hero: React.FC = () => (
       src="/images/homebg.webp"
       srcSet="/images/homebg-800.webp 800w, /images/homebg-1200.webp 1200w, /images/homebg.webp 1600w"
       sizes="(min-width: 1024px) 58vw, 100vw"
-      alt="JLG Boom Lift in action"
+      alt={`${pictured.brand} ${pictured.model} telescopic boom lift on a steel-structure site`}
       width="1600"
       height="1200"
       fetchPriority="high"

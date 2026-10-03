@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import { Bullets, CONTAINER, LINK, PROSE, PageHero } from '../components/ui';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { PRIVACY_TITLE, PRIVACY_DESCRIPTION } from '../seo';
+import { breadcrumbs, localBusiness } from '../schema';
+
+// Copy: copy-draft.md section 6 (approved 2026-10-03). Change this date whenever
+// the policy text changes.
+const LAST_UPDATED = '2026-10-03';
+
+const site = Astro.site!;
+const path = Astro.url.pathname;
+const a = CONTACT_INFO.address;
+const updated = new Date(LAST_UPDATED).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+// The analytics paragraph describes GA4, so it ships only in builds that load it.
+const ga4 = Boolean(import.meta.env.PUBLIC_GA4_ID);
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: t.footer_privacy, url: new URL(path, site).href },
+    ]),
+  ]}
+  title={PRIVACY_TITLE}
+  description={PRIVACY_DESCRIPTION}
+>
+  <SiteShell path={path}>
+    <PageHero crumb={t.footer_privacy} title={t.footer_privacy} />
+
+    <article class={`${CONTAINER} pb-14 sm:pb-20`}>
+      <div class={PROSE}>
+        <p class="micro-label pt-10 text-steel-500">Last updated: <time datetime={LAST_UPDATED}>{updated}</time></p>
+        <p>This policy covers the website of OG-IN Worldwide LLP, {a.street}, {a.locality}, {a.city} {a.postalCode} ("we").</p>
+
+        <h2>What we collect</h2>
+        <p>When you send the quote form, we receive:</p>
+        <Bullets
+          items={[
+            'your name',
+            'phone number',
+            'company (if you give it)',
+            'the machine you selected',
+            'site city',
+            'start date',
+            'hire duration',
+            'site conditions (if you describe them)',
+            'the page you sent the form from',
+          ]}
+        />
+        <p>We do not ask for payment details or identity documents on this website.</p>
+
+        <h2>How the form is handled</h2>
+        <p>The form is hosted by Netlify Forms, a form hosting provider. Netlify receives and stores the submission, then passes it to us.</p>
+
+        <h2>What we use it for</h2>
+        <p>We use these details only to respond to your enquiry: to contact you, recommend a machine and send a quote. We do not sell your details. We do not add you to a mailing list.</p>
+
+        <h2>Phone and WhatsApp</h2>
+        <p>If you call or message us on WhatsApp, your call or message is carried by your phone network or by WhatsApp, under their own terms and privacy policies. We use your number and message only to respond to you.</p>
+
+        {ga4 && (
+          <>
+            <h2>Analytics</h2>
+            <p>We use Google Analytics 4 to understand how the site is used in aggregate, for example which pages are visited and which buttons are tapped. Google Analytics sets cookies in your browser. We use the reports to improve the site, not to identify individual visitors. You can block these cookies in your browser settings.</p>
+          </>
+        )}
+
+        <h2>How long we keep it</h2>
+        <p>We keep enquiry details for as long as we need them to respond to the enquiry and to manage any hire that follows.</p>
+
+        <h2>Your data</h2>
+        <p>To ask what we hold about you, or to have it deleted, email <a href={`mailto:${CONTACT_INFO.email}`} class={`${LINK} font-semibold break-all`}>{CONTACT_INFO.email}</a>. We will reply to the address you write from.</p>
+
+        <h2>Changes</h2>
+        <p>If this policy changes, we will update this page and the date at the top.</p>
+      </div>
+    </article>
+  </SiteShell>
+</BaseLayout>

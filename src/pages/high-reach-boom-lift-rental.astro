@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteShell from '../components/SiteShell';
+import LiftCard from '../components/LiftCard';
+import QuoteForm from '../components/QuoteForm';
+import { Bullets, CONTAINER, CtaBand, CtaRow, H2, LINK, Label, PageHero } from '../components/ui';
+import { TRANSLATIONS as t } from '../../constants';
+import { fill, highReach } from '../fleet';
+import { HIGHREACH_TITLE, HIGHREACH_DESCRIPTION } from '../seo';
+import { breadcrumbs, localBusiness } from '../schema';
+
+// Copy: copy-draft.md section 4 (approved 2026-10-03). Every figure comes from
+// constants.ts through fill(); none is typed here.
+const site = Astro.site!;
+const path = Astro.url.pathname;
+const crumb = 'High-reach boom lift rental';
+const ROW = 'grid gap-4 border-t border-steel-100 py-10 first:border-t-0 lg:grid-cols-[1fr_2fr] lg:gap-16';
+const BODY = 'max-w-[65ch] space-y-4 text-[1.0625rem] leading-relaxed';
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: crumb, url: new URL(path, site).href },
+    ]),
+  ]}
+  title={HIGHREACH_TITLE}
+  description={HIGHREACH_DESCRIPTION}
+>
+  <SiteShell path={path} quoteHref="#quote">
+    <PageHero
+      crumb={crumb}
+      title={fill('High reach boom lift rental: {highReachHeightsFt} ft, operator included')}
+      intro={fill('OG-IN Worldwide hires out {highReachCount} JLG telescopic boom lifts that work above 100 ft, with platform heights of {highReachHeightsFt} ft. Every machine comes with a certified operator. We are based in Mumbai and hire pan-India. Pricing is by quote.')}
+    >
+      <CtaRow dark className="mt-7" />
+    </PageHero>
+
+    <div class={`${CONTAINER} py-6 sm:py-10`}>
+      <section class={ROW}>
+        <H2>When you need more than 100 ft</H2>
+        <div class={BODY}>
+          <p>Some work points are simply too high for a mid-size manlift: upper floors of a facade, the underside of a high roof, the top of a stack, silo or tower, overhead steelwork in a plant, signage and lighting on tall structures. At those heights you are usually choosing between a large boom lift, scaffold, rope access or a crane with a man basket.</p>
+          <p>A telescopic boom lift is driven to the work and set up from the ground. It puts people, tools and materials at height without building a structure first. It also reaches out as well as up. When a canopy, podium, plant room or live process area sits between the ground and the work, horizontal outreach often matters as much as height.</p>
+        </div>
+      </section>
+
+      <section class="border-t border-steel-100 py-10">
+        <Label>{t.lift_type}</Label>
+        <H2 className="mt-3">The high-reach machines</H2>
+        <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {highReach.map((lift) => <LiftCard lift={lift} />)}
+        </div>
+      </section>
+
+      <section class={ROW}>
+        <H2>Choosing between them</H2>
+        <div class={BODY}>
+          <p>{fill('Choose the smallest machine that reaches the work point comfortably. Bigger is not automatically better: weight rises with height across this range ({highReachWeightRange}), so a larger machine needs firmer ground and more room to get in and set up. If the work point sits close to the top of one machine\'s range, or you need outreach over an obstacle at height, the next size up is usually the better pick. Ask us and we will check it against the numbers.')}</p>
+          <p>{fill('For work below 100 ft, the {lowCount} smaller machines in the fleet ({lowHeightsFt} ft) are lighter. See the ')}<a href="/fleet/" class={`${LINK} font-semibold`}>full fleet</a>.</p>
+        </div>
+      </section>
+
+      <section class={ROW}>
+        <H2>What to send for a quote</H2>
+        <div class={BODY}>
+          <Bullets
+            items={[
+              'working height needed, and how far out the work is from where the machine can stand',
+              'site location',
+              'start date and duration',
+              'ground conditions: concrete, compacted soil, slab or slope',
+              'access: gate width, ramps, overhead cables, anything the machine has to pass under or around',
+            ]}
+          />
+          <p>Photos or a rough sketch on WhatsApp help.</p>
+        </div>
+      </section>
+
+      <CtaBand
+        title="Need to work above 100 ft?"
+        text="Send the height, the site and the dates. A certified operator comes with every machine."
+      />
+    </div>
+
+    <section class="mt-10 border-t border-steel-100 bg-white py-14 sm:mt-14 sm:py-20">
+      <div class={CONTAINER}>
+        <div class="mx-auto max-w-3xl"><QuoteForm page={path} /></div>
+      </div>
+    </section>
+  </SiteShell>
+</BaseLayout>

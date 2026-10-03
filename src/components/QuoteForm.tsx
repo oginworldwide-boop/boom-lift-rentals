@@ -1,6 +1,7 @@
 import React from 'react';
 import { TRANSLATIONS as t } from '../../constants';
 import { byHeight } from '../fleet';
+import { LINK } from './ui';
 
 interface QuoteFormProps {
   /** Path of the page the form sits on, sent with the submission. */
@@ -29,7 +30,6 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ page, selectedLiftId, id = 'quote
   const f = (name: string) => `${id}-${name}`;
   const required = <span className="ml-1 text-sm font-normal text-steel-500">({t.form_required})</span>;
 
-  // privacy link added with /privacy/
   return (
     <form
       id={id}
@@ -122,7 +122,10 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ page, selectedLiftId, id = 'quote
         >
           {t.form_submit}
         </button>
-        <p className="mt-3 text-sm text-steel-500">{t.form_privacy_note}</p>
+        <p className="mt-3 text-sm text-steel-500">
+          {t.form_privacy_note}{' '}
+          <a href="/privacy/" className={LINK}>{t.form_privacy_link}</a>
+        </p>
       </div>
     </form>
   );

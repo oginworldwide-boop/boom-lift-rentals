@@ -173,6 +173,9 @@ export const BOOM_LIFTS: BoomLift[] = [
 // fill fails the build. No figure or phone number is typed into these strings.
 export const TRANSLATIONS = {
   nav_call: "Call",
+  // Short labels so three links fit beside the wordmark at 390px.
+  nav_fleet: "Fleet",
+  nav_highreach: "High reach",
   nav_contact: "Contact",
 
   // Hero
@@ -229,9 +232,11 @@ export const TRANSLATIONS = {
   clients_label: "Clients include",
 
   highreach_title: "Work above 100 ft",
-  highreach_desc: "{highReachCount} JLG telescopic booms at {highReachHeightsFt} ft platform height, up to {maxCapacityKg} kg on the platform, each hired with a certified operator.",
-  // Link text for /high-reach-boom-lift-rental/; rendered once that page exists.
+  highreach_desc: "{highReachCount} JLG telescopic booms at {highReachHeightsFt} ft platform height, up to {highReachMaxCapacityKg} kg on the platform, each hired with a certified operator.",
   highreach_link: "High-reach boom lifts",
+  // /guides/boom-lift-working-height/: fleet-table link and footer link.
+  guide_link: "How to choose working height",
+  footer_guide: "Working height guide",
 
   cta_title: "Send the height and the site",
   cta_desc: "Tell us the working height, site location, start date and duration. We will suggest a machine from the fleet and send a quote.",
@@ -297,8 +302,8 @@ export const TRANSLATIONS = {
   form_conditions_help: "Working height needed, what you are reaching (facade, roof, steelwork), ground (concrete, soil, slab), gate width, anything overhead.",
   form_required: "Required",
   form_submit: "Send enquiry",
-  // Draft continues "See the privacy policy." -- appended, linked, once /privacy/ exists.
   form_privacy_note: "We use these details only to reply to this enquiry.",
+  form_privacy_link: "See the privacy policy.",
 
   // /quote/thanks/
   thanks_title: "Enquiry received",
@@ -319,7 +324,6 @@ export const TRANSLATIONS = {
   footer_contact: "Contact",
   footer_address_label: "Registered office",
   footer_hours: "Mon–Sat, 9:00 AM–7:00 PM",
-  // Rendered once /privacy/ exists.
   footer_privacy: "Privacy policy",
   footer_rights: "All rights reserved.",
 };

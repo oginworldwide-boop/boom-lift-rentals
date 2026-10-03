@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteShell from '../../components/SiteShell';
-import { BTN_PRIMARY, BTN_WA, CONTAINER, LINK } from '../../components/ui';
+import { BTN_CALL, BTN_WA, CONTAINER, LINK } from '../../components/ui';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../../constants';
 import { byHeight, fill } from '../../fleet';
 import { THANKS_TITLE, THANKS_DESCRIPTION, liftPath, telHref, waPrefill, whatsappHref } from '../../seo';
@@ -21,7 +21,7 @@ const [beforePhone, afterPhone] = t.thanks_urgent.split('{phone}');
         </p>
         <div class="mt-7 grid gap-3 sm:flex sm:flex-wrap">
           <a href={whatsappHref(waPrefill())} class={BTN_WA}>{t.cta_whatsapp_long}</a>
-          <a href={telHref(CONTACT_INFO.phone)} class={`${BTN_PRIMARY} tabular-nums`}>{fill(t.cta_call_long)}</a>
+          <a href={telHref(CONTACT_INFO.phone)} class={BTN_CALL}>{fill(t.cta_call_long)}</a>
         </div>
       </div>
     </div>

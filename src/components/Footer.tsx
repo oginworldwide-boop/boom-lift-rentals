@@ -35,6 +35,8 @@ const Footer: React.FC = () => (
           {byHeight.map((l) => (
             <li key={l.id}><a href={liftPath(l)} className={A}>{l.brand} {l.model}</a></li>
           ))}
+          <li><a href="/high-reach-boom-lift-rental/" className={A}>{t.highreach_link}</a></li>
+          <li><a href="/guides/boom-lift-working-height/" className={A}>{t.footer_guide}</a></li>
           <li><a href="/contact/" className={A}>{t.nav_contact}</a></li>
         </ul>
       </div>
@@ -54,7 +56,10 @@ const Footer: React.FC = () => (
 
     <div className="border-t border-steel-800">
       <div className={`${CONTAINER} flex flex-col gap-2 py-6 text-xs md:flex-row md:justify-between`}>
-        <p>© {new Date().getFullYear()} OG-IN Worldwide LLP. {t.footer_rights}</p>
+        <p>
+          © {new Date().getFullYear()} OG-IN Worldwide LLP. {t.footer_rights}{' '}
+          <a href="/privacy/" className="inline-flex min-h-12 items-center underline underline-offset-4 hover:text-white md:min-h-0">{t.footer_privacy}</a>
+        </p>
         {companyIds && <p>{companyIds}</p>}
       </div>
     </div>

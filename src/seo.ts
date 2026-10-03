@@ -63,6 +63,22 @@ export const CONTACT_DESCRIPTION =
   'Call, WhatsApp or send the quote form for boom lift rental. Mumbai-based, pan-India hire, ' +
   'certified operator included. Mon–Sat, 9:00 AM–7:00 PM.';
 
+export const HIGHREACH_TITLE = fill(`High Reach Boom Lift Rental, {highReachMinFt}–{maxHeightFt} ft | ${BRAND_SUFFIX}`);
+export const HIGHREACH_DESCRIPTION = fill(
+  'Hire JLG telescopic boom lifts at {highReachHeightsFt} ft platform height, up to {highReachMaxCapacityKg} kg, ' +
+  'with a certified operator. Mumbai-based, pan-India. Get a quote.',
+);
+
+export const GUIDE_TITLE = `Boom Lift Working Height: How to Choose | ${BRAND_SUFFIX}`;
+export const GUIDE_DESCRIPTION =
+  'Platform height vs working height, outreach, capacity, ground and access: how to pick a boom lift ' +
+  'or manlift for the job, with the full fleet spec table.';
+
+export const PRIVACY_TITLE = `Privacy Policy | ${BRAND_SUFFIX}`;
+export const PRIVACY_DESCRIPTION =
+  'What the OG-IN Worldwide quote form collects, how enquiry details are used and stored, ' +
+  'and how to ask for your data to be accessed or deleted.';
+
 export const THANKS_TITLE = `Enquiry Received | ${BRAND_SUFFIX}`;
 export const THANKS_DESCRIPTION =
   'Your boom lift rental enquiry has reached OG-IN Worldwide. ' +

@@ -36,6 +36,20 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 const SITE_NAME = 'OG-IN Worldwide LLP';
 
 const jsonLd = schema.length ? graph(schema) : null;
+
+// GA4. Set PUBLIC_GA4_ID (e.g. G-XXXXXXXXXX) in the build environment (Netlify UI)
+// to load gtag.js and send click_call, click_whatsapp and, on /quote/thanks/,
+// generate_lead. Unset, the site ships no JavaScript at all. scripts/assert-html.mjs
+// reads the same variable and allows these two scripts and nothing else.
+const ga4Id: string | undefined = import.meta.env.PUBLIC_GA4_ID;
+if (ga4Id && !/^G-[A-Z0-9]+$/.test(ga4Id)) throw new Error(`PUBLIC_GA4_ID "${ga4Id}" is not a GA4 measurement ID`);
+const ga4Script = ga4Id && [
+  'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}',
+  `gtag('js',new Date());gtag('config','${ga4Id}');`,
+  // One delegated listener: every tel: and wa.me link on the page, including ones added later.
+  `document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"],a[href^="https://wa.me/"]');if(a)gtag('event',a.protocol==='tel:'?'click_call':'click_whatsapp',{link_url:a.href})});`,
+  Astro.url.pathname === '/quote/thanks/' ? `gtag('event','generate_lead');` : '',
+].join('');
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -76,6 +90,8 @@ const jsonLd = schema.length ? graph(schema) : null;
 
     <!-- Display font only (headings, numerals). Self-hosted, swap; body text is system UI. -->
     <link rel="preload" href="/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    {ga4Id && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>}
+    {ga4Script && <script is:inline set:html={ga4Script} />}
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}

@@ -14,7 +14,8 @@ export const Wordmark: React.FC<{ full?: boolean }> = ({ full }) => (
 );
 
 const NAV = [
-  { href: '/fleet/', label: t.fleet_title },
+  { href: '/fleet/', label: t.nav_fleet },
+  { href: '/high-reach-boom-lift-rental/', label: t.nav_highreach },
   { href: '/contact/', label: t.nav_contact },
 ];
 

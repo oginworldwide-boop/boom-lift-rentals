@@ -7,7 +7,7 @@ import QuoteForm from './QuoteForm';
 import { CLIENTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { byHeight, fill, highReach } from '../fleet';
 import { liftPath, telHref, waPrefill, whatsappHref } from '../seo';
-import { CONTAINER, H2, LINK, Label } from './ui';
+import { CONTAINER, H2, LINK, Label, cx } from './ui';
 
 const STRIP = [
   [t.strip_height_label, t.strip_height_value],
@@ -73,6 +73,9 @@ const HomeSections: React.FC = () => (
         <div>
           <H2>{t.highreach_title}</H2>
           <p className="mt-3 max-w-[55ch] leading-relaxed text-steel-100">{fill(t.highreach_desc)}</p>
+          <a href="/high-reach-boom-lift-rental/" className={cx(LINK, 'mt-2 inline-flex min-h-12 items-center font-semibold text-white decoration-steel-500')}>
+            {t.highreach_link}
+          </a>
         </div>
         <ul className="grid grid-cols-3 border-t border-steel-700">
           {highReach.map((l, i) => (

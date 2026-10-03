@@ -15,6 +15,9 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
 const DIST = process.argv[2] || 'dist';
+// GA4 is the one script allowed, and only when the build set PUBLIC_GA4_ID (see
+// BaseLayout.astro). Run this check with the same environment as the build.
+const GA4_ID = process.env.PUBLIC_GA4_ID || '';
 // Visible characters inside <main>. An unrendered shell has 0; the sparsest real
 // page (404: heading plus links to the machines) has ~107; content pages have thousands.
 const MIN_MAIN_TEXT = 100;
@@ -113,7 +116,21 @@ for (const file of htmlFiles) {
 
   // Zero client JS: nothing on this site needs hydration.
   if (html.includes('astro-island')) fail(rel, 'contains an <astro-island> -- a client:* directive crept in');
-  if (html.includes('<script type="module"')) fail(rel, 'ships a <script type="module"> -- the site is meant to be zero-JS');
+  // Every <script> except JSON-LD. Unset GA4: none. Set: exactly the gtag.js loader
+  // and one inline config script, nothing else and no modules.
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)]
+    .filter(([, attrs]) => !attrs.includes('type="application/ld+json"'));
+  if (!GA4_ID) {
+    if (scripts.length) fail(rel, `ships ${scripts.length} <script> -- the site is zero-JS unless PUBLIC_GA4_ID is set`);
+  } else {
+    const loader = scripts.filter(([, a, b]) => a.includes(`src="https://www.googletagmanager.com/gtag/js?id=${GA4_ID}"`) && /\basync\b/.test(a) && !b.trim());
+    const inline = scripts.filter(([, a, b]) => !a.trim() && b.includes(`gtag('config','${GA4_ID}')`));
+    if (loader.length !== 1) fail(rel, `expected one async gtag.js loader for ${GA4_ID}, found ${loader.length}`);
+    if (inline.length !== 1) fail(rel, `expected one inline GA4 config script, found ${inline.length}`);
+    if (scripts.length !== 2) fail(rel, `ships ${scripts.length} <script> tags; only the two GA4 scripts are allowed`);
+    const lead = html.includes(`gtag('event','generate_lead')`);
+    if (lead !== (routeOf(rel) === '/quote/thanks/')) fail(rel, `generate_lead ${lead ? 'fires on a page other than' : 'missing from'} /quote/thanks/`);
+  }
 
   // Titles and descriptions are brand-visible in search results, so keep them
   // inside the lengths Google will actually render rather than discovering the
@@ -201,4 +218,4 @@ if (failures) {
   console.error(`\n  ${failures} assertion(s) failed across ${checked}.`);
   process.exit(1);
 }
-console.log(`  PASS  ${checked}: server-rendered, zero-JS, canonicals, links, share images, JSON-LD, specs, no stray phone numbers.`);
+console.log(`  PASS  ${checked}: server-rendered, ${GA4_ID ? `GA4 ${GA4_ID} only` : 'zero-JS'}, canonicals, links, share images, JSON-LD, specs, no stray phone numbers.`);

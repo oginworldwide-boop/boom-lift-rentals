@@ -11,12 +11,15 @@ export const byHeight: BoomLift[] = [...BOOM_LIFTS].sort((a, b) => a.heightM - b
 
 /** Machines above 100 ft, by the model-designation height. */
 export const highReach = byHeight.filter((l) => l.nominalHeightFt >= 100);
+const lowReach = byHeight.filter((l) => l.nominalHeightFt < 100);
 
 /** ["120", "135", "150"] -> "120, 135 and 150" */
 const joinAnd = (xs: (string | number)[]) =>
   xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`;
 
 const nominal = BOOM_LIFTS.map((l) => l.nominalHeightFt);
+const kg = (n: number) => n.toLocaleString('en-IN');
+const weights = (ls: BoomLift[]) => ls.map((l) => l.weightKg);
 
 export const FLEET_VARS: Record<string, string | number> = {
   fleetCount: BOOM_LIFTS.length,
@@ -25,6 +28,13 @@ export const FLEET_VARS: Record<string, string | number> = {
   maxCapacityKg: Math.max(...BOOM_LIFTS.map((l) => l.capacityKg)),
   highReachCount: highReach.length,
   highReachHeightsFt: joinAnd(highReach.map((l) => l.nominalHeightFt)),
+  highReachMinFt: Math.min(...highReach.map((l) => l.nominalHeightFt)),
+  highReachMaxCapacityKg: Math.max(...highReach.map((l) => l.capacityKg)),
+  highReachWeightRange: `${kg(Math.min(...weights(highReach)))}–${kg(Math.max(...weights(highReach)))} kg`,
+  lowCount: lowReach.length,
+  lowHeightsFt: joinAnd(lowReach.map((l) => l.nominalHeightFt)),
+  minWeightKg: kg(Math.min(...weights(BOOM_LIFTS))),
+  maxWeightKg: kg(Math.max(...weights(BOOM_LIFTS))),
   phone: CONTACT_INFO.phone,
 };
 

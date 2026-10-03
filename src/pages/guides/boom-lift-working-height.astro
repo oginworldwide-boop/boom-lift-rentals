@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteShell from '../../components/SiteShell';
+import { FleetTable } from '../../components/FleetSections';
+import { Bullets, CONTAINER, CtaBand, PROSE, PageHero } from '../../components/ui';
+import { TRANSLATIONS as t } from '../../../constants';
+import { fill } from '../../fleet';
+import { GUIDE_TITLE, GUIDE_DESCRIPTION } from '../../seo';
+import { breadcrumbs, localBusiness } from '../../schema';
+
+// Copy: copy-draft.md section 5 (approved 2026-10-03). Fleet figures come from
+// constants.ts through fill() and FleetTable; none is typed here.
+const site = Astro.site!;
+const path = Astro.url.pathname;
+const title = 'How to choose boom lift working height';
+const STEPS = [
+  'Measure the height of the work point (not a working-height figure).',
+  'Measure how far the work is from the nearest place the machine can stand.',
+  'Add up the platform load: people, tools and materials.',
+  'Note the ground and any access limits.',
+  'Pick the smallest machine whose platform height and outreach cover steps 1 and 2 with some margin, and whose capacity covers step 3. If two machines are close, ask us.',
+];
+---
+<BaseLayout
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: title, url: new URL(path, site).href },
+    ]),
+  ]}
+  title={GUIDE_TITLE}
+  description={GUIDE_DESCRIPTION}
+>
+  <SiteShell path={path}>
+    <PageHero
+      crumb={t.footer_guide}
+      title={title}
+      intro="Most boom lift enquiries start with one number: how high. Height is only part of the answer, though. The machine also has to reach out to the work, carry the people and materials, stand on the ground you have, and get through the gate. This guide covers each of those and ends with the full OG‑IN fleet in one table."
+    />
+
+    <article class={`${CONTAINER} pb-14 sm:pb-20`}>
+      <div class={PROSE}>
+        <h2>Platform height and working height are different numbers</h2>
+        <p>Platform height is the height of the platform floor at full elevation. It is the figure on a manufacturer's datasheet, and it is the figure we list for every machine.</p>
+        <p>Working height is how high a person on the platform can reach. By common convention it is quoted as platform height plus about 2&nbsp;m (6&nbsp;ft), which assumes a person of average height working at roughly shoulder to head height. It is a convention, not a measured figure.</p>
+        <p>When you compare quotes, check which of the two figures is being used. When you send us a requirement, tell us the height of the work point itself, for example "underside of the beam at 32&nbsp;m" or "top of the facade panel at 38&nbsp;m", and we will match it against platform height.</p>
+
+        <h2>Horizontal outreach: when you can't park under the work</h2>
+        <p>Height assumes the machine can stand directly below the work. On most real sites it can't: there is a canopy, a podium slab, a planter, a line of parked plant, a live road, or a building setback in the way. Horizontal outreach is how far the platform can reach out sideways from the machine's centre of rotation.</p>
+        <p>Two things follow from that:</p>
+        <Bullets
+          items={[
+            'Maximum height and maximum outreach are not reached at the same time. As the boom lowers to reach further out, the platform comes down. A machine with enough height for the work point may not have enough height at the outreach you need.',
+            'Measure the distance from the nearest place the machine can stand to the work, and send it with the height. Without it, every recommendation is a guess.',
+          ]}
+        />
+        <p>Every machine page lists horizontal outreach next to platform height.</p>
+
+        <h2>Platform capacity: people, tools and materials</h2>
+        <p>Platform capacity is the total load the platform is rated to carry: the people, plus everything they take up. Glazing units, cladding panels, cable drums, welding sets and buckets all count.</p>
+        <p>Add it up before choosing a machine:</p>
+        <Bullets
+          items={[
+            'number of people × a realistic body weight, with PPE and harness',
+            'tools and power equipment',
+            'materials lifted in one go',
+          ]}
+        />
+        <p>{fill('Some machines have a dual capacity rating: a higher load within a restricted part of the work envelope and a lower load across the full envelope. If your load is near the higher figure, check with us which rating applies at the height and outreach you need. Platform capacity in the OG‑IN fleet goes up to {maxCapacityKg} kg. Each machine\'s rating is on its spec page.')}</p>
+
+        <h2>Ground conditions and machine weight</h2>
+        <p>{fill('Large telescopic booms are heavy. Across the OG‑IN fleet, machine weight runs from {minWeightKg} kg to {maxWeightKg} kg. Each machine page lists its weight.')}</p>
+        <p>Tell us what the machine will stand and travel on:</p>
+        <Bullets
+          items={[
+            'concrete hardstanding, compacted soil, gravel, or fill',
+            'suspended slabs, basement roofs, podiums, covered drains or service trenches',
+            'slopes and kerbs along the route to the work point',
+            'recent rain or waterlogging',
+          ]}
+        />
+        <p>Soft or unknown ground can rule out a machine that is otherwise the right height. It is better to raise it before the hire than on the day.</p>
+
+        <h2>Access and transport</h2>
+        <p>Before a boom lift can work, it has to reach the work point. Check:</p>
+        <Bullets
+          items={[
+            'gate and lane width, and turning space inside the site',
+            'overhead obstructions on the route: cables, pipe racks, signage, tree branches',
+            'ramps and gradients',
+            'where the machine can be unloaded',
+          ]}
+        />
+        <p>We don't publish stowed dimensions on the site. Ask and we will confirm them for the machine you are considering.</p>
+
+        <h2>How to pick: a short checklist</h2>
+        <ol class="space-y-3">
+          {STEPS.map((step, i) => (
+            <li class="flex gap-4">
+              <span aria-hidden="true" class="w-5 shrink-0 font-display text-2xl leading-[1.15] text-safety-ink tabular-nums">{i + 1}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+
+        <h2 id="fleet-table">The fleet by platform height</h2>
+      </div>
+      <div class="mt-6">
+        <FleetTable caption="Every machine is hired with a certified operator." />
+      </div>
+
+      <div class="mt-14">
+        <CtaBand
+          title="Not sure which machine fits?"
+          text="Send the height of the work point, the distance out from where the machine can stand, the load, and the site location. We will suggest a machine and send a quote."
+          quoteHref="/contact/#quote"
+        />
+      </div>
+    </article>
+  </SiteShell>
+</BaseLayout>
