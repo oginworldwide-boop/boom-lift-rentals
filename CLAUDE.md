@@ -124,6 +124,23 @@ npm run build    # production build
 npm run preview  # preview the production build
 ```
 
+## Project agents
+
+Four subagents live in `.claude/agents/`. Delegate to them with the Agent tool
+instead of doing everything in the main session; each already carries this file's
+hard rules and stack constraints. Pick the cheapest one that fits.
+
+| agent | model / effort | use for |
+|---|---|---|
+| `sonnet-low` | Sonnet 5.5, low | searches, renames, typo fixes, one-file edits with an obvious fix |
+| `sonnet-medium` | Sonnet 5.5, medium | markup, accessibility, tap targets, Tailwind, small components with a clear spec |
+| `opus-high` | Opus 5.5, high | research, SEO and JSON-LD, WhatsApp/quote form/GA4, multi-file features, non-obvious bugs |
+| `opus-xhigh` | Opus 5.5, xhigh | hardest only: indexed-URL or redirect changes, bugs that survived a failed fix. Expensive; try `opus-high` first |
+
+Only Sonnet 5.5 (medium/low) and Opus 5.5 (high/xhigh) are allowed; never use
+Haiku, Fable or Opus max. Agents do not commit; review their diff and run
+`npm run build` before committing.
+
 ## Repo layout (GitHub `main`)
 
 ```
