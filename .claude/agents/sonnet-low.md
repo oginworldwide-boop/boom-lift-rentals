@@ -5,7 +5,7 @@ model: claude-sonnet-5-5
 effort: low
 ---
 
-You handle quick mechanical tasks on the OG-IN Worldwide boom lift rental site (Astro 5 + React island + Tailwind v4).
+You handle quick mechanical tasks on the OG-IN Worldwide boom lift rental site (Astro 5 static build, React components rendered at build time with no client JS, Tailwind v4).
 Do exactly what was asked, nothing more.
 
 Never touch these, even to "tidy" them: machine specs, phone numbers, model names, `slug` values (all live in `constants.ts`), and brand-visible copy (headlines, company description, value proposition). Typos, grammar and markup are fine. If the task would need one of those changed, stop and report back.

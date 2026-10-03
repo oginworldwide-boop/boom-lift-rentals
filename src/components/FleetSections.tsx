@@ -1,6 +1,7 @@
 import React from 'react';
 import LiftCard from './LiftCard';
 import { BOOM_LIFTS, TRANSLATIONS as t } from '../../constants';
+import { liftPath } from '../seo';
 
 /**
  * The /fleet catalogue.
@@ -37,7 +38,7 @@ const FleetSections: React.FC = () => {
             {byHeight.map((lift) => (
               <tr key={lift.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
                 <th scope="row" className="px-5 py-4 text-left font-semibold text-slate-900 whitespace-nowrap">
-                  <a href={`/fleet/${lift.slug}`} className="hover:text-orange-600 transition-colors">
+                  <a href={liftPath(lift)} className="hover:text-orange-600 transition-colors">
                     {lift.brand} {lift.model}
                   </a>
                 </th>

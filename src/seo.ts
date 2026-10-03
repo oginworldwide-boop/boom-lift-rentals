@@ -1,4 +1,4 @@
-import type { BoomLift } from '../types';
+import type { BoomLift, PostalAddress } from '../types';
 import { CONTACT_INFO } from '../constants';
 
 /**
@@ -10,6 +10,22 @@ import { CONTACT_INFO } from '../constants';
  */
 
 const BRAND_SUFFIX = 'OG-IN Worldwide';
+
+/** The one place a machine URL is built. Trailing slash matches trailingSlash: 'always'. */
+export const liftPath = (lift: BoomLift) => `/fleet/${lift.slug}/`;
+
+/** "+91 98765 43210" -> "+919876543210" (E.164, for tel: links and JSON-LD). */
+export const e164 = (phone: string) => `+${phone.replace(/\D/g, '')}`;
+export const telHref = (phone: string) => `tel:${e164(phone)}`;
+
+/** Display lines for an address. JSON-LD addressLocality uses the same "locality, city" pairing. */
+export const addressLocality = (a: PostalAddress) => `${a.locality}, ${a.city}`;
+export const formatAddress = (a: PostalAddress) => [
+  a.street,
+  addressLocality(a),
+  `${a.region} ${a.postalCode}`,
+  a.country,
+];
 
 /** Google truncates around these lengths; exceeded values are reported by `npm run seo`. */
 export const TITLE_MAX = 60;

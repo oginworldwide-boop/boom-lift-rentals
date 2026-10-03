@@ -1,10 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteShell from '../components/SiteShell';
-import { localBusiness } from '../schema';
+import FleetSections from '../components/FleetSections';
+import { breadcrumbs, localBusiness } from '../schema';
 import { FLEET_TITLE, FLEET_DESCRIPTION } from '../seo';
+
+const site = Astro.site!;
 ---
 <BaseLayout
-  schema={[localBusiness(Astro.site!)]} title={FLEET_TITLE} description={FLEET_DESCRIPTION}>
-  <SiteShell page="fleet" client:load />
+  schema={[
+    localBusiness(site),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: 'Fleet', url: new URL('/fleet/', site).href },
+    ]),
+  ]}
+  title={FLEET_TITLE}
+  description={FLEET_DESCRIPTION}
+>
+  <SiteShell><FleetSections /></SiteShell>
 </BaseLayout>

@@ -95,13 +95,19 @@ switcher or `/hi/` routes without the user asking.
   `astro:assets` and view transitions are all unused. Revisit with Node 22.
 - Canonical origin is `https://www.og-inworldwide.in`, set once as `site` in
   `astro.config.mjs`. Canonicals, OG URLs and the sitemap all derive from it.
-- `trailingSlash: 'never'` with `build.format: 'directory'`. Do not switch to
-  `'file'`: it puts `.html` into `Astro.url.pathname`, which silently
-  corrupts every canonical and `og:url`.
-- Machine URLs are `/fleet/[brand]-[id]`, e.g. `/fleet/jlg-1350sjp`,
-  `/fleet/genie-s60j`. The `slug` is an explicit field in `constants.ts`, never
-  derived. **These are indexed; changing one costs a permanent redirect.**
-- One React island per page (`SiteShell`). Keep island props scalar: Astro serializes them into the HTML.
+- **`trailingSlash: 'always'` with `build.format: 'directory'`** (changed
+  2026-10-03, before any `/fleet/*` URL went live). Netlify Pretty URLs 301s
+  `/fleet/x` to `/fleet/x/` when only `fleet/x/index.html` exists, so the old
+  `'never'` setting made every canonical point at a redirecting URL. Every
+  internal link must end in `/`. Do not switch to `'file'`: it puts `.html`
+  into `Astro.url.pathname`.
+- Machine URLs are `/fleet/[brand]-[id]/`, e.g. `/fleet/jlg-1350sjp/`,
+  `/fleet/genie-s60j/`. Build them with `liftPath()` from `src/seo.ts`. The
+  `slug` is an explicit field in `constants.ts`, never derived. **Once live
+  they are indexed; changing one costs a permanent redirect.**
+- **Zero client JS.** React components are rendered to static HTML at build time
+  with no `client:*` directive. Do not add one: nothing on the site needs
+  hydration, and it costs ~66 KB gzipped on patchy 4G.
 - `npm run build` runs `scripts/assert-html.mjs`, which fails the build if a page
   stops server-rendering, exceeds title/description
   limits, or ships junk files.
@@ -114,7 +120,7 @@ switcher or `/hi/` routes without the user asking.
 - No backend. Forms go through Netlify Forms or an equivalent static-host
   service.
 - Use absolute asset paths (`/images/...`), never relative. Relative paths break
-  on nested routes like `/fleet/jlg-1350sjp`.
+  on nested routes like `/fleet/jlg-1350sjp/`.
 
 ## Commands
 

@@ -11,8 +11,8 @@ export interface BoomLift {
   horizontalOutreach: string;
   platformCapacity: string;
   weight: string;
-  /** Numeric forms of the four specs above, for JSON-LD QuantitativeValue and for
-   *  sorting. Every value is an exact transcription of the display string beside it —
+  /** Numeric forms of the four specs above, for sorting and any future structured
+   *  data. Every value is an exact transcription of the display string beside it —
    *  no rounding, no conversion, nothing sourced from anywhere else. */
   heightM: number;
   outreachM: number;
@@ -36,5 +36,14 @@ export interface ContactInfo {
   phone: string;
   phone2: string;
   email: string;
-  address: string;
+  address: PostalAddress;
+}
+
+export interface PostalAddress {
+  street: string;
+  locality: string;
+  city: string;
+  region: string;
+  postalCode: string;
+  country: string;
 }

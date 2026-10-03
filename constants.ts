@@ -4,7 +4,15 @@ export const CONTACT_INFO: ContactInfo = {
   phone: "+91 92210 28139",
   phone2: "+91 93245 25581",
   email: "oginworldwide@gmail.com",
-  address: "Mumbai, Maharashtra, India"
+  // Registered office, supplied by the client on 2026-10-03.
+  address: {
+    street: "Green Avenue, Bungalow No. 2",
+    locality: "Mira Road East",
+    city: "Thane",
+    region: "Maharashtra",
+    postalCode: "401107",
+    country: "India"
+  }
 };
 
 export const BOOM_LIFTS: BoomLift[] = [

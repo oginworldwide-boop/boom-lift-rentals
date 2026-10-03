@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteShell from '../../components/SiteShell';
+import LiftDetail from '../../components/LiftDetail';
 import { BOOM_LIFTS } from '../../../constants';
-import { liftTitle, liftDescription } from '../../seo';
-import { liftGraph } from '../../schema';
+import { liftPath, liftTitle, liftDescription } from '../../seo';
+import { breadcrumbs, liftService, localBusiness } from '../../schema';
 
 export function getStaticPaths() {
   // Slugs are permanent URLs, so a collision would silently drop a machine page.
@@ -15,14 +16,23 @@ export function getStaticPaths() {
 }
 
 const { lift } = Astro.props;
-const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const site = Astro.site!;
+const pageUrl = new URL(liftPath(lift), site).href;
 ---
 <BaseLayout
-  schema={liftGraph(lift, Astro.site!, pageUrl)}
+  schema={[
+    localBusiness(site),
+    liftService(lift, site, pageUrl),
+    breadcrumbs([
+      { name: 'Home', url: site.href },
+      { name: 'Fleet', url: new URL('/fleet/', site).href },
+      { name: `${lift.brand} ${lift.model}`, url: pageUrl },
+    ]),
+  ]}
   title={liftTitle(lift)}
   description={liftDescription(lift)}
   ogImage={lift.imageUrl}
   ogType="product"
 >
-  <SiteShell page="lift" liftId={lift.id} client:load />
+  <SiteShell><LiftDetail lift={lift} /></SiteShell>
 </BaseLayout>

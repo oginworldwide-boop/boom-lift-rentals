@@ -14,20 +14,21 @@ export default defineConfig({
   // origins.
   site: 'https://www.og-inworldwide.in',
 
-  // One URL per page, no trailing slash: /fleet/jlg-1350sjp.
+  // One URL per page, with a trailing slash: /fleet/jlg-1350sjp/.
   //
-  // 'directory' emits /fleet/jlg-1350sjp/index.html, which every static host serves
-  // at the extensionless path without extra configuration. 'file' was tried first
-  // and rejected: it puts .html into Astro.url.pathname, so canonical and og:url
-  // came out as /fleet/jlg-1350sjp.html while the page is served at
-  // /fleet/jlg-1350sjp -- manufacturing exactly the duplicate URLs this setting is
-  // supposed to prevent.
-  trailingSlash: 'never',
+  // 'directory' emits /fleet/jlg-1350sjp/index.html. Netlify's Pretty URLs then
+  // 301s /fleet/jlg-1350sjp to /fleet/jlg-1350sjp/, so the slash form is the URL
+  // that actually answers 200 and is the only correct canonical. With 'never' every
+  // canonical, og:url and sitemap entry pointed at a redirect.
+  // Do not switch build.format to 'file': it puts .html into Astro.url.pathname,
+  // which corrupts every canonical and og:url.
+  trailingSlash: 'always',
   build: { format: 'directory' },
 
   // sitemap() derives every URL from `site` and the generated routes, so the
-  // sitemap cannot drift from the canonical tags.
-  integrations: [react(), sitemap({ filter: (page) => !page.endsWith('/404') })],
+  // sitemap cannot drift from the canonical tags. 404 is excluded automatically;
+  // the quote thank-you page is noindex and must stay out too.
+  integrations: [react(), sitemap({ filter: (page) => !page.includes('/quote/thanks/') })],
 
   vite: {
     // Tailwind v4 is CSS-first: config lives in src/styles/global.css via

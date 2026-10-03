@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, Maximize2, Ruler } from 'lucide-react';
 import type { BoomLift } from '../../types';
 import { TRANSLATIONS as t } from '../../constants';
+import { liftPath } from '../seo';
 
 interface LiftCardProps {
   lift: BoomLift;
@@ -31,7 +32,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl font-bold text-slate-900">{lift.model}</h3>
           <a
-            href={`/fleet/${lift.slug}`}
+            href={liftPath(lift)}
             aria-label={`View specs for ${lift.model}`}
             className="flex items-center justify-center min-h-11 min-w-11 rounded-full bg-slate-50 text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-colors"
           >
@@ -57,7 +58,7 @@ const LiftCard: React.FC<LiftCardProps> = ({ lift }) => {
         </div>
         
         <a
-          href={`/fleet/${lift.slug}`}
+          href={liftPath(lift)}
           className="mt-auto w-full py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all text-center"
         >
           {t.card_btn}

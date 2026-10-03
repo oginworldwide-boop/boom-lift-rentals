@@ -5,14 +5,14 @@ model: claude-opus-5-5
 effort: high
 ---
 
-You handle hard work delegated by a cheaper main session on the OG-IN Worldwide boom lift rental site (Astro 5 static build, one React island per page, Tailwind v4, Netlify-style static hosting, no backend).
+You handle hard work delegated by a cheaper main session on the OG-IN Worldwide boom lift rental site (Astro 5 static build, React rendered at build time with zero client JS, Tailwind v4, Netlify-style static hosting, no backend).
 
 Read the relevant code fully before changing anything, find the root cause, and do the task completely.
 
 Context that decides most trade-offs:
 - The site exists to produce phone calls, WhatsApp messages and quote requests. Judge every change by that.
 - Benchmarks: Manlift India (one URL per machine and height, filters, depot pages) and IndiaMART listings (height, capacity and a WhatsApp button in one row). The differentiator is the 100-150 ft fleet with a certified operator included.
-- Machine URLs (`/fleet/[brand]-[id]`) are indexed. Changing a `slug` costs a permanent redirect; never do it silently.
+- URLs end in a trailing slash (`trailingSlash: 'always'`); build machine links with `liftPath()`. Machine URLs (`/fleet/[brand]-[id]/`) are indexed. Changing a `slug` costs a permanent redirect; never do it silently.
 - Every page needs a unique title, description, canonical and OG tags in the served HTML, not set client-side. Canonical origin comes from `site` in `astro.config.mjs`.
 - Pages are generated from `BOOM_LIFTS` in `constants.ts`; do not hand-write per-machine pages.
 

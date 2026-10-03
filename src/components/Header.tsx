@@ -2,6 +2,7 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
 import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { telHref } from '../seo';
 
 const Header: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const Header: React.FC = () => {
         
         <div className="flex items-center gap-3 sm:gap-6">
           <a
-            href="/fleet"
+            href="/fleet/"
             className="text-slate-600 hover:text-orange-600 transition-colors text-sm font-bold uppercase tracking-wider hidden sm:inline"
           >
             {t.fleet_title}
@@ -22,7 +23,7 @@ const Header: React.FC = () => {
 
 
           <a 
-            href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+            href={telHref(CONTACT_INFO.phone)}
             aria-label={`Call us at ${CONTACT_INFO.phone}`}
             className="flex items-center justify-center gap-2 min-h-11 min-w-11 bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition-colors duration-300"
           >

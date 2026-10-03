@@ -4,6 +4,7 @@ import LiftCard from './LiftCard';
 import TrustSection from './TrustSection';
 import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { Phone } from 'lucide-react';
+import { telHref } from '../seo';
 
 /** The homepage body, lifted out of SiteShell unchanged so that SiteShell can be
  *  shared chrome and each route supplies its own main content. */
@@ -38,7 +39,7 @@ const HomeSections: React.FC = () => {
                 {t.cta_desc}
               </p>
               <a
-                href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+                href={telHref(CONTACT_INFO.phone)}
                 aria-label={`Call us at ${CONTACT_INFO.phone}`}
                 className="inline-flex items-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl"
               >

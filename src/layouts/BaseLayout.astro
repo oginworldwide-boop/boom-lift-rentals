@@ -8,10 +8,11 @@ interface Props {
   /** Path to the page's share image, e.g. "/images/1350sjp.webp". Made absolute below. */
   ogImage?: string;
   ogType?: 'website' | 'product';
-  /** Only the homepage shows the hero, so only it should pay for the preload. */
-  preloadHero?: boolean;
   /** JSON-LD nodes for this page, wrapped in an @graph below. */
   schema?: object[];
+  /** For pages that must not be indexed (404, thank-you). Emits robots noindex and
+   *  drops canonical and og:url, since there is no canonical URL to point at. */
+  noindex?: boolean;
 }
 
 const {
@@ -19,8 +20,8 @@ const {
   description,
   ogImage = '/images/homebg.webp',
   ogType = 'website',
-  preloadHero = false,
   schema = [],
+  noindex = false,
 } = Astro.props;
 
 // Astro.site comes from astro.config.mjs. Building canonical and OG URLs from it
@@ -40,14 +41,14 @@ const jsonLd = schema.length ? graph(schema) : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content="en_IN" />
 
@@ -59,8 +60,9 @@ const jsonLd = schema.length ? graph(schema) : null;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-
-    {preloadHero && <link rel="preload" as="image" href="/images/homebg.webp" />}
+    {/* No hero preload here: React 19 already emits <link rel="preload" as="image">
+        for the fetchPriority="high" hero <img> (and for each machine page's image),
+        so a second one would only duplicate it. */}
 
     <!-- Google Fonts - non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

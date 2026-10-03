@@ -1,17 +1,14 @@
 import React from 'react';
 import { CheckCircle2, Phone, UserCheck } from 'lucide-react';
-import { BOOM_LIFTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import type { BoomLift } from '../../types';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { telHref } from '../seo';
 
 interface LiftDetailProps {
-  /** Only the id is passed in. Astro serializes island props into the HTML, so the
-   *  component looks the machine up itself rather than having the whole record
-   *  embedded in the page a second time. */
-  liftId: string;
+  lift: BoomLift;
 }
 
-const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
-  const lift = BOOM_LIFTS.find((l) => l.id === liftId);
-  if (!lift) throw new Error(`Unknown lift id: ${liftId}`);
+const LiftDetail: React.FC<LiftDetailProps> = ({ lift }) => {
 
   // Specs are rendered as a table in the page rather than inside a modal, so they
   // are in the served HTML where a crawler can read them. Values come straight from
@@ -29,7 +26,7 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
         <ol className="flex items-center gap-2">
           <li><a href="/" className="hover:text-orange-600 transition-colors">Home</a></li>
           <li aria-hidden="true">/</li>
-          <li><a href="/fleet" className="hover:text-orange-600 transition-colors">{t.fleet_title}</a></li>
+          <li><a href="/fleet/" className="hover:text-orange-600 transition-colors">{t.fleet_title}</a></li>
           <li aria-hidden="true">/</li>
           <li className="text-slate-900 font-medium">{lift.brand} {lift.model}</li>
         </ol>
@@ -91,7 +88,7 @@ const LiftDetail: React.FC<LiftDetailProps> = ({ liftId }) => {
               <p className="text-lg font-bold text-slate-900">{t.modal_contact_desk}</p>
             </div>
             <a
-              href={`tel:${CONTACT_INFO.phone.replace(/\s/g, '')}`}
+              href={telHref(CONTACT_INFO.phone)}
               aria-label={`Call us at ${CONTACT_INFO.phone}`}
               className="w-full sm:w-auto flex items-center justify-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-200"
             >
