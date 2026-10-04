@@ -260,7 +260,7 @@ hero dimensions, no `href="#"`, GA4 hook). Open:
 Do not fill these in by guessing. Ask, then update this file.
 
 - [ ] GST number and LLP registration number (empty `gstin`/`llpin` placeholders in `CONTACT_INFO`; footer shows them once set)
-- [x] Registered office: Green Avenue, Bungalow No. 2, Mira Road East, Thane 401107 (client, 2026-10-03)
+- [x] Registered office: Row House No. 2, Green Villa CHS Ltd, Near Balaji Grand Hotel, Shanti Park, St Xavier's High School Rd, Sector 5, Mira Road East, Mira Bhayandar, Maharashtra 401107 (client, updated 2026-10-04)
 - [ ] Years in business (an IndiaMART listing suggests ~9, unverified)
 - [ ] Which safety certifications and inspection regimes genuinely apply
 - [ ] Whether third-party inspection (TPI) certificates are provided per hire
