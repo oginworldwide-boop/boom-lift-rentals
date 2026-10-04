@@ -79,7 +79,7 @@ These override any instruction to be helpful, fast, or complete.
 working-height guide, contact, privacy, GA4 hook). Netlify builds `main` and
 makes a deploy preview per PR (previews carry `noindex` and the Netlify drawer,
 so Lighthouse there needs `--blocked-url-patterns` for `*/.netlify/*` and
-`*/cdp/*`). Netlify form detection was still OFF at go-live.
+`*/cdp/*`). The quote form is confirmed working on production (2026-10-04).
 
 **English only (decided 2026-10-03).** The Hindi toggle, every Hindi string in
 `constants.ts` and the language context were removed on the user's instruction.
@@ -268,7 +268,7 @@ Do not fill these in by guessing. Ask, then update this file.
 - [ ] Insurance coverage and whether it can be stated publicly
 - [ ] Whether operator training credentials can be named specifically
 - [ ] Which cities can actually be served with what lead time
-- [x] Clients may be named: Godrej, Reliance, Vedanta Power, Bokaro Steel (names only; no testimonials or logos supplied)
+- [x] Clients may be named and shown with logos: Godrej, Reliance, Vedanta Power, Bokaro Steel/SAIL (logos from Wikimedia, `public/clients/`, at the client's request 2026-10-04; no testimonials)
 - [ ] Whether any indicative pricing can be published
 - [x] WhatsApp number: +91 93245 25581 (client, 2026-10-03)
 - [ ] Google Analytics / Search Console / Google Business Profile access

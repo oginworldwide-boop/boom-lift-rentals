@@ -95,9 +95,19 @@ const HomeSections: React.FC = () => (
     <section aria-label={t.clients_label} className="border-b border-steel-100 bg-paper py-8">
       <div className={`${CONTAINER} flex flex-col gap-4 md:flex-row md:items-center md:gap-8`}>
         <Label>{t.clients_label}</Label>
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-x-8">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:flex-1">
           {CLIENTS.map((c) => (
-            <li key={c} className="border-l-2 border-steel-300 pl-3 font-display text-2xl leading-tight text-steel-500">{c}</li>
+            <li key={c.name} className="flex h-24 items-center justify-center border border-steel-100 bg-white px-4">
+              <img
+                src={c.logo}
+                alt={c.name}
+                width={c.width}
+                height={c.height}
+                loading="lazy"
+                decoding="async"
+                className="h-auto max-h-16 w-auto max-w-full"
+              />
+            </li>
           ))}
         </ul>
       </div>

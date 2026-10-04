@@ -21,9 +21,17 @@ export const CONTACT_INFO: ContactInfo = {
   llpin: ""
 };
 
-// Names only, with the client's permission (2026-10-03). No logos, quotes or
-// project details: those need separate permission.
-export const CLIENTS = ["Godrej", "Reliance", "Vedanta Power", "Bokaro Steel"];
+// Client names, with the client's permission (2026-10-03); logos added at the
+// client's request (2026-10-04), SVGs from Wikimedia in public/clients/.
+// Bokaro Steel Plant is a SAIL unit, so it carries the SAIL mark.
+// No quotes or project details: those need separate permission.
+// width/height are the SVGs' intrinsic size, for aspect ratio (no layout shift).
+export const CLIENTS = [
+  { name: "Godrej", logo: "/clients/godrej.svg", width: 398, height: 192 },
+  { name: "Reliance", logo: "/clients/reliance.svg", width: 380, height: 263 },
+  { name: "Vedanta Power", logo: "/clients/vedanta.svg", width: 370, height: 77 },
+  { name: "Bokaro Steel (SAIL)", logo: "/clients/sail.svg", width: 732, height: 768 },
+];
 
 export const BOOM_LIFTS: BoomLift[] = [
   {
