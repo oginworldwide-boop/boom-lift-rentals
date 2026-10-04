@@ -301,7 +301,7 @@ export const TRANSLATIONS = {
   form_city_help: "City or town, and the area if you know it.",
   form_start: "Start date",
   form_duration: "Duration",
-  form_duration_opts: ["1–3 days", "Up to 1 week", "Up to 1 month", "Longer than 1 month", "Not sure yet"],
+  form_duration_opts: ["1–3 days", "Up to 1 week", "Up to 1 month", "Up to 6 months", "Up to 1 year", "More than 1 year", "Not sure yet"],
   form_conditions: "Site conditions (optional)",
   form_conditions_help: "Working height needed, what you are reaching (facade, roof, steelwork), ground (concrete, soil, slab), gate width, anything overhead.",
   form_required: "Required",
