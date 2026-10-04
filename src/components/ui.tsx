@@ -2,7 +2,7 @@ import React from 'react';
 import { FileText, MessageCircle, Phone } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import type { BoomLift } from '../../types';
-import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { CLIENTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { fill } from '../fleet';
 import { telHref, waPrefill, whatsappHref } from '../seo';
 
@@ -96,6 +96,20 @@ export const CtaBand: React.FC<{ title: string; text: string; quoteHref?: string
     </div>
     <CtaRow dark quoteHref={quoteHref} />
   </div>
+);
+
+/** Client names only (permission covers names, not logos or quotes). */
+export const ClientsStrip: React.FC = () => (
+  <section aria-label={t.clients_label} className="border-b border-steel-100 bg-paper py-8">
+    <div className={`${CONTAINER} flex flex-col gap-4 md:flex-row md:items-center md:gap-8`}>
+      <Label>{t.clients_label}</Label>
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-x-8">
+        {CLIENTS.map((c) => (
+          <li key={c} className="border-l-2 border-steel-300 pl-3 font-display text-2xl leading-tight text-steel-500">{c}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
 );
 
 /** Article measure. Child h2/p/ul/ol get spacing, so pages write plain markup. */

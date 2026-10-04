@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteShell from '../components/SiteShell';
 import LiftCard from '../components/LiftCard';
 import QuoteForm from '../components/QuoteForm';
-import { Bullets, CONTAINER, CtaBand, CtaRow, H2, LINK, Label, PageHero } from '../components/ui';
+import { Bullets, CONTAINER, ClientsStrip, CtaBand, CtaRow, H2, LINK, Label, PageHero } from '../components/ui';
 import { TRANSLATIONS as t } from '../../constants';
 import { fill, highReach } from '../fleet';
 import { HIGHREACH_TITLE, HIGHREACH_DESCRIPTION } from '../seo';
@@ -36,6 +36,7 @@ const BODY = 'max-w-[65ch] space-y-4 text-[1.0625rem] leading-relaxed';
     >
       <CtaRow dark className="mt-7" />
     </PageHero>
+    <ClientsStrip />
 
     <div class={`${CONTAINER} py-6 sm:py-10`}>
       <section class={ROW}>

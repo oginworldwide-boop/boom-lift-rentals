@@ -4,10 +4,10 @@ import Hero from './Hero';
 import { FleetGrid } from './LiftCard';
 import TrustSection from './TrustSection';
 import QuoteForm from './QuoteForm';
-import { CLIENTS, CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
+import { CONTACT_INFO, TRANSLATIONS as t } from '../../constants';
 import { byHeight, fill, highReach, platformFt } from '../fleet';
 import { liftPath, telHref, waPrefill, whatsappHref } from '../seo';
-import { Bullets, CONTAINER, H2, LINK, Label, cx } from './ui';
+import { Bullets, CONTAINER, ClientsStrip, H2, LINK, Label, cx } from './ui';
 
 const STRIP = [
   [t.strip_height_label, t.strip_height_value],
@@ -92,16 +92,7 @@ const HomeSections: React.FC = () => (
       </div>
     </section>
 
-    <section aria-label={t.clients_label} className="border-b border-steel-100 bg-paper py-8">
-      <div className={`${CONTAINER} flex flex-col gap-4 md:flex-row md:items-center md:gap-8`}>
-        <Label>{t.clients_label}</Label>
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-3 md:flex md:flex-wrap md:gap-x-8">
-          {CLIENTS.map((c) => (
-            <li key={c} className="border-l-2 border-steel-300 pl-3 font-display text-2xl leading-tight text-steel-500">{c}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <ClientsStrip />
 
     <TrustSection />
 
