@@ -134,14 +134,6 @@ switcher or `/hi/` routes without the user asking.
 - Use absolute asset paths (`/images/...`), never relative. Relative paths break
   on nested routes like `/fleet/jlg-1350sjp/`.
 
-## Commands
-
-```bash
-npm run dev      # local dev server
-npm run build    # production build
-npm run preview  # preview the production build
-```
-
 ## Project agents
 
 Four subagents live in `.claude/agents/`. Delegate to them with the Agent tool
@@ -158,22 +150,6 @@ hard rules and stack constraints. Pick the cheapest one that fits.
 Only Sonnet 5.5 (medium/low) and Opus 5.5 (high/xhigh) are allowed; never use
 Haiku, Fable or Opus max. Agents do not commit; review their diff and run
 `npm run build` before committing.
-
-## Repo layout (GitHub `main`)
-
-```
-constants.ts        # SOURCE OF TRUTH: BOOM_LIFTS, CONTACT_INFO, CLIENTS, TRANSLATIONS
-types.ts            # BoomLift, ContactInfo, PostalAddress
-src/pages/          # index, fleet, fleet/[slug], high-reach-boom-lift-rental,
-                    # guides/boom-lift-working-height, contact, privacy, quote/thanks, 404
-src/components/     # SiteShell, Header, Footer, Hero, HomeSections, LiftCard, LiftDetail,
-                    # FleetSections, TrustSection, QuoteForm, ui (buttons, plates, CtaRow)
-src/fleet.ts        # derived figures (ranges, highReach, neighbours) + fill()
-src/seo.ts          # titles/descriptions, liftPath, telHref, whatsappHref, ogImagePath
-src/schema.ts       # JSON-LD: LocalBusiness, Service, BreadcrumbList, WebSite
-scripts/            # assert-html (build guard), og-images, responsive-images
-public/og/          # generated share images; public/fonts/ Barlow Condensed (OFL)
-```
 
 ## ⚠ Two diverging versions exist
 
@@ -198,16 +174,6 @@ surface the differences and let the user choose; do not pick silently.
 
 Seven machines, all telescopic, all rented with an operator. Full specs live in
 `BOOM_LIFTS` in `constants.ts`:
-
-| id | brand | model | platform height |
-|---|---|---|---|
-| `660sj` | JLG | 660SJ | 20.12 m / 66 ft |
-| `860sj` | JLG | 860SJ | 26.21 m / 86 ft |
-| `1200sjp` | JLG | 1200SJP | 36.58 m / 120 ft |
-| `1350sjp` | JLG | 1350SJP | 41.15 m / 135 ft |
-| `1500sj` | JLG | 1500SJ | 45.72 m / 150 ft |
-| `s60j` | Genie | S-60 J | 18.50 m / 60 ft 8 in |
-| `s85xc` | Genie | S-85 XC | 25.91 m / 85 ft |
 
 Each entry already carries outreach, capacity, weight, an English description,
 an English feature list and an image path. **Do not duplicate this data.**
