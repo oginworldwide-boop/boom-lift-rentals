@@ -6,11 +6,11 @@ export const CONTACT_INFO: ContactInfo = {
   // Confirmed by the client on 2026-10-03.
   whatsapp: "+91 93245 25581",
   email: "oginworldwide@gmail.com",
-  // Registered office, supplied by the client on 2026-10-03.
+  // Registered office, supplied by the client on 2026-10-03, updated 2026-10-04.
   address: {
-    street: "Green Avenue, Bungalow No. 2",
+    street: "Row House No. 2, Green Villa CHS Ltd, Near Balaji Grand Hotel, Shanti Park, St Xavier's High School Rd, Sector 5",
     locality: "Mira Road East",
-    city: "Thane",
+    city: "Mira Bhayandar",
     region: "Maharashtra",
     postalCode: "401107",
     country: "India"
