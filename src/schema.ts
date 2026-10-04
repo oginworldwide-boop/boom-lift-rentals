@@ -44,8 +44,8 @@ export const localBusiness = (site: URL) => {
     },
     areaServed: INDIA,
     // Taken from the hours the site already publishes (TRANSLATIONS.cta_hours,
-    // "Available Monday - Saturday, 9:00 AM - 7:00 PM"), not from an assumption.
-    openingHours: 'Mo-Sa 09:00-19:00',
+    // "Mon–Sun, 9:00 AM–6:00 PM", client-supplied 2026-10-04), not from an assumption.
+    openingHours: 'Mo-Su 09:00-18:00',
   };
 };
 

@@ -17,7 +17,7 @@ export const CONTACT_INFO: ContactInfo = {
   },
   // Placeholders until the client supplies them. The footer company-details line
   // renders only when a value is set.
-  gstin: "",
+  gstin: "27AAJFO6619E1Z4", // client-supplied 2026-10-04
   llpin: ""
 };
 
@@ -244,7 +244,7 @@ export const TRANSLATIONS = {
 
   cta_title: "Send the height and the site",
   cta_desc: "Tell us the working height, site location, start date and duration. We will suggest a machine from the fleet and send a quote.",
-  cta_hours: "Mon–Sat, 9:00 AM–7:00 PM",
+  cta_hours: "Mon–Sun, 9:00 AM–6:00 PM",
 
   spec_heading: "Specifications",
   features_heading: "Features",
@@ -289,7 +289,7 @@ export const TRANSLATIONS = {
 
   // Quote form (Netlify Forms)
   form_title: "Get a quote",
-  form_intro: "Send the job details. We reply by phone or WhatsApp during working hours, Mon–Sat, 9:00 AM–7:00 PM.",
+  form_intro: "Send the job details. We reply by phone or WhatsApp during working hours, Mon–Sun, 9:00 AM–6:00 PM.",
   form_name: "Your name",
   form_phone: "Phone (WhatsApp if possible)",
   form_phone_help: "We use this number to send the quote.",
@@ -311,13 +311,13 @@ export const TRANSLATIONS = {
 
   // /quote/thanks/
   thanks_title: "Enquiry received",
-  thanks_body: "We have your details. We will contact you by phone or WhatsApp during working hours, Mon–Sat, 9:00 AM–7:00 PM.",
+  thanks_body: "We have your details. We will contact you by phone or WhatsApp during working hours, Mon–Sun, 9:00 AM–6:00 PM.",
   thanks_urgent: "If the job can't wait, call {phone} or message us on WhatsApp.",
   thanks_back: "Back to the fleet",
 
   // /contact/
   contact_title: "Contact OG-IN Worldwide",
-  contact_intro: "Boom lift rental enquiries by phone, WhatsApp or the quote form. Mon–Sat, 9:00 AM–7:00 PM.",
+  contact_intro: "Boom lift rental enquiries by phone, WhatsApp or the quote form. Mon–Sun, 9:00 AM–6:00 PM.",
   contact_office_label: "Registered office",
   contact_email_label: "Email",
   contact_map_link: "Open in Google Maps",
@@ -327,7 +327,7 @@ export const TRANSLATIONS = {
   footer_links: "Pages",
   footer_contact: "Contact",
   footer_address_label: "Registered office",
-  footer_hours: "Mon–Sat, 9:00 AM–7:00 PM",
+  footer_hours: "Mon–Sun, 9:00 AM–6:00 PM",
   footer_privacy: "Privacy policy",
   footer_rights: "All rights reserved.",
 };

@@ -61,7 +61,7 @@ export const FLEET_DESCRIPTION = fill(
 export const CONTACT_TITLE = `Contact: Boom Lift Rental Quotes | ${BRAND_SUFFIX}`;
 export const CONTACT_DESCRIPTION =
   'Call, WhatsApp or send the quote form for boom lift rental. Mumbai-based, pan-India hire, ' +
-  'certified operator included. Mon–Sat, 9:00 AM–7:00 PM.';
+  'certified operator included. Mon–Sun, 9:00 AM–6:00 PM.';
 
 export const HIGHREACH_TITLE = fill(`High Reach Boom Lift Rental, {highReachMinFt}–{maxHeightFt} ft | ${BRAND_SUFFIX}`);
 export const HIGHREACH_DESCRIPTION = fill(
@@ -82,7 +82,7 @@ export const PRIVACY_DESCRIPTION =
 export const THANKS_TITLE = `Enquiry Received | ${BRAND_SUFFIX}`;
 export const THANKS_DESCRIPTION =
   'Your boom lift rental enquiry has reached OG-IN Worldwide. ' +
-  'We will contact you by phone or WhatsApp during working hours, Mon–Sat.';
+  'We will contact you by phone or WhatsApp during working hours, Mon–Sun.';
 
 export const HOME_TITLE = `Boom Lift Rental Mumbai & Pan-India | ${BRAND_SUFFIX}`;
 export const HOME_DESCRIPTION = fill(
