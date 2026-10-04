@@ -21,9 +21,17 @@ export const CONTACT_INFO: ContactInfo = {
   llpin: ""
 };
 
-// Names only, with the client's permission (2026-10-03). No logos, quotes or
-// project details: those need separate permission.
-export const CLIENTS = ["Godrej", "Reliance", "Vedanta Power", "Bokaro Steel"];
+// Client names, with the client's permission (2026-10-03); logos added at the
+// client's request (2026-10-04), SVGs from Wikimedia in public/clients/.
+// Bokaro Steel Plant is a SAIL unit, so it carries the SAIL mark.
+// No quotes or project details: those need separate permission.
+// width/height are the SVGs' intrinsic size, for aspect ratio (no layout shift).
+export const CLIENTS = [
+  { name: "Godrej", logo: "/clients/godrej.svg", width: 398, height: 192 },
+  { name: "Reliance", logo: "/clients/reliance.svg", width: 380, height: 263 },
+  { name: "Vedanta Power", logo: "/clients/vedanta.svg", width: 370, height: 77 },
+  { name: "Bokaro Steel (SAIL)", logo: "/clients/sail.svg", width: 732, height: 768 },
+];
 
 export const BOOM_LIFTS: BoomLift[] = [
   {
@@ -301,7 +309,7 @@ export const TRANSLATIONS = {
   form_city_help: "City or town, and the area if you know it.",
   form_start: "Start date",
   form_duration: "Duration",
-  form_duration_opts: ["1–3 days", "Up to 1 week", "Up to 1 month", "Longer than 1 month", "Not sure yet"],
+  form_duration_opts: ["1–3 days", "Up to 1 week", "Up to 1 month", "Up to 6 months", "Up to 1 year", "More than 1 year", "Not sure yet"],
   form_conditions: "Site conditions (optional)",
   form_conditions_help: "Working height needed, what you are reaching (facade, roof, steelwork), ground (concrete, soil, slab), gate width, anything overhead.",
   form_required: "Required",
