@@ -3,7 +3,7 @@ import { FleetGrid } from './LiftCard';
 import { TRANSLATIONS as t } from '../../constants';
 import { byHeight, fill } from '../fleet';
 import { liftPath } from '../seo';
-import { CONTAINER, LINK, Label, PageHero } from './ui';
+import { CONTAINER, ClientsStrip, LINK, Label, PageHero } from './ui';
 
 const TH = 'px-4 py-3 text-left micro-label text-steel-500 whitespace-nowrap';
 const TD = 'px-4 py-4 whitespace-nowrap';
@@ -52,6 +52,7 @@ export const FleetTable: React.FC<{ caption?: string }> = ({ caption }) => (
 const FleetSections: React.FC = () => (
   <>
     <PageHero title={t.fleet_title} crumb={t.fleet_title} intro={fill(t.fleet_desc)} />
+    <ClientsStrip />
 
     <section className={`${CONTAINER} py-10 sm:py-14`}>
       <FleetTable />
